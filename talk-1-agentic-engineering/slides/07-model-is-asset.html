@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Model Is the Asset</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0c0c0e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #0d0d0f;
+    position: relative;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#0d0d0f" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.80"/>
+    </radialGradient>
+
+    <radialGradient id="modelAura1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="modelAura2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6AACB8" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#6AACB8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="modelAura3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#5A8CC8" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Shared field — the collective glow that emerges between connected models -->
+    <radialGradient id="sharedField" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="nodeGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="dimGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="textGlow" x="-5%" y="-30%" width="110%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bridgeGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <marker id="arrowShare" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(200,165,90,0.78)"/>
+    </marker>
+
+    <style>
+      @keyframes drift {
+        0%, 100% { opacity: 0.15; }
+        50%       { opacity: 0.35; }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.50; }
+        50%       { opacity: 0.85; }
+      }
+    </style>
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- LEFT: THREE MODELS — connected, not isolated                 -->
+  <!-- The constellations overlap. Edges bridge between them.       -->
+  <!-- ============================================================ -->
+
+  <!-- Shared atmosphere behind all three — the collective field -->
+  <ellipse cx="240" cy="360" rx="220" ry="260" fill="url(#sharedField)" opacity="0.9"/>
+
+  <!-- ─── ENGINEER A — gold, top -->
+  <g opacity="0.85">
+    <circle cx="148" cy="168" r="4"   fill="rgba(200,165,90,0.78)" filter="url(#nodeGlow)"/>
+    <circle cx="198" cy="142" r="3"   fill="rgba(200,165,90,0.78)"/>
+    <circle cx="238" cy="178" r="4.5" fill="rgba(200,165,90,0.80)" filter="url(#nodeGlow)"/>
+    <circle cx="182" cy="208" r="3"   fill="rgba(200,165,90,0.75)"/>
+    <circle cx="264" cy="150" r="3"   fill="rgba(200,165,90,0.78)"/>
+    <circle cx="220" cy="225" r="3.5" fill="rgba(200,165,90,0.75)"/>
+    <circle cx="155" cy="235" r="2.5" fill="rgba(200,165,90,0.75)"/>
+    <line x1="148" y1="168" x2="198" y2="142" stroke="rgba(200,165,90,0.78)" stroke-width="1"/>
+    <line x1="198" y1="142" x2="238" y2="178" stroke="rgba(200,165,90,0.75)" stroke-width="1.2"/>
+    <line x1="238" y1="178" x2="264" y2="150" stroke="rgba(200,165,90,0.48)" stroke-width="1"/>
+    <line x1="238" y1="178" x2="220" y2="225" stroke="rgba(200,165,90,0.42)" stroke-width="1"/>
+    <line x1="182" y1="208" x2="148" y2="168" stroke="rgba(200,165,90,0.15)" stroke-width="1"/>
+    <line x1="182" y1="208" x2="220" y2="225" stroke="rgba(200,165,90,0.15)" stroke-width="1"/>
+    <text x="206" y="260"
+      text-anchor="middle"
+      font-family="IBM Plex Mono, monospace"
+      font-size="8" letter-spacing="0.10em"
+      fill="rgba(200,165,90,0.48)">A</text>
+  </g>
+
+  <!-- ─── ENGINEER B — teal, center-left -->
+  <g opacity="0.75">
+    <circle cx="132" cy="352" r="3.5" fill="rgba(106,172,184,0.65)" filter="url(#dimGlow)"/>
+    <circle cx="185" cy="338" r="4"   fill="rgba(106,172,184,0.80)" filter="url(#nodeGlow)"/>
+    <circle cx="225" cy="365" r="3"   fill="rgba(106,172,184,0.70)"/>
+    <circle cx="158" cy="395" r="4.5" fill="rgba(106,172,184,0.75)" filter="url(#nodeGlow)"/>
+    <circle cx="210" cy="405" r="3"   fill="rgba(106,172,184,0.65)"/>
+    <circle cx="135" cy="415" r="2.5" fill="rgba(106,172,184,0.65)"/>
+    <line x1="185" y1="338" x2="132" y2="352" stroke="rgba(106,172,184,0.32)" stroke-width="1"/>
+    <line x1="185" y1="338" x2="225" y2="365" stroke="rgba(106,172,184,0.38)" stroke-width="1"/>
+    <line x1="158" y1="395" x2="132" y2="352" stroke="rgba(106,172,184,0.65)" stroke-width="1.2"/>
+    <line x1="158" y1="395" x2="210" y2="405" stroke="rgba(106,172,184,0.20)" stroke-width="1"/>
+    <line x1="158" y1="395" x2="135" y2="415" stroke="rgba(106,172,184,0.65)" stroke-width="1"/>
+    <line x1="225" y1="365" x2="210" y2="405" stroke="rgba(106,172,184,0.65)" stroke-width="1"/>
+    <text x="178" y="440"
+      text-anchor="middle"
+      font-family="IBM Plex Mono, monospace"
+      font-size="8" letter-spacing="0.10em"
+      fill="rgba(106,172,184,0.26)">B</text>
+  </g>
+
+  <!-- ─── ENGINEER C — blue, bottom -->
+  <g opacity="0.70">
+    <circle cx="198" cy="505" r="3"   fill="rgba(90,140,200,0.65)"/>
+    <circle cx="245" cy="492" r="4"   fill="rgba(90,140,200,0.75)" filter="url(#nodeGlow)"/>
+    <circle cx="288" cy="518" r="3.5" fill="rgba(90,140,200,0.70)" filter="url(#dimGlow)"/>
+    <circle cx="220" cy="538" r="4"   fill="rgba(90,140,200,0.70)" filter="url(#nodeGlow)"/>
+    <circle cx="270" cy="552" r="3"   fill="rgba(90,140,200,0.65)"/>
+    <circle cx="202" cy="560" r="2.5" fill="rgba(90,140,200,0.65)"/>
+    <line x1="245" y1="492" x2="198" y2="505" stroke="rgba(90,140,200,0.20)" stroke-width="1"/>
+    <line x1="245" y1="492" x2="288" y2="518" stroke="rgba(90,140,200,0.20)" stroke-width="1"/>
+    <line x1="220" y1="538" x2="198" y2="505" stroke="rgba(90,140,200,0.32)" stroke-width="1.1"/>
+    <line x1="220" y1="538" x2="270" y2="552" stroke="rgba(90,140,200,0.38)" stroke-width="1"/>
+    <line x1="220" y1="538" x2="202" y2="560" stroke="rgba(90,140,200,0.65)" stroke-width="1"/>
+    <line x1="288" y1="518" x2="270" y2="552" stroke="rgba(90,140,200,0.65)" stroke-width="1"/>
+    <text x="242" y="585"
+      text-anchor="middle"
+      font-family="IBM Plex Mono, monospace"
+      font-size="8" letter-spacing="0.10em"
+      fill="rgba(90,140,200,0.34)">C</text>
+  </g>
+
+  <!-- ─── BRIDGE EDGES — models connecting across engineers ─── -->
+  <!-- These are the shared edges: frameworks, agents, steering files -->
+  <g>
+    <!-- A→B: shared understanding propagating down -->
+    <line x1="220" y1="225" x2="185" y2="338"
+      stroke="rgba(200,165,90,0.24)" stroke-width="1"
+      stroke-dasharray="4 4" filter="url(#bridgeGlow)"
+      style="animation: drift 4s ease-in-out infinite"/>
+    <line x1="182" y1="208" x2="158" y2="395"
+      stroke="rgba(200,165,90,0.78)" stroke-width="0.8"
+      stroke-dasharray="3 5"
+      style="animation: drift 5s ease-in-out 1s infinite"/>
+    <!-- B→C: model traveling further -->
+    <line x1="210" y1="405" x2="245" y2="492"
+      stroke="rgba(106,172,184,0.32)" stroke-width="1"
+      stroke-dasharray="4 4" filter="url(#bridgeGlow)"
+      style="animation: drift 4.5s ease-in-out 0.5s infinite"/>
+    <line x1="225" y1="365" x2="288" y2="518"
+      stroke="rgba(106,172,184,0.08)" stroke-width="0.8"
+      stroke-dasharray="3 5"
+      style="animation: drift 5.5s ease-in-out 2s infinite"/>
+    <!-- A→C: the long arc — lineage -->
+    <line x1="238" y1="178" x2="245" y2="492"
+      stroke="rgba(200,165,90,0.06)" stroke-width="0.8"
+      stroke-dasharray="2 6"
+      style="animation: drift 6s ease-in-out 1.5s infinite"/>
+  </g>
+
+  <!-- annotation -->
+  <text x="205" y="625"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.92)">same codebase — different models — shared edges</text>
+
+  <!-- ============================================================ -->
+  <!-- CENTER VERTICAL RULE                                         -->
+  <!-- ============================================================ -->
+
+  <line x1="400" y1="100" x2="400" y2="640"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT: THE TEXT                                              -->
+  <!-- Three beats: personal → shared → lineage                    -->
+  <!-- ============================================================ -->
+
+  <!-- Main statement -->
+  <text x="468" y="158"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="44" font-style="italic"
+    fill="rgba(255,255,255,0.94)"
+    filter="url(#textGlow)">the model</text>
+  <text x="468" y="216"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="44" font-style="italic"
+    fill="rgba(255,255,255,0.94)">is the asset</text>
+
+  <line x1="468" y1="236" x2="1140" y2="236"
+    stroke="rgba(200,165,90,0.48)"
+    stroke-width="1"/>
+
+  <text x="468" y="272"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="17" font-style="italic"
+    fill="rgba(255,255,255,0.76)">the code is a byproduct</text>
+
+  <!-- Beat 1: formation is personal -->
+  <text x="468" y="326"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.14em"
+    fill="rgba(255,255,255,0.56)">formation</text>
+
+  <text x="468" y="350"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.90)">the working theory forms through encounter —</text>
+  <text x="468" y="370"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.90)">bugs chased, designs questioned, moments of clarity.</text>
+  <text x="468" y="396"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.90)">the right interaction model accelerates this cycle.</text>
+
+  <line x1="468" y1="414" x2="1140" y2="414"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <!-- Beat 2: transmission is collective -->
+  <text x="468" y="438"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.14em"
+    fill="rgba(200,165,90,0.42)">transmission</text>
+
+  <text x="468" y="462"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.90)">but the model doesn't stay personal.</text>
+  <text x="468" y="482"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.90)">externalized as a framework — a steering file, an agent,</text>
+  <text x="468" y="502"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.90)">a test suite — it becomes a scaffold for the next person.</text>
+  <text x="468" y="528"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(200,165,90,0.75)"
+    filter="url(#textGlow)">the next person starts where you ended.</text>
+
+  <line x1="468" y1="546" x2="1140" y2="546"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <!-- Beat 3: lineage — the 2001 arc -->
+  <text x="468" y="570"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.14em"
+    fill="rgba(200,165,90,0.42)">lineage</text>
+
+  <text x="468" y="594"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.90)">the bone didn't change one ape. it changed a lineage.</text>
+  <text x="468" y="620"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15.5" font-style="italic"
+    fill="rgba(255,255,255,0.76)"
+    filter="url(#textGlow)">models that compound across people are how tools</text>
+  <text x="468" y="644"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15.5" font-style="italic"
+    fill="rgba(255,255,255,0.76)">become civilizations.</text>
+
+  <!-- ============================================================ -->
+  <!-- VIGNETTE                                                     -->
+  <!-- ============================================================ -->
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+
+  <!-- Source whisper -->
+  <text x="1198" y="694"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.90)">Polanyi · Vygotsky · Engelbart · Kubrick</text>
+
+</svg>
+</div>
+</body>
+</html>

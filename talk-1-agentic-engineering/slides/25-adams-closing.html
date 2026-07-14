@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Adams</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #060608;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px; height: 720px;
+    background: #060608;
+    position: relative; overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="62%">
+      <stop offset="0%"   stop-color="#060608" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.94"/>
+    </radialGradient>
+  </defs>
+
+  <!--
+    One block. Same size. Same weight. Same color.
+    No hierarchy. The meaning comes from the speaker, not the slide.
+    Centered vertically and horizontally.
+    The quote breathes in the dark.
+  -->
+
+  <text x="640" y="196"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="19" font-style="italic"
+    fill="rgba(255,255,255,0.90)">I must study Politicks and War that my sons may have liberty to study</text>
+
+  <text x="640" y="232"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="19" font-style="italic"
+    fill="rgba(255,255,255,0.90)">Mathematicks and Philosophy. My sons ought to study Mathematicks and</text>
+
+  <text x="640" y="268"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="19" font-style="italic"
+    fill="rgba(255,255,255,0.90)">Philosophy, Geography, natural History, Naval Architecture, navigation,</text>
+
+  <text x="640" y="304"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="19" font-style="italic"
+    fill="rgba(255,255,255,0.90)">Commerce and Agriculture, in order to give their Children a right to study</text>
+
+  <text x="640" y="340"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="19" font-style="italic"
+    fill="rgba(255,255,255,0.90)">Painting, Poetry, Musick, Architecture, Statuary, Tapestry and Porcelaine.</text>
+
+  <text x="640" y="410"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.94)">John Adams, letter to Abigail Adams, 1780</text>
+
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+
+</svg>
+</div>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Signal Router</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #111113;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <radialGradient id="brainAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="chipAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6AACB8" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#6AACB8" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="materialAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#5A8CC8" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="brainGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="chipGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="faint" x="-10%" y="-20%" width="120%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="pulseGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Upward flow: raw material → chip -->
+    <marker id="arrowUp" markerWidth="7" markerHeight="7" refX="3.5" refY="1" orient="auto">
+      <path d="M 0 7 L 3.5 0 L 7 7 Z" fill="rgba(90,140,200,0.70)"/>
+    </marker>
+
+    <!-- Downward flow: chip → engineer -->
+    <marker id="arrowDown" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto">
+      <path d="M 0 0 L 3.5 7 L 7 0 Z" fill="rgba(106,172,184,0.65)"/>
+    </marker>
+
+    <!-- Right arrow: engineer output -->
+    <marker id="arrowRight" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(200,165,90,0.78)"/>
+    </marker>
+
+    <!-- Left arrow: feedback back to material -->
+    <marker id="arrowLeft" markerWidth="7" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <path d="M 7 0 L 0 3.5 L 7 7 Z" fill="rgba(200,165,90,0.75)"/>
+    </marker>
+
+    <clipPath id="bounds">
+      <rect width="1280" height="720"/>
+    </clipPath>
+
+  </defs>
+
+  <!--
+    THREE-ROW VERTICAL LAYOUT — mirroring Sarkar's structure but horizontal
+    
+    Actually: let's go HORIZONTAL like Sarkar's image:
+    
+    LEFT COLUMN:  Raw engineering material (the "documents")
+                  — logs, metrics, PRs, test results, incidents
+    
+    CENTER:       AI chip — the mediating layer
+                  What it does: situate, surface, provoke
+                  What it doesn't do: decide, judge, own
+    
+    RIGHT COLUMN: Engineer — the meaning-maker
+                  What they do: triage, design, decide, act
+    
+    Above/below chip: labels for the routing function
+    
+    Sarkar's labels adapted:
+    "Situated summaries"     → "situated context"     (what's relevant NOW)
+    "Provocations"           → "structural gaps"      (what you might be missing)  
+    "Text generation"        → "pattern surface"      (here's what the system is doing)
+    "Strategic reading"      → "signal triage"        (which of these matters)
+    "Reflection"             → "design judgment"      (what does this mean for the system)
+    "Strategic writing"      → "architectural decision" (what we do next)
+  -->
+
+  <!-- ============================================================ -->
+  <!-- TITLE -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="52"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="21" font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.90)">AI as signal router, not signal generator</text>
+
+  <line x1="80" y1="68" x2="1200" y2="68"
+    stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT: RAW ENGINEERING MATERIAL -->
+  <!-- ============================================================ -->
+
+  <!-- Atmosphere -->
+  <ellipse cx="198" cy="370" rx="185" ry="260" fill="url(#materialAura)" opacity="1"/>
+
+  <!-- Section label -->
+  <text x="198" y="108"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.18em"
+    fill="rgba(90,140,200,0.70)">SYSTEM MATERIAL</text>
+
+  <!-- Material cards — stacked, slightly offset, document-like -->
+  <!-- Each card represents a type of engineering artifact -->
+
+  <!-- Card 1: logs -->
+  <rect x="80" y="148" width="238" height="58" rx="3"
+    fill="rgba(14,18,26,0.85)"
+    stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <text x="98" y="171"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.94)">monitoring · logs</text>
+  <!-- Fake log lines -->
+  <line x1="98" y1="181" x2="264" y2="181" stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <line x1="98" y1="189" x2="240" y2="189" stroke="rgba(90,140,200,0.09)" stroke-width="1"/>
+  <line x1="98" y1="197" x2="220" y2="197" stroke="rgba(200,96,96,0.18)" stroke-width="1"/>
+
+  <!-- Card 2: test results -->
+  <rect x="80" y="228" width="238" height="58" rx="3"
+    fill="rgba(14,18,26,0.85)"
+    stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <text x="98" y="251"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.94)">test results</text>
+  <line x1="98" y1="261" x2="264" y2="261" stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <line x1="98" y1="269" x2="200" y2="269" stroke="rgba(200,165,90,0.15)" stroke-width="1"/>
+  <line x1="98" y1="277" x2="252" y2="277" stroke="rgba(90,140,200,0.09)" stroke-width="1"/>
+
+  <!-- Card 3: PR history -->
+  <rect x="80" y="308" width="238" height="58" rx="3"
+    fill="rgba(14,18,26,0.85)"
+    stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <text x="98" y="331"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.94)">PR · commit history</text>
+  <line x1="98" y1="341" x2="264" y2="341" stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <line x1="98" y1="349" x2="232" y2="349" stroke="rgba(90,140,200,0.09)" stroke-width="1"/>
+  <line x1="98" y1="357" x2="248" y2="357" stroke="rgba(90,140,200,0.09)" stroke-width="1"/>
+
+  <!-- Card 4: incidents -->
+  <rect x="80" y="388" width="238" height="58" rx="3"
+    fill="rgba(14,18,26,0.85)"
+    stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <text x="98" y="411"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.94)">incidents · runbooks</text>
+  <line x1="98" y1="421" x2="264" y2="421" stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <line x1="98" y1="429" x2="220" y2="429" stroke="rgba(200,96,96,0.15)" stroke-width="1"/>
+  <line x1="98" y1="437" x2="258" y2="437" stroke="rgba(90,140,200,0.09)" stroke-width="1"/>
+
+  <!-- Card 5: design docs / context -->
+  <rect x="80" y="468" width="238" height="58" rx="3"
+    fill="rgba(14,18,26,0.85)"
+    stroke="rgba(90,140,200,0.32)" stroke-width="1"/>
+  <text x="98" y="491"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.94)">context · worklog</text>
+  <line x1="98" y1="501" x2="264" y2="501" stroke="rgba(200,165,90,0.48)" stroke-width="1"/>
+  <line x1="98" y1="509" x2="244" y2="509" stroke="rgba(200,165,90,0.42)" stroke-width="1"/>
+  <line x1="98" y1="517" x2="264" y2="517" stroke="rgba(200,165,90,0.78)" stroke-width="1"/>
+
+  <!-- Volume annotation -->
+  <text x="198" y="560"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.56)">too much to hold at once</text>
+
+  <!-- ============================================================ -->
+  <!-- CENTER: AI CHIP — the mediating layer -->
+  <!-- ============================================================ -->
+
+  <ellipse cx="640" cy="362" rx="110" ry="110" fill="url(#chipAura)" opacity="1.2"/>
+
+  <!-- Chip body -->
+  <rect x="590" y="312" width="100" height="100" rx="6"
+    fill="rgba(12,16,22,0.95)"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1.5"
+    filter="url(#chipGlow)"/>
+
+  <!-- Chip inner grid — circuit aesthetic -->
+  <rect x="606" y="328" width="68" height="68" rx="3"
+    fill="none"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1"/>
+
+  <!-- Circuit lines inside -->
+  <line x1="621" y1="328" x2="621" y2="396" stroke="rgba(106,172,184,0.65)" stroke-width="0.8"/>
+  <line x1="640" y1="328" x2="640" y2="396" stroke="rgba(106,172,184,0.65)" stroke-width="0.8"/>
+  <line x1="659" y1="328" x2="659" y2="396" stroke="rgba(106,172,184,0.65)" stroke-width="0.8"/>
+  <line x1="606" y1="347" x2="674" y2="347" stroke="rgba(106,172,184,0.65)" stroke-width="0.8"/>
+  <line x1="606" y1="362" x2="674" y2="362" stroke="rgba(106,172,184,0.65)" stroke-width="0.8"/>
+  <line x1="606" y1="377" x2="674" y2="377" stroke="rgba(106,172,184,0.65)" stroke-width="0.8"/>
+
+  <!-- Center dot -->
+  <circle cx="640" cy="362" r="6"
+    fill="rgba(106,172,184,0.65)"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1"/>
+
+  <!-- Chip pins — left side -->
+  <line x1="574" y1="332" x2="590" y2="332" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="574" y1="347" x2="590" y2="347" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="574" y1="362" x2="590" y2="362" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="574" y1="377" x2="590" y2="377" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="574" y1="392" x2="590" y2="392" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+
+  <!-- Chip pins — right side -->
+  <line x1="690" y1="332" x2="706" y2="332" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="690" y1="347" x2="706" y2="347" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="690" y1="362" x2="706" y2="362" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="690" y1="377" x2="706" y2="377" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+  <line x1="690" y1="392" x2="706" y2="392" stroke="rgba(106,172,184,0.70)" stroke-width="1.2"/>
+
+  <!-- ABOVE CHIP: what goes IN from material — three routing functions -->
+  <!-- These are Sarkar's functions adapted for engineering -->
+
+  <!-- Inbound label column — left of chip, between material and chip -->
+  <!-- Three labels, staggered vertically to show they arrive from different cards -->
+
+  <!-- Top inbound thread: situated context -->
+  <path id="in1" d="M 318 207 C 430 207, 520 280, 574 340"
+    fill="none" stroke="rgba(90,140,200,0.65)" stroke-width="1.1" stroke-dasharray="4 4"/>
+  <text x="420" y="196"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(90,140,200,0.65)">situated context</text>
+  <text x="420" y="212"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(255,255,255,0.90)">what's relevant right now</text>
+
+  <!-- Mid inbound thread: structural gaps -->
+  <path id="in2" d="M 318 362 C 430 362, 520 362, 574 362"
+    fill="none" stroke="rgba(90,140,200,0.65)" stroke-width="1.1" stroke-dasharray="4 4"/>
+  <text x="420" y="352"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(90,140,200,0.65)">structural gaps</text>
+  <text x="420" y="368"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(255,255,255,0.90)">what you might be missing</text>
+
+  <!-- Bottom inbound thread: pattern surface -->
+  <path id="in3" d="M 318 497 C 430 497, 520 440, 574 392"
+    fill="none" stroke="rgba(90,140,200,0.65)" stroke-width="1.1" stroke-dasharray="4 4"/>
+  <text x="420" y="510"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(90,140,200,0.65)">pattern surface</text>
+  <text x="420" y="526"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(255,255,255,0.90)">here's what the system is doing</text>
+
+  <!-- Animated pulses inbound -->
+  <circle r="2.5" fill="#5A8CC8" opacity="0.70" filter="url(#pulseGlow)">
+    <animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#in1"/></animateMotion>
+  </circle>
+  <circle r="2.5" fill="#5A8CC8" opacity="0.70" filter="url(#pulseGlow)">
+    <animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite"><mpath href="#in2"/></animateMotion>
+  </circle>
+  <circle r="2.5" fill="#5A8CC8" opacity="0.70" filter="url(#pulseGlow)">
+    <animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite"><mpath href="#in3"/></animateMotion>
+  </circle>
+
+  <!-- OUTBOUND: chip → engineer — three forms of routed signal -->
+
+  <!-- Top outbound: signal triage -->
+  <path id="out1" d="M 706 340 C 790 280, 870 240, 940 228"
+    fill="none" stroke="rgba(200,165,90,0.75)" stroke-width="1.3"
+    marker-end="url(#arrowRight)"/>
+  <text x="840" y="222"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.78)">signal triage</text>
+  <text x="840" y="238"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(255,255,255,0.74)">which of these matters</text>
+
+  <!-- Mid outbound: design judgment -->
+  <path id="out2" d="M 706 362 C 790 362, 870 362, 940 362"
+    fill="none" stroke="rgba(200,165,90,0.75)" stroke-width="1.3"
+    marker-end="url(#arrowRight)"/>
+  <text x="840" y="352"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.78)">design judgment</text>
+  <text x="840" y="368"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(255,255,255,0.74)">what does this mean for the system</text>
+
+  <!-- Bottom outbound: architectural decision -->
+  <path id="out3" d="M 706 392 C 790 440, 870 480, 940 492"
+    fill="none" stroke="rgba(200,165,90,0.75)" stroke-width="1.3"
+    marker-end="url(#arrowRight)"/>
+  <text x="840" y="506"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.78)">architectural decision</text>
+  <text x="840" y="522"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(255,255,255,0.74)">what we do next</text>
+
+  <!-- Animated pulses outbound — gold, faster -->
+  <circle r="3" fill="#C8A55A" opacity="0.80" filter="url(#pulseGlow)">
+    <animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#out1"/></animateMotion>
+  </circle>
+  <circle r="3" fill="#C8A55A" opacity="0.80" filter="url(#pulseGlow)">
+    <animateMotion dur="1.8s" begin="0.6s" repeatCount="indefinite"><mpath href="#out2"/></animateMotion>
+  </circle>
+  <circle r="3" fill="#C8A55A" opacity="0.80" filter="url(#pulseGlow)">
+    <animateMotion dur="1.8s" begin="1.2s" repeatCount="indefinite"><mpath href="#out3"/></animateMotion>
+  </circle>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT: ENGINEER — the meaning-maker -->
+  <!-- ============================================================ -->
+
+  <ellipse cx="1082" cy="362" rx="130" ry="115" fill="url(#brainAura)" opacity="1.1"/>
+
+  <g transform="translate(1082, 354)" filter="url(#brainGlow)">
+    <path d="
+      M 0 -52 C 14 -56, 36 -46, 46 -30
+      C 56 -16, 54 2, 48 16
+      C 42 30, 30 42, 18 50
+      C 6 56, -4 58, -14 54
+      C -28 48, -36 34, -42 18
+      C -50 2, -50 -14, -44 -28
+      C -36 -44, -18 -52, 0 -52 Z
+    "
+    fill="rgba(235,220,195,0.14)"
+    stroke="rgba(235,220,195,0.52)"
+    stroke-width="1.5"/>
+    <path d="M 0 -52 C -2 -22, 2 8, 0 46"
+      fill="none" stroke="rgba(235,220,195,0.20)" stroke-width="1"/>
+    <path d="M -18 -32 C -13 -18, -11 -2, -15 14" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+    <path d="M -32 -5 C -24 2, -20 16, -26 28" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+    <path d="M 17 -32 C 13 -18, 13 -2, 17 14" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+    <path d="M 30 -5 C 24 2, 22 16, 28 26" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+  </g>
+
+  <text x="1082" y="436"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.18em"
+    fill="rgba(200,165,90,0.42)">ENGINEER</text>
+
+  <!-- What the engineer owns — below brain -->
+  <text x="1082" y="468"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.92)">judgment · ownership · intent</text>
+
+  <!-- ============================================================ -->
+  <!-- CHIP LABEL — what it is -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="296"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.18em"
+    fill="rgba(106,172,184,0.70)">AI</text>
+
+  <!-- What the chip does NOT do — below chip -->
+  <text x="640" y="440"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.56)">routes · does not decide</text>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM INVARIANT -->
+  <!-- ============================================================ -->
+
+  <line x1="80" y1="618" x2="1200" y2="618"
+    stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <text x="640" y="648"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="17" font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.74)">the engineer decides what the signal means — the AI decides what to surface</text>
+
+  <text x="640" y="676"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.56)">Sarkar, TEDAI Vienna 2025 — applied to the development lifecycle</text>
+
+</svg>
+</div>
+</body>
+</html>

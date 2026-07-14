@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>A Framework for Agentic Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    background: #0d0d0f;
+  }
+
+  :root {
+    --gold: #C8A55A;
+    --gold-dim: rgba(200,165,90,0.42);
+    --gold-faint: rgba(200,165,90,0.48);
+    --teal: #6AACB8;
+    --blue: #5A8CC8;
+    --text: rgba(255,255,255,0.92);
+    --text-dim: rgba(255,255,255,0.90);
+    --text-muted: rgba(255,255,255,0.56);
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0d0d0f;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.014) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.014) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Deep vignette — heavier than demos, more cinematic */
+  .slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 700px 400px at 50% 52%, transparent 30%, rgba(13,13,15,0.72) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── BACKGROUND SVG ─── */
+  .bg-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -56%);
+    z-index: 0;
+    opacity: 1;
+    pointer-events: none;
+  }
+
+  /* Spine: draw bottom to top */
+  .spine {
+    stroke: var(--gold);
+    stroke-opacity: 0.18;
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 380;
+    stroke-dashoffset: 380;
+    animation: drawPath 1.6s ease-out forwards;
+    animation-delay: 0.3s;
+  }
+
+  /* Each rung draws in */
+  .rung {
+    stroke: var(--gold);
+    stroke-opacity: 0.15;
+    stroke-width: 1;
+    fill: none;
+  }
+
+  .r1 { stroke-dasharray: 120; stroke-dashoffset: 120; animation: drawPath 0.4s ease forwards 0.7s; }
+  .r2 { stroke-dasharray: 100; stroke-dashoffset: 100; animation: drawPath 0.35s ease forwards 1.0s; }
+  .r3 { stroke-dasharray: 90;  stroke-dashoffset: 90;  animation: drawPath 0.35s ease forwards 1.3s; }
+  .r4 { stroke-dasharray: 80;  stroke-dashoffset: 80;  animation: drawPath 0.3s ease forwards 1.6s; }
+  .r5 { stroke-dasharray: 74;  stroke-dashoffset: 74;  animation: drawPath 0.3s ease forwards 1.9s; }
+
+  /* The top loop — the three-phase cycle */
+  .loop {
+    stroke: var(--gold);
+    stroke-opacity: 0.28;
+    stroke-width: 1.2;
+    fill: none;
+    stroke-dasharray: 230;
+    stroke-dashoffset: 230;
+    animation: drawPath 0.9s ease-out forwards;
+    animation-delay: 2.2s;
+  }
+
+  /* Loop phase dots — appear after loop draws */
+  .loop-dot {
+    fill: var(--gold);
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+  }
+  .ld1 { animation-delay: 3.1s; }
+  .ld2 { animation-delay: 3.2s; }
+  .ld3 { animation-delay: 3.3s; }
+
+  /* Rung tick marks at right end */
+  .tick {
+    stroke: var(--gold);
+    stroke-opacity: 0.2;
+    stroke-width: 1;
+    fill: none;
+    stroke-dasharray: 6;
+    stroke-dashoffset: 6;
+  }
+  .t1 { animation: drawPath 0.2s ease forwards 0.85s; }
+  .t2 { animation: drawPath 0.2s ease forwards 1.15s; }
+  .t3 { animation: drawPath 0.2s ease forwards 1.45s; }
+  .t4 { animation: drawPath 0.2s ease forwards 1.75s; }
+  .t5 { animation: drawPath 0.2s ease forwards 2.05s; }
+
+  /* Rung labels — tiny, textural */
+  .rlabel {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7.5px;
+    fill: var(--gold);
+    fill-opacity: 0.25;
+    letter-spacing: 0.06em;
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  .rl1 { animation-delay: 0.85s; }
+  .rl2 { animation-delay: 1.15s; }
+  .rl3 { animation-delay: 1.45s; }
+  .rl4 { animation-delay: 1.75s; }
+  .rl5 { animation-delay: 2.05s; }
+
+  /* Phase labels on loop */
+  .plabel {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 7px;
+    fill: var(--gold);
+    fill-opacity: 0.5;
+    letter-spacing: 0.1em;
+    text-anchor: middle;
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards;
+  }
+  .pl1 { animation-delay: 3.15s; }
+  .pl2 { animation-delay: 3.25s; }
+  .pl3 { animation-delay: 3.35s; }
+
+  /* ─── CONTENT ─── */
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-top: 60px; /* offset down from center — SVG ladder is above */
+  }
+
+  .org-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 3.6s;
+  }
+
+  .talk-title {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 54px;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1.18;
+    text-align: center;
+    max-width: 820px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 3.8s;
+  }
+
+  /* Divider draws */
+  .divider-wrap {
+    width: 320px;
+    height: 1px;
+    position: relative;
+    margin: 28px 0 22px;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+    animation-delay: 4.45s;
+  }
+
+  .div-left {
+    position: absolute;
+    top: 0; right: 50%;
+    height: 1px;
+    background: rgba(200,165,90,0.48);
+    width: 0;
+    animation: growLeft 0.5s ease forwards;
+    animation-delay: 4.5s;
+  }
+
+  .div-right {
+    position: absolute;
+    top: 0; left: 50%;
+    height: 1px;
+    background: rgba(200,165,90,0.48);
+    width: 0;
+    animation: growRight 0.5s ease forwards;
+    animation-delay: 4.5s;
+  }
+
+  /* Center diamond on divider */
+  .div-diamond {
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 7px;
+    height: 7px;
+    border: 1px solid rgba(200,165,90,0.75);
+    background: #0d0d0f;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+    animation-delay: 4.65s;
+  }
+
+  .thesis-line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 300;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-align: center;
+    font-style: normal;
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+    animation-delay: 4.85s;
+  }
+
+  .thesis-line em {
+    font-style: italic;
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    color: rgba(255,255,255,0.56);
+    letter-spacing: 0;
+  }
+
+  .speaker-line {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 5.3s;
+  }
+
+  .speaker-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .speaker-sep {
+    width: 1px;
+    height: 12px;
+    background: rgba(200,165,90,0.48);
+  }
+
+  .speaker-org {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: rgba(200,165,90,0.3);
+    text-transform: uppercase;
+  }
+
+  /* ─── CORNERS ─── */
+  .corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-color: rgba(200,165,90,0.42);
+    border-style: solid;
+    z-index: 1;
+  }
+  .corner-tl { top: 24px; left: 24px; border-width: 1px 0 0 1px; }
+  .corner-tr { top: 24px; right: 24px; border-width: 1px 1px 0 0; }
+  .corner-bl { bottom: 24px; left: 24px; border-width: 0 0 1px 1px; }
+  .corner-br { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
+
+  /* ─── KEYFRAMES ─── */
+  @keyframes drawPath {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes growLeft {
+    to { width: 50%; }
+  }
+
+  @keyframes growRight {
+    to { width: 50%; }
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <!--
+    BACKGROUND DIAGRAM: The abstraction ladder ascending into
+    the three-phase cycle — the visual thesis of the entire talk.
+    Ladder = 70-year pattern. Loop = where we go next.
+  -->
+  <svg class="bg-svg" width="320" height="500" viewBox="0 0 320 500" xmlns="http://www.w3.org/2000/svg">
+
+    <!-- Vertical spine: bottom to top -->
+    <line class="spine" x1="160" y1="460" x2="160" y2="100"/>
+
+    <!-- RUNG 1: Assembly → HLL (bottom, widest) -->
+    <line class="rung r1" x1="100" y1="420" x2="220" y2="420"/>
+    <line class="tick t1" x1="220" y1="414" x2="220" y2="426"/>
+    <text class="rlabel rl1" x="230" y="424">ASSEMBLY → HLL</text>
+
+    <!-- RUNG 2: Memory → GC -->
+    <line class="rung r2" x1="108" y1="355" x2="212" y2="355"/>
+    <line class="tick t2" x1="212" y1="349" x2="212" y2="361"/>
+    <text class="rlabel rl2" x="222" y="359">MEMORY → GC</text>
+
+    <!-- RUNG 3: Metal → Cloud -->
+    <line class="rung r3" x1="116" y1="290" x2="204" y2="290"/>
+    <line class="tick t3" x1="204" y1="284" x2="204" y2="296"/>
+    <text class="rlabel rl3" x="214" y="294">METAL → CLOUD</text>
+
+    <!-- RUNG 4: Waterfall → CI/CD -->
+    <line class="rung r4" x1="122" y1="225" x2="198" y2="225"/>
+    <line class="tick t4" x1="198" y1="219" x2="198" y2="231"/>
+    <text class="rlabel rl4" x="208" y="229">MANUAL → CI/CD</text>
+
+    <!-- RUNG 5: Code → AI (narrowest, near top) -->
+    <line class="rung r5" x1="128" y1="160" x2="192" y2="160"/>
+    <line class="tick t5" x1="192" y1="154" x2="192" y2="166"/>
+    <text class="rlabel rl5" x="202" y="164">CODE → AI</text>
+
+    <!--
+      THE LOOP: at the top of the ladder the spine transitions
+      into the three-phase cycle — discovery, sensemaking, execution.
+      A circle centered at (160, 72), radius 42.
+      The spine connects to the bottom of the circle.
+    -->
+    <circle class="loop" cx="160" cy="72" r="42"/>
+
+    <!-- Three phase dots on the loop (at 270°, 30°, 150° = top, bottom-right, bottom-left) -->
+    <!-- top = discovery (12 o'clock) -->
+    <circle class="loop-dot ld1" cx="160" cy="30" r="2.5"/>
+    <!-- bottom-right = execution (4 o'clock) -->
+    <circle class="loop-dot ld2" cx="196" cy="93" r="2.5"/>
+    <!-- bottom-left = sensemaking (8 o'clock) -->
+    <circle class="loop-dot ld3" cx="124" cy="93" r="2.5"/>
+
+    <!-- Phase labels -->
+    <text class="plabel pl1" x="160" y="18">DISCOVER</text>
+    <text class="plabel pl2" x="214" y="100">EXECUTE</text>
+    <text class="plabel pl3" x="106" y="100">SENSE</text>
+
+    <!-- Connecting segment: spine to loop bottom -->
+    <!-- The spine ends at y=100; the loop bottom is at cy+r = 72+42 = 114.
+         We need a small connector. Already covered by the spine overlapping. -->
+
+  </svg>
+
+  <!-- FOREGROUND CONTENT -->
+  <div class="content">
+    <div class="org-label">March 2026</div>
+
+    <div class="talk-title">A Framework for<br>Agentic Engineering</div>
+
+    <div class="divider-wrap">
+      <div class="div-left"></div>
+      <div class="div-right"></div>
+      <div class="div-diamond"></div>
+    </div>
+
+    <div class="thesis-line">
+      tools don't just make us faster —&nbsp;<em>they change what we can think about</em>
+    </div>
+
+    <div class="speaker-line">
+      <span class="speaker-name">Gabriel Granata</span>
+      <span class="speaker-sep"></span>
+      <span class="speaker-org">SDE</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

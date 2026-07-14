@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tech Talks — Gabriel Granata</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C8A55A;
+    --bg: #111113;
+    --card: #1a1b1e;
+    --border: #2a2c30;
+    --text: #e2e4e8;
+    --muted: #9ea4af;
+    --meta: #767c89;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Newsreader', Georgia, serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 800px;
+    width: 100%;
+  }
+
+  h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+    margin-bottom: 48px;
+  }
+
+  .talks {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .talk-card {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 48px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+
+  .talk-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .talk-card .date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  .talk-card .title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 32px;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .talk-card .description {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .footer {
+    margin-top: 80px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--meta);
+    text-align: center;
+  }
+
+  .footer a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Tech Talks</h1>
+
+  <div class="talks">
+    <a class="talk-card" href="talk-1-agentic-engineering/index.html">
+      <div class="date">March 2026</div>
+      <div class="title">A Framework for Agentic Engineering</div>
+      <div class="description">Tools don't just make us faster — they change what we're capable of thinking about. A framework grounded in cognitive science for building AI workflows that extend your thinking rather than replace it.</div>
+    </a>
+
+    <a class="talk-card" href="talk-2-ai-mirror/index.html">
+      <div class="date">May 2026</div>
+      <div class="title">What Your AI Conversations Say About How You Think</div>
+      <div class="description">833 sessions analyzed with a custom pipeline. The empirical case for cognitive debt, the longitudinal gap in the research, and a flywheel that turns your own session data into deliberate practice.</div>
+    </a>
+  </div>
+
+  <div class="footer">
+    Gabriel Granata · <a href="https://github.com/gabrielgranata">github.com/gabrielgranata</a> · <a href="https://m1ndovermatter.substack.com">m1ndovermatter.substack.com</a>
+  </div>
+</div>
+</body>
+</html>

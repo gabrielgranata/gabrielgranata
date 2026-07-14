@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDLC — Cognitive Map</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #111113;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <radialGradient id="engineerAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- S2 node — deliberate, gold -->
+    <radialGradient id="s2NodeAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- S1 node — automatic, dimmer -->
+    <radialGradient id="s1NodeAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Friction node — where S2 gets consumed by operational fluff -->
+    <radialGradient id="frictionAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c87840" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#c87840" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="engineerGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="14" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="frictionGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="faint" x="-10%" y="-20%" width="120%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Loop ring gradient — clockwise fade -->
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="rgba(200,165,90,0.75)"/>
+      <stop offset="50%"  stop-color="rgba(200,165,90,0.15)"/>
+      <stop offset="100%" stop-color="rgba(200,165,90,0.75)"/>
+    </linearGradient>
+
+    <marker id="arrowGold" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(200,165,90,0.75)"/>
+    </marker>
+
+    <marker id="arrowDim" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(255,255,255,0.76)"/>
+    </marker>
+
+    <marker id="arrowFriction" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(200,120,64,0.50)"/>
+    </marker>
+
+    <clipPath id="bounds">
+      <rect width="1280" height="720"/>
+    </clipPath>
+
+  </defs>
+
+  <!--
+    LAYOUT:
+    Engineer sits left-center (~300, 370).
+    Six SDLC stages arranged in a loose arc/ring to the right.
+    Stages: Plan, Code, Build, Test, Deploy, Monitor
+    Center of ring: ~820, 370. Radius: ~200.
+
+    Angles (clockwise from top):
+      Plan:    270° → (820, 170)
+      Code:    330° → (993, 270)
+      Build:     30° → (993, 470)
+      Test:     90° → (820, 570)
+      Deploy:  150° → (647, 470)
+      Monitor: 210° → (647, 270)
+
+    Engineer threads into the loop at Monitor/Plan — the cognitive handoff.
+    S2 nodes: Plan, Test, Monitor (deliberate thinking)
+    S1 nodes: Code (familiar), Build (automated), Deploy (patterns)
+    Friction markers: Build pipeline, Deploy config — where S2 leaks into ops
+  -->
+
+  <!-- ============================================================ -->
+  <!-- TITLE -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="56"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="20" font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.94)">where the thinking actually goes</text>
+
+  <line x1="80" y1="72" x2="1200" y2="72"
+    stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- ENGINEER — left side -->
+  <!-- ============================================================ -->
+
+  <!-- Aura -->
+  <ellipse cx="268" cy="370" rx="155" ry="135"
+    fill="url(#engineerAura)" opacity="1"/>
+
+  <!-- Brain -->
+  <g transform="translate(268, 358)" filter="url(#engineerGlow)">
+    <path d="
+      M 0 -58
+      C 14 -62, 38 -52, 46 -36
+      C 58 -20, 54 0, 48 14
+      C 42 28, 32 40, 20 48
+      C 8 56, -4 58, -14 54
+      C -30 48, -38 34, -44 20
+      C -52 6, -52 -10, -46 -26
+      C -38 -44, -18 -54, 0 -58 Z
+    "
+    fill="rgba(235,220,195,0.13)"
+    stroke="rgba(235,220,195,0.48)"
+    stroke-width="1.4"/>
+    <path d="M 0 -58 C -2 -26, 2 8, 0 48"
+      fill="none" stroke="rgba(235,220,195,0.20)" stroke-width="1"/>
+    <path d="M -22 -36 C -16 -22, -14 -4, -18 12" fill="none" stroke="rgba(235,220,195,0.14)" stroke-width="1"/>
+    <path d="M -36 -8 C -26 0, -22 14, -28 26" fill="none" stroke="rgba(235,220,195,0.14)" stroke-width="1"/>
+    <path d="M 20 -36 C 16 -22, 16 -4, 20 12" fill="none" stroke="rgba(235,220,195,0.14)" stroke-width="1"/>
+    <path d="M 34 -8 C 26 0, 24 14, 30 24" fill="none" stroke="rgba(235,220,195,0.14)" stroke-width="1"/>
+  </g>
+
+  <text x="268" y="440"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.16em"
+    fill="rgba(200,165,90,0.78)">ENGINEER</text>
+
+  <!-- Coupling thread — engineer into the loop at Monitor -->
+  <!-- Monitor is at ~647, 270 -->
+  <path id="couplingIn"
+    d="M 330 340 C 420 290, 530 272, 618 272"
+    fill="none"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1.5"
+    stroke-dasharray="5 4"
+    marker-end="url(#arrowGold)"/>
+
+  <!-- Coupling return — loop back to engineer at Plan/Monitor -->
+  <path d="M 618 378 C 530 400, 420 400, 340 388"
+    fill="none"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1.2"
+    stroke-dasharray="3 5"
+    marker-end="url(#arrowGold)"/>
+
+  <!-- Animated pulse on coupling thread -->
+  <circle r="3" fill="#C8A55A" opacity="0.75" filter="url(#faint)">
+    <animateMotion dur="3.2s" repeatCount="indefinite">
+      <mpath href="#couplingIn"/>
+    </animateMotion>
+  </circle>
+
+  <!-- "cognitive coupling" label on thread -->
+  <text x="472" y="278"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(200,165,90,0.48)">mental model</text>
+
+  <!-- ============================================================ -->
+  <!-- LOOP RING — background circle showing the cycle -->
+  <!-- ============================================================ -->
+
+  <circle cx="820" cy="370" r="200"
+    fill="none"
+    stroke="rgba(255,255,255,0.06)"
+    stroke-width="1.2"/>
+
+  <!-- ============================================================ -->
+  <!-- LOOP ARROWS between stages (clockwise) -->
+  <!-- Plan→Code→Build→Test→Deploy→Monitor→Plan -->
+  <!-- ============================================================ -->
+
+  <!-- Plan → Code (top to top-right) -->
+  <path d="M 860 185 C 910 200, 963 235, 978 262"
+    fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="1.1"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Code → Build (top-right to bottom-right) -->
+  <path d="M 998 302 C 1006 330, 1004 360, 996 390"
+    fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="1.1"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Build → Test (bottom-right to bottom) -->
+  <path d="M 978 436 C 960 466, 922 512, 884 548"
+    fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="1.1"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Test → Deploy (bottom to bottom-left) -->
+  <path d="M 783 558 C 752 562, 714 546, 684 524"
+    fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="1.1"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Deploy → Monitor (bottom-left to top-left) -->
+  <path d="M 643 448 C 632 418, 632 340, 642 308"
+    fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="1.1"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Monitor → Plan (top-left to top) -->
+  <path d="M 672 258 C 710 218, 762 188, 800 178"
+    fill="none" stroke="rgba(255,255,255,0.11)" stroke-width="1.1"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- ============================================================ -->
+  <!-- STAGE NODES -->
+  <!-- ============================================================ -->
+
+  <!-- ── PLAN (top) 820, 170 — S2: architecture, deployment patterns, strategy -->
+  <ellipse cx="820" cy="170" rx="62" ry="26" fill="url(#s2NodeAura)"/>
+  <ellipse cx="820" cy="170" rx="52" ry="20"
+    fill="rgba(16,18,22,0.92)"
+    stroke="rgba(200,165,90,0.75)" stroke-width="1.5"
+    filter="url(#faint)"/>
+  <text x="820" y="174" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="0.09em"
+    fill="rgba(255,255,255,0.92)">plan</text>
+  <!-- S2 tag -->
+  <text x="820" y="140" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.12em"
+    fill="rgba(200,165,90,0.75)">S2</text>
+  <!-- What the mind does here -->
+  <text x="820" y="118" text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.56)">architecture · strategy</text>
+
+  <!-- ── CODE (top-right) 993, 270 — S1/S2 mix -->
+  <ellipse cx="993" cy="270" rx="62" ry="26" fill="url(#s1NodeAura)"/>
+  <ellipse cx="993" cy="270" rx="52" ry="20"
+    fill="rgba(16,18,22,0.92)"
+    stroke="rgba(255,255,255,0.74)" stroke-width="1.2"/>
+  <text x="993" y="274" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="0.09em"
+    fill="rgba(255,255,255,0.94)">code</text>
+  <text x="993" y="240" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.12em"
+    fill="rgba(255,255,255,0.56)">S1 + S2</text>
+  <text x="1066" y="266" text-anchor="start"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.74)">familiar patterns</text>
+  <text x="1066" y="282" text-anchor="start"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.74)">hard problems</text>
+
+  <!-- ── BUILD (bottom-right) 993, 470 — mostly S1, but friction hides here -->
+  <ellipse cx="993" cy="470" rx="62" ry="26" fill="url(#frictionAura)"/>
+  <ellipse cx="993" cy="470" rx="52" ry="20"
+    fill="rgba(16,18,22,0.92)"
+    stroke="rgba(200,120,64,0.45)" stroke-width="1.2"
+    filter="url(#frictionGlow)"/>
+  <text x="993" y="474" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="0.09em"
+    fill="rgba(255,255,255,0.76)">build</text>
+  <!-- Friction marker -->
+  <text x="993" y="440" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.12em"
+    fill="rgba(200,120,64,0.55)">S2 leak</text>
+  <text x="1066" y="466" text-anchor="start"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(200,120,64,0.40)">pipeline failures</text>
+  <text x="1066" y="482" text-anchor="start"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(200,120,64,0.40)">dep conflicts</text>
+
+  <!-- ── TEST (bottom) 820, 570 — S2: coverage strategy, failure triage -->
+  <ellipse cx="820" cy="570" rx="62" ry="26" fill="url(#s2NodeAura)"/>
+  <ellipse cx="820" cy="570" rx="52" ry="20"
+    fill="rgba(16,18,22,0.92)"
+    stroke="rgba(200,165,90,0.78)" stroke-width="1.5"
+    filter="url(#faint)"/>
+  <text x="820" y="574" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="0.09em"
+    fill="rgba(255,255,255,0.92)">test</text>
+  <text x="820" y="598" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.12em"
+    fill="rgba(200,165,90,0.75)">S2</text>
+  <text x="820" y="618" text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.56)">coverage · failure reasoning</text>
+
+  <!-- ── DEPLOY (bottom-left) 647, 470 — S1 + friction -->
+  <ellipse cx="647" cy="470" rx="62" ry="26" fill="url(#frictionAura)"/>
+  <ellipse cx="647" cy="470" rx="52" ry="20"
+    fill="rgba(16,18,22,0.92)"
+    stroke="rgba(200,120,64,0.40)" stroke-width="1.2"
+    filter="url(#frictionGlow)"/>
+  <text x="647" y="474" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="0.09em"
+    fill="rgba(255,255,255,0.76)">deploy</text>
+  <text x="647" y="440" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.12em"
+    fill="rgba(200,120,64,0.55)">S2 leak</text>
+  <text x="570" y="466" text-anchor="end"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(200,120,64,0.40)">rollout config</text>
+  <text x="570" y="482" text-anchor="end"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(200,120,64,0.40)">incident runbooks</text>
+
+  <!-- ── MONITOR (top-left) 647, 270 — S2: highest cognitive load, alerts + triage -->
+  <ellipse cx="647" cy="270" rx="68" ry="26" fill="url(#s2NodeAura)" opacity="1.3"/>
+  <ellipse cx="647" cy="270" rx="58" ry="20"
+    fill="rgba(16,18,22,0.92)"
+    stroke="rgba(200,165,90,0.72)" stroke-width="1.8"
+    filter="url(#softGlow)"/>
+  <text x="647" y="274" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="0.09em"
+    fill="rgba(255,255,255,0.92)">monitor</text>
+  <!-- Highest S2 load — brightest node -->
+  <text x="647" y="240" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.12em"
+    fill="rgba(200,165,90,0.78)">S2 ↑↑</text>
+  <text x="565" y="262" text-anchor="end"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.94)">system behavior</text>
+  <text x="565" y="278" text-anchor="end"
+    font-family="EB Garamond, Georgia, serif" font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.94)">anomaly triage</text>
+
+  <!-- ============================================================ -->
+  <!-- LEGEND — bottom left, minimal -->
+  <!-- ============================================================ -->
+
+  <line x1="80" y1="648" x2="560" y2="648"
+    stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <!-- S2 indicator -->
+  <rect x="80" y="658" width="10" height="10" rx="2"
+    fill="none" stroke="rgba(200,165,90,0.75)" stroke-width="1.2"/>
+  <text x="98" y="668"
+    font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.56)">deliberate thinking</text>
+
+  <!-- S2 leak indicator -->
+  <rect x="230" y="658" width="10" height="10" rx="2"
+    fill="none" stroke="rgba(200,120,64,0.50)" stroke-width="1.2"/>
+  <text x="248" y="668"
+    font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.56)">S2 consumed by operational friction</text>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM RIGHT — bridge line to next slide -->
+  <!-- ============================================================ -->
+
+  <text x="1200" y="660"
+    text-anchor="end"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.74)">what if the friction didn't require your best thinking?</text>
+
+</svg>
+</div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Framework for Agentic Engineering — Gabriel Granata</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --gold: #C8A55A;
+    --blue: #5A8CC8;
+    --teal: #6AACB8;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  body { background: #000; }
+  .reveal { background: #000; }
+  .reveal .slides { background: #000; }
+
+  .reveal .slides section {
+    padding: 0 !important;
+    margin: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 1280px !important;
+    height: 720px !important;
+    background: #111113;
+    overflow: hidden;
+  }
+
+  .reveal .slides section iframe.slide-frame {
+    width: 1280px;
+    height: 720px;
+    border: none;
+    display: block;
+    background: #111113;
+  }
+
+  /* Navigation */
+  .reveal .controls { color: var(--gold); opacity: 0.25; }
+  .reveal .controls:hover { opacity: 0.7; }
+  .reveal .progress { color: var(--gold); height: 2px; }
+  .reveal .slide-number {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.18);
+    background: transparent;
+    bottom: 10px;
+    right: 14px;
+  }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+  <!-- ═══════════════════ MOVEMENT I — THE PATTERN ═══════════════════ -->
+
+  <!-- 01 — The Bone (Kubrick) -->
+  <section><iframe class="slide-frame" src="slides/01-the-bone.html"></iframe></section>
+
+  <!-- 03 — HAL / Today -->
+  <section><iframe class="slide-frame" src="slides/02-hal-today.html"></iframe></section>
+
+  <!-- 04 — Title Card -->
+  <section><iframe class="slide-frame" src="slides/01b-title-card.html"></iframe></section>
+
+  <!-- 05 — Abstraction Arc -->
+  <section><iframe class="slide-frame" src="slides/03-abstraction-arc.html"></iframe></section>
+
+  <!-- 06 — System 1/2 + Cognitive Debt -->
+  <section><iframe class="slide-frame" src="slides/04-system-1-2.html"></iframe></section>
+
+  <!-- 07 — Extended Mind Thesis -->
+  <section><iframe class="slide-frame" src="slides/05-extended-mind.html"></iframe></section>
+
+  <!-- 08 — The Human Is the Agent -->
+  <section><iframe class="slide-frame" src="slides/06-human-is-agent.html"></iframe></section>
+
+  <!-- 09 — How Understanding Gets Built (combined) -->
+  <section><iframe class="slide-frame" src="slides/08-how-understanding-builds.html"></iframe></section>
+
+  <!-- ═════════════════ MOVEMENT II — THE FRAMEWORK ═════════════════ -->
+
+  <!-- 09 — SDLC Cognitive Map -->
+  <section><iframe class="slide-frame" src="slides/11-sdlc-cognitive-map.html"></iframe></section>
+
+  <!-- 10 — SDLC: What Becomes Possible -->
+  <section><iframe class="slide-frame" src="slides/10-what-becomes-possible.html"></iframe></section>
+
+  <!-- 11 — Extended Mind SDLC -->
+  <section><iframe class="slide-frame" src="slides/12-extended-mind-sdlc.html"></iframe></section>
+
+  <!-- 12 — The Model Is the Asset -->
+  <section><iframe class="slide-frame" src="slides/07-model-is-asset.html"></iframe></section>
+
+  <!-- 13 — Transition -->
+  <section><iframe class="slide-frame" src="slides/13-transition.html"></iframe></section>
+
+  <!-- 14 — Three Phases of Thinking -->
+  <section><iframe class="slide-frame" src="slides/14-three-phases.html"></iframe></section>
+
+  <!-- 15 — Conversation Structure -->
+  <section><iframe class="slide-frame" src="slides/20-demo-c-framing.html"></iframe></section>
+
+  <!-- 16 — The Loop Wants to Be Tight -->
+  <section><iframe class="slide-frame" src="slides/16-tight-loop.html"></iframe></section>
+
+  <!-- 17 — The Signal Router -->
+  <section><iframe class="slide-frame" src="slides/15-signal-router.html"></iframe></section>
+
+  <!-- ═════════════════ MOVEMENT II contd ═════════════════ -->
+
+  <!-- 20 — Parallelization -->
+  <section><iframe class="slide-frame" src="slides/17-parallelization.html"></iframe></section>
+
+  <!-- ═══════════════ MOVEMENT III — THE POSSIBILITY ═══════════════ -->
+
+  <!-- 22 — The Collaboration Question -->
+  <section><iframe class="slide-frame" src="slides/23-collaboration-question.html"></iframe></section>
+
+  <!-- 23 — Already Building -->
+  <section><iframe class="slide-frame" src="slides/24-already-building.html"></iframe></section>
+
+  <!-- 24 — Adams. Let it breathe. -->
+  <section><iframe class="slide-frame" src="slides/25-adams-closing.html"></iframe></section>
+
+  <!-- 25 - Sources-->
+  <section><iframe class="slide-frame" src="slides/sources.html"></iframe></section>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1280,
+    height: 720,
+    margin: 0,
+    minScale: 0.3,
+    maxScale: 2.0,
+    controls: true,
+    controlsLayout: 'bottom-right',
+    progress: true,
+    slideNumber: 'c/t',
+    hash: true,
+    history: true,
+    transition: 'none',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'none',
+    autoSlide: 0,
+    loop: false,
+  });
+
+</script>
+</body>
+</html>

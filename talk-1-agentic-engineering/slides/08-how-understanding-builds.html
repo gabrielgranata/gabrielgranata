@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Understanding Gets Built</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0c0c0e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #0d0d0f;
+    position: relative;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#0d0d0f" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.85"/>
+    </radialGradient>
+
+    <!-- Phase glows for cycle nodes -->
+    <radialGradient id="encounterGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="tensionGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="patternGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6AACB8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#6AACB8" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="integrationGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#5A8CC8" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="nodeGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="textGlow" x="-5%" y="-40%" width="110%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Arrow markers, one per arc color -->
+    <marker id="arrowWhite" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(255,255,255,0.35)"/>
+    </marker>
+    <marker id="arrowGold" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(200,165,90,0.75)"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(106,172,184,0.65)"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(90,140,200,0.65)"/>
+    </marker>
+    <marker id="arrowWhiteReturn" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(255,255,255,0.90)"/>
+    </marker>
+
+    <!-- Pulse dots per arc -->
+    <circle id="dot" r="3"/>
+
+    <clipPath id="bounds">
+      <rect width="1280" height="720"/>
+    </clipPath>
+
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- TITLE — top, restrained -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="58"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="18" font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.76)">the content is personal — the structure is universal</text>
+
+  <line x1="200" y1="74" x2="1080" y2="74"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!--
+    CENTER: THE CYCLE — four nodes in a circle
+    
+    cx=490, cy=385 — center of cycle, left-center of slide
+    Radius: 190px
+    
+    Four nodes at cardinal positions:
+    TOP    (490, 195): ENCOUNTER   — white/dim   — "something resists"
+    RIGHT  (680, 385): TENSION     — gold        — "you don't understand yet"
+    BOTTOM (490, 575): PATTERN     — teal        — "something coheres"
+    LEFT   (300, 385): INTEGRATION — blue        — "the model shifts"
+    
+    Arc arrows connect them clockwise.
+    
+    Below/beside each node: label + one-line description
+    
+    The cycle is large — it IS the slide visually.
+    Text annotations are restrained.
+  -->
+  <!-- ============================================================ -->
+
+  <!-- Outer atmosphere -->
+  <circle cx="490" cy="385" r="230"
+    fill="none"
+    stroke="rgba(255,255,255,0.025)"
+    stroke-width="1"
+    stroke-dasharray="2 8"/>
+
+  <!-- ── NODE 1: ENCOUNTER — top -->
+  <ellipse cx="490" cy="192" rx="70" ry="70" fill="url(#encounterGlow)" opacity="0.9"/>
+  <circle cx="490" cy="192" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(255,255,255,0.94)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <!-- inner ring -->
+  <circle cx="490" cy="192" r="10"
+    fill="none"
+    stroke="rgba(255,255,255,0.94)"
+    stroke-width="1"/>
+  <circle cx="490" cy="192" r="3.5"
+    fill="rgba(255,255,255,0.90)"
+    filter="url(#softGlow)"/>
+
+  <text x="490" y="141"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.18em"
+    fill="rgba(255,255,255,0.76)">ENCOUNTER</text>
+  <text x="490" y="160"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">something resists your model</text>
+
+  <!-- ── NODE 2: TENSION — right -->
+  <ellipse cx="682" cy="385" rx="70" ry="70" fill="url(#tensionGlow)" opacity="0.9"/>
+  <circle cx="682" cy="385" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <circle cx="682" cy="385" r="10"
+    fill="none"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1"/>
+  <circle cx="682" cy="385" r="3.5"
+    fill="rgba(200,165,90,0.80)"
+    filter="url(#softGlow)"/>
+
+  <text x="762" y="378"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.18em"
+    fill="rgba(200,165,90,0.75)">TENSION</text>
+  <text x="762" y="397"
+    text-anchor="start"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">you hold the gap open</text>
+
+  <!-- ── NODE 3: PATTERN — bottom -->
+  <ellipse cx="490" cy="578" rx="70" ry="70" fill="url(#patternGlow)" opacity="0.9"/>
+  <circle cx="490" cy="578" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(106,172,184,0.70)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <circle cx="490" cy="578" r="10"
+    fill="none"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1"/>
+  <circle cx="490" cy="578" r="3.5"
+    fill="rgba(106,172,184,0.80)"
+    filter="url(#softGlow)"/>
+
+  <text x="490" y="628"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.18em"
+    fill="rgba(106,172,184,0.65)">PATTERN</text>
+  <text x="490" y="647"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">something coheres</text>
+
+  <!-- ── NODE 4: INTEGRATION — left -->
+  <ellipse cx="298" cy="385" rx="70" ry="70" fill="url(#integrationGlow)" opacity="0.9"/>
+  <circle cx="298" cy="385" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(90,140,200,0.70)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <circle cx="298" cy="385" r="10"
+    fill="none"
+    stroke="rgba(90,140,200,0.65)"
+    stroke-width="1"/>
+  <circle cx="298" cy="385" r="3.5"
+    fill="rgba(90,140,200,0.80)"
+    filter="url(#softGlow)"/>
+
+  <text x="218" y="378"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.18em"
+    fill="rgba(90,140,200,0.65)">INTEGRATION</text>
+  <text x="218" y="397"
+    text-anchor="end"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">the model shifts</text>
+
+  <!-- ── ARCS — clockwise, curved around the cycle -->
+
+  <!-- ENCOUNTER → TENSION (top → right) -->
+  <path id="arc1" d="M 505 208 A 190 190 0 0 1 664 370"
+    fill="none"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.4"
+    marker-end="url(#arrowGold)"
+    filter="url(#arcGlow)"/>
+
+  <!-- TENSION → PATTERN (right → bottom) -->
+  <path id="arc2" d="M 666 402 A 190 190 0 0 1 506 562"
+    fill="none"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1.4"
+    marker-end="url(#arrowTeal)"
+    filter="url(#arcGlow)"/>
+
+  <!-- PATTERN → INTEGRATION (bottom → left) -->
+  <path id="arc3" d="M 474 562 A 190 190 0 0 1 314 402"
+    fill="none"
+    stroke="rgba(90,140,200,0.65)"
+    stroke-width="1.4"
+    marker-end="url(#arrowBlue)"
+    filter="url(#arcGlow)"/>
+
+  <!-- INTEGRATION → ENCOUNTER (left → top, completing cycle) -->
+  <path id="arc4" d="M 312 368 A 190 190 0 0 1 474 208"
+    fill="none"
+    stroke="rgba(255,255,255,0.90)"
+    stroke-width="1.4"
+    marker-end="url(#arrowWhiteReturn)"
+    filter="url(#arcGlow)"/>
+
+  <!-- Animated pulses on arcs — one per arc, staggered -->
+  <circle r="3" fill="#C8A55A" opacity="0.90" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="0s" repeatCount="indefinite">
+      <mpath href="#arc1"/>
+    </animateMotion>
+  </circle>
+
+  <circle r="3" fill="#6AACB8" opacity="0.90" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="1.25s" repeatCount="indefinite">
+      <mpath href="#arc2"/>
+    </animateMotion>
+  </circle>
+
+  <circle r="3" fill="#5A8CC8" opacity="0.90" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="2.5s" repeatCount="indefinite">
+      <mpath href="#arc3"/>
+    </animateMotion>
+  </circle>
+
+  <circle r="3" fill="rgba(255,255,255,0.94)" opacity="0.80" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="3.75s" repeatCount="indefinite">
+      <mpath href="#arc4"/>
+    </animateMotion>
+  </circle>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT HALF: ANNOTATION — three points, restrained prose -->
+  <!-- ============================================================ -->
+
+  <line x1="830" y1="100" x2="830" y2="650"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <!-- Beat 1: the cycle's content is yours -->
+  <text x="858" y="188"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.74)">01</text>
+
+  <text x="858" y="218"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="21" font-style="italic"
+    fill="rgba(255,255,255,0.92)"
+    filter="url(#textGlow)">the content is yours alone</text>
+
+  <text x="858" y="248"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">which bugs, which designs, which moments</text>
+  <text x="858" y="268"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">of sudden coherence — no two paths are the same.</text>
+
+  <!-- Beat 2: the structure is universal -->
+  <line x1="858" y1="308" x2="1200" y2="308"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <text x="858" y="338"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.74)">02</text>
+
+  <text x="858" y="368"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="21" font-style="italic"
+    fill="rgba(255,255,255,0.92)"
+    filter="url(#textGlow)">the structure is shared</text>
+
+  <text x="858" y="398"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">encounter something you can't yet explain.</text>
+  <text x="858" y="418"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">hold the gap open. find the pattern.</text>
+  <text x="858" y="438"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">let the model update. then encounter again.</text>
+
+  <!-- Beat 3: the bypass -->
+  <line x1="858" y1="476" x2="1200" y2="476"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <text x="858" y="506"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.74)">03</text>
+
+  <text x="858" y="536"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="21" font-style="italic"
+    fill="rgba(255,255,255,0.92)"
+    filter="url(#textGlow)">the bypass is the problem</text>
+
+  <text x="858" y="566"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">an AI that resolves the tension for you</text>
+  <text x="858" y="586"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.56)">has skipped the step where the model grows.</text>
+  <text x="858" y="606"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.94)">you received an answer. you built nothing.</text>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM BRIDGE — connects to the three phases -->
+  <!-- ============================================================ -->
+
+  <line x1="80" y1="672" x2="1200" y2="672"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <!-- Phase correspondences — subtle, earns the next slide -->
+  <text x="490" y="696"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.14em"
+    fill="rgba(200,165,90,0.48)">encounter + tension</text>
+
+  <text x="490" y="710"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.76)">discovery</text>
+
+  <text x="640" y="696"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.14em"
+    fill="rgba(106,172,184,0.38)">pattern + integration</text>
+
+  <text x="640" y="710"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.76)">sensemaking</text>
+
+  <text x="790" y="696"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.14em"
+    fill="rgba(90,140,200,0.38)">encounter again</text>
+
+  <text x="790" y="710"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.08em"
+    fill="rgba(255,255,255,0.76)">execution</text>
+
+  <!-- Vignette -->
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+
+  <!-- Source whisper -->
+  <text x="1198" y="660"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.12em"
+    fill="rgba(255,255,255,0.90)">Heidegger · Vygotsky · Dreyfus · Dewey</text>
+
+</svg>
+</div>
+</body>
+</html>

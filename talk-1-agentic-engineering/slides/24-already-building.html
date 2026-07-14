@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Already Building</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #09090b;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px; height: 720px;
+    background: #09090b;
+    position: relative; overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.012) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="68%">
+      <stop offset="0%"   stop-color="#09090b" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.92"/>
+    </radialGradient>
+    <radialGradient id="warmCenter" cx="50%" cy="50%" r="55%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="textGlow" x="-5%" y="-40%" width="110%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      @keyframes pulse {
+        0%, 100% { opacity: 0.70; }
+        50%       { opacity: 1.0; }
+      }
+      .live { animation: pulse 3.5s ease-in-out infinite; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="720" fill="url(#warmCenter)"/>
+
+  <!-- ============================================================ -->
+  <!-- THE CLAIM — present tense, already true                      -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="192"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="48" font-style="italic"
+    fill="rgba(255,255,255,0.94)"
+    filter="url(#textGlow)">we are already</text>
+
+  <text x="640" y="256"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="48" font-style="italic"
+    fill="rgba(255,255,255,0.94)"
+    filter="url(#textGlow)">building this way</text>
+
+  <line x1="320" y1="284" x2="960" y2="284"
+    stroke="rgba(200,165,90,0.78)" stroke-width="1"/>
+
+  <!-- Sub-statement — present tense, grounded in what was just shown -->
+  <text x="640" y="330"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="18" font-style="italic"
+    fill="rgba(255,255,255,0.74)">the tools in these demos are not prototypes of a future state.</text>
+
+  <text x="640" y="358"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="18" font-style="italic"
+    fill="rgba(255,255,255,0.74)">they are evidence of a transition already underway.</text>
+
+  <line x1="400" y1="390" x2="880" y2="390"
+    stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <!-- The real point — what this makes possible to think about -->
+  <text x="640" y="434"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="20" font-style="italic"
+    fill="rgba(255,255,255,0.92)">when the operational layer runs itself,</text>
+
+  <text x="640" y="466"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="20" font-style="italic"
+    fill="rgba(255,255,255,0.92)">the engineer is free to think about</text>
+
+  <text x="640" y="512"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="28" font-style="italic"
+    fill="rgba(200,165,90,0.90)"
+    filter="url(#textGlow)">what actually matters</text>
+
+  <!-- Live indicator — small, bottom right, present tense signal -->
+  <circle cx="1142" cy="648" r="4"
+    fill="rgba(200,165,90,0.80)"
+    filter="url(#softGlow)"
+    class="live"/>
+  <text x="1156" y="653"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.14em"
+    fill="rgba(200,165,90,0.75)">in production</text>
+
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+
+</svg>
+</div>
+</body>
+</html>

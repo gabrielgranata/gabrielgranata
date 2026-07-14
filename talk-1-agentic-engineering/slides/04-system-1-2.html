@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System 1 / System 2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #111113;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- S1 aura — warm, fast, instinctive -->
+    <radialGradient id="s1Aura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- S2 aura — cool, deliberate -->
+    <radialGradient id="s2Aura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#5A8CC8" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- The chatbot zone — danger area, subtle red warmth -->
+    <radialGradient id="chatbotAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c86060" stop-opacity="0.09"/>
+      <stop offset="100%" stop-color="#c86060" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Spectrum gradient S1→S2 -->
+    <linearGradient id="spectrumGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.9"/>
+      <stop offset="45%"  stop-color="#C8A55A" stop-opacity="0.3"/>
+      <stop offset="55%"  stop-color="#5A8CC8" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Chatbot marker gradient -->
+    <linearGradient id="chatbotMarkerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#c86060" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#c86060" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="dimGlow" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="statGlow" x="-10%" y="-30%" width="120%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- BACKGROUND ATMOSPHERE -->
+  <!-- ============================================================ -->
+
+  <!-- S1 warmth left -->
+  <ellipse cx="280" cy="340" rx="280" ry="240" fill="url(#s1Aura)" opacity="1"/>
+  <!-- S2 cool right -->
+  <ellipse cx="920" cy="340" rx="280" ry="240" fill="url(#s2Aura)" opacity="1"/>
+
+  <!-- ============================================================ -->
+  <!-- TOP TITLE -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="72"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="20"
+    font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.75)">thinking has two speeds — and tools operate in only one</text>
+
+  <line x1="80" y1="88" x2="1200" y2="88"
+    stroke="rgba(255,255,255,0.06)"
+    stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT: SYSTEM 1 -->
+  <!-- ============================================================ -->
+
+  <!-- Label -->
+  <text x="272" y="158"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.18em"
+    fill="rgba(200,165,90,0.75)">SYSTEM 1</text>
+
+  <!-- Main descriptor -->
+  <text x="272" y="210"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="34"
+    font-style="italic"
+    fill="rgba(255,255,255,0.86)"
+    filter="url(#softGlow)">fast</text>
+
+  <!-- Attributes — sparse, low opacity -->
+  <text x="272" y="258"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15"
+    font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.90)">automatic · instinctive · effortless</text>
+
+  <!-- Examples — concrete -->
+  <text x="272" y="305"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11"
+    letter-spacing="0.06em"
+    fill="rgba(200,165,90,0.78)">pattern recognition</text>
+
+  <text x="272" y="328"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11"
+    letter-spacing="0.06em"
+    fill="rgba(200,165,90,0.78)">syntax recall</text>
+
+  <text x="272" y="351"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11"
+    letter-spacing="0.06em"
+    fill="rgba(200,165,90,0.78)">familiar debugging</text>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT: SYSTEM 2 -->
+  <!-- ============================================================ -->
+
+  <text x="912" y="158"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.18em"
+    fill="rgba(90,140,200,0.65)">SYSTEM 2</text>
+
+  <text x="912" y="210"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="34"
+    font-style="italic"
+    fill="rgba(255,255,255,0.86)"
+    filter="url(#softGlow)">slow</text>
+
+  <text x="912" y="258"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15"
+    font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.90)">deliberate · effortful · constructive</text>
+
+  <text x="912" y="305"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11"
+    letter-spacing="0.06em"
+    fill="rgba(90,140,200,0.70)">system design</text>
+
+  <text x="912" y="328"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11"
+    letter-spacing="0.06em"
+    fill="rgba(90,140,200,0.70)">trade-off reasoning</text>
+
+  <text x="912" y="351"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11"
+    letter-spacing="0.06em"
+    fill="rgba(90,140,200,0.70)">synthesis · judgment</text>
+
+  <!-- ============================================================ -->
+  <!-- CENTER SPECTRUM BAR -->
+  <!-- ============================================================ -->
+
+  <!-- Bar -->
+  <rect x="130" y="392" width="1020" height="4" rx="2"
+    fill="url(#spectrumGrad)"
+    opacity="0.7"/>
+
+  <!-- S1 end tick -->
+  <line x1="130" y1="386" x2="130" y2="404"
+    stroke="rgba(200,165,90,0.5)" stroke-width="1.2"/>
+
+  <!-- S2 end tick -->
+  <line x1="1150" y1="386" x2="1150" y2="404"
+    stroke="rgba(90,140,200,0.5)" stroke-width="1.2"/>
+
+  <!-- ============================================================ -->
+  <!-- CHATBOT INTERFACE MARKER -->
+  <!-- Positioned ~30% from left — closer to S1 than most people expect.
+       The insight: chat defaults to passive acceptance, which is S1 engagement
+       even though the tasks are S2. -->
+  <!-- ============================================================ -->
+
+  <!-- Chatbot zone aura -->
+  <ellipse cx="398" cy="394" rx="90" ry="60" fill="url(#chatbotAura)" opacity="1.2"/>
+
+  <!-- Marker line dropping from spectrum -->
+  <line x1="398" y1="388" x2="398" y2="480"
+    stroke="rgba(200,96,96,0.55)"
+    stroke-width="1.2"
+    stroke-dasharray="4 3"
+    filter="url(#softGlow)"/>
+
+  <!-- Marker dot on bar -->
+  <circle cx="398" cy="394" r="5"
+    fill="#c86060"
+    opacity="0.85"
+    filter="url(#dimGlow)"/>
+
+  <!-- Marker label -->
+  <text x="398" y="504"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.12em"
+    fill="rgba(200,96,96,0.65)">agents</text>
+
+  <!-- Explanatory note — small, italic, key insight -->
+  <text x="398" y="528"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13"
+    font-style="italic"
+    fill="rgba(255,255,255,0.74)">S2 tasks, S1 engagement</text>
+
+  <!-- ============================================================ -->
+  <!-- COGNITIVE DEBT STATS — right side, understated -->
+  <!-- Three data points, presented as texture not accusation -->
+  <!-- ============================================================ -->
+
+  <!-- Vertical rule separating stats from diagram -->
+  <line x1="760" y1="430" x2="760" y2="640"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <!-- Stat block header -->
+  <text x="790" y="460"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.18em"
+    fill="rgba(255,255,255,0.94)">WHAT THE DATA SHOWS</text>
+
+  <!-- Stat 1 — METR perception gap -->
+  <text x="790" y="498"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="28"
+    font-style="italic"
+    fill="rgba(200,165,90,0.80)"
+    filter="url(#statGlow)">39 points</text>
+
+  <text x="790" y="520"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.92)">gap between perceived and actual productivity</text>
+
+  <text x="790" y="536"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.05em"
+    fill="rgba(255,255,255,0.92)">METR, 2025 · experienced developers · RCT</text>
+
+  <!-- Divider between stats -->
+  <line x1="790" y1="552" x2="1200" y2="552"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <!-- Stat 2 — Kosmyna recall -->
+  <text x="790" y="584"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="28"
+    font-style="italic"
+    fill="rgba(90,140,200,0.70)"
+    filter="url(#statGlow)">83%</text>
+
+  <text x="790" y="606"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.92)">couldn't recall passages they'd just written with AI</text>
+
+  <text x="790" y="622"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.05em"
+    fill="rgba(255,255,255,0.92)">Kosmyna et al., MIT Media Lab, 2025</text>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM RULE + KAHNEMAN CREDIT -->
+  <!-- ============================================================ -->
+
+  <line x1="80" y1="664" x2="740" y2="664"
+    stroke="rgba(200,165,90,0.08)"
+    stroke-width="1"/>
+
+  <text x="80" y="682"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12"
+    font-style="italic"
+    fill="rgba(255,255,255,0.94)">Kahneman, Thinking Fast and Slow, 2011</text>
+
+  <!-- ============================================================ -->
+  <!-- KEY INSIGHT — the bridge line at the bottom left -->
+  <!-- Frames the data as interface critique, not AI critique -->
+  <!-- ============================================================ -->
+
+  <text x="130" y="580"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="16"
+    font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.56)">every tool before AI automated S1 tasks.</text>
+
+  <text x="130" y="606"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="16"
+    font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.74)">AI is the first tool that operates in S2 territory.</text>
+
+  <text x="130" y="636"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15"
+    font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.74)">the interface determines which one you get.</text>
+
+</svg>
+</div>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Becomes Possible</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0b0b0d;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px; height: 720px;
+    background: #0b0b0d;
+    position: relative; overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.013) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.013) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="brainAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="openingLight" cx="0%" cy="50%" r="100%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.10"/>
+      <stop offset="60%"  stop-color="#C8A55A" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="aiAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6AACB8" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#6AACB8" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="vignette" cx="40%" cy="50%" r="72%">
+      <stop offset="0%"   stop-color="#0b0b0d" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.92"/>
+    </radialGradient>
+
+    <filter id="brainGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="18" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="aiGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="nodeGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="rayGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="textGlow" x="-5%" y="-40%" width="110%" height="180%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Gradient for rays that fade into possibility -->
+    <linearGradient id="rayFade1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.55"/>
+      <stop offset="60%"  stop-color="#C8A55A" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rayFade2" x1="0%" y1="0%" x2="100%" y2="-50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.48"/>
+      <stop offset="55%"  stop-color="#C8A55A" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rayFade3" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.42"/>
+      <stop offset="50%"  stop-color="#C8A55A" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rayFade4" x1="0%" y1="0%" x2="80%" y2="-100%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="rayFade5" x1="0%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </linearGradient>
+
+    <style>
+      @keyframes breathe {
+        0%, 100% { opacity: 0.60; }
+        50%       { opacity: 1.0; }
+      }
+      @keyframes breatheSlow {
+        0%, 100% { opacity: 0.40; }
+        50%       { opacity: 0.80; }
+      }
+      @keyframes rayPulse {
+        0%, 100% { opacity: 0.55; }
+        50%       { opacity: 0.95; }
+      }
+      .node-s2     { animation: breathe 3.2s ease-in-out infinite; }
+      .node-ai     { animation: breathe 3.2s ease-in-out 1.0s infinite; }
+      .ray-pulse   { animation: rayPulse 4s ease-in-out infinite; }
+      .ray-pulse-2 { animation: rayPulse 4s ease-in-out 1.3s infinite; }
+      .ray-pulse-3 { animation: rayPulse 4s ease-in-out 2.6s infinite; }
+    </style>
+  </defs>
+
+  <!-- Opening light field from the right — possibility space -->
+  <rect x="460" y="0" width="820" height="720" fill="url(#openingLight)"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT — SDLC RING + ENGINEER BRAIN                           -->
+  <!-- ============================================================ -->
+
+  <!-- SDLC orbit ring -->
+  <ellipse cx="310" cy="362" rx="200" ry="200"
+    fill="none"
+    stroke="rgba(255,255,255,0.06)"
+    stroke-width="1"
+    stroke-dasharray="2 6"/>
+
+  <!-- ── RING NODES ── -->
+
+  <!-- PLAN — S2 legitimate, gold -->
+  <circle cx="310" cy="162" r="28"
+    fill="rgba(10,14,20,0.92)"
+    stroke="rgba(200,165,90,0.75)" stroke-width="1.5"
+    class="node-s2" filter="url(#nodeGlow)"/>
+  <text x="310" y="157" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.10em"
+    fill="rgba(200,165,90,0.80)">PLAN</text>
+  <text x="310" y="170" text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="9" font-style="italic"
+    fill="rgba(200,165,90,0.78)">S2</text>
+
+  <!-- TEST — S2 legitimate, gold -->
+  <circle cx="468" cy="462" r="28"
+    fill="rgba(10,14,20,0.92)"
+    stroke="rgba(200,165,90,0.75)" stroke-width="1.5"
+    class="node-s2" filter="url(#nodeGlow)"/>
+  <text x="468" y="457" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.10em"
+    fill="rgba(200,165,90,0.80)">TEST</text>
+  <text x="468" y="470" text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="9" font-style="italic"
+    fill="rgba(200,165,90,0.78)">S2</text>
+
+  <!-- MONITOR — S2 legitimate, gold -->
+  <circle cx="152" cy="462" r="28"
+    fill="rgba(10,14,20,0.92)"
+    stroke="rgba(200,165,90,0.75)" stroke-width="1.5"
+    class="node-s2" filter="url(#nodeGlow)"/>
+  <text x="152" y="457" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.80)">MONITOR</text>
+  <text x="152" y="470" text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="9" font-style="italic"
+    fill="rgba(200,165,90,0.78)">S2</text>
+
+  <!-- BUILD — now AI, teal, dimmer -->
+  <circle cx="468" cy="262" r="28"
+    fill="rgba(10,14,20,0.92)"
+    stroke="rgba(106,172,184,0.70)" stroke-width="1.5"
+    class="node-ai" filter="url(#nodeGlow)"/>
+  <text x="468" y="257" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.10em"
+    fill="rgba(106,172,184,0.80)">BUILD</text>
+  <text x="468" y="270" text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="9" font-style="italic"
+    fill="rgba(106,172,184,0.70)">AI</text>
+
+  <!-- DEPLOY — now AI, teal, dimmer -->
+  <circle cx="152" cy="262" r="28"
+    fill="rgba(10,14,20,0.92)"
+    stroke="rgba(106,172,184,0.70)" stroke-width="1.5"
+    class="node-ai" filter="url(#nodeGlow)"/>
+  <text x="152" y="257" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.08em"
+    fill="rgba(106,172,184,0.80)">DEPLOY</text>
+  <text x="152" y="270" text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="9" font-style="italic"
+    fill="rgba(106,172,184,0.70)">AI</text>
+
+  <!-- Ring edges — connecting nodes -->
+  <line x1="310" y1="190" x2="448" y2="252" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="496" y1="268" x2="496" y2="452" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="468" y1="490" x2="180" y2="490" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="124" y1="468" x2="124" y2="282" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <line x1="152" y1="234" x2="296" y2="178" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- AI absorbs label -->
+  <text x="310" y="620"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(106,172,184,0.70)">build · deploy absorbed by AI</text>
+
+  <!-- Engineer brain — center of ring -->
+  <ellipse cx="310" cy="362" rx="95" ry="82" fill="url(#brainAura)"/>
+
+  <g transform="translate(310, 356)" filter="url(#brainGlow)">
+    <path d="
+      M 0 -46 C 12 -50, 32 -42, 40 -28
+      C 50 -16, 46 0, 42 12
+      C 36 26, 26 36, 16 42
+      C 6 48, -4 50, -12 46
+      C -24 40, -32 28, -36 16
+      C -42 4, -42 -10, -36 -22
+      C -30 -36, -14 -44, 0 -46 Z
+    "
+    fill="rgba(235,220,195,0.14)"
+    stroke="rgba(235,220,195,0.55)"
+    stroke-width="1.4"/>
+    <path d="M 0 -46 C -1 -20, 1 8, 0 40"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+    <path d="M -16 -28 C -11 -14, -10 2, -13 16" fill="none" stroke="rgba(235,220,195,0.12)" stroke-width="0.9"/>
+    <path d="M -28 -4 C -20 4, -18 14, -22 26" fill="none" stroke="rgba(235,220,195,0.12)" stroke-width="0.9"/>
+    <path d="M 14 -28 C 11 -14, 11 2, 14 16" fill="none" stroke="rgba(235,220,195,0.12)" stroke-width="0.9"/>
+    <path d="M 26 -4 C 20 4, 18 14, 22 24" fill="none" stroke="rgba(235,220,195,0.12)" stroke-width="0.9"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- THE OPENING — rays from brain into possibility space         -->
+  <!-- Rays widen as they go right, then dissolve into dark         -->
+  <!-- ============================================================ -->
+
+  <!-- Ray 1 — straight right (center) -->
+  <line x1="408" y1="362" x2="1220" y2="362"
+    stroke="url(#rayFade1)" stroke-width="1.5"
+    class="ray-pulse" filter="url(#rayGlow)"/>
+
+  <!-- Ray 2 — upper diagonal -->
+  <line x1="390" y1="322" x2="1160" y2="110"
+    stroke="url(#rayFade2)" stroke-width="1.2"
+    class="ray-pulse-2" filter="url(#rayGlow)"/>
+
+  <!-- Ray 3 — lower diagonal -->
+  <line x1="390" y1="402" x2="1160" y2="614"
+    stroke="url(#rayFade3)" stroke-width="1.2"
+    class="ray-pulse-3" filter="url(#rayGlow)"/>
+
+  <!-- Ray 4 — upper edge -->
+  <line x1="360" y1="296" x2="1060" y2="72"
+    stroke="url(#rayFade4)" stroke-width="0.8"
+    class="ray-pulse" filter="url(#rayGlow)" opacity="0.7"/>
+
+  <!-- Ray 5 — lower edge -->
+  <line x1="360" y1="428" x2="1060" y2="650"
+    stroke="url(#rayFade5)" stroke-width="0.8"
+    class="ray-pulse-2" filter="url(#rayGlow)" opacity="0.7"/>
+
+  <!-- Very faint outer rays — the possibility space extends further than shown -->
+  <line x1="340" y1="272" x2="900" y2="48"
+    stroke="rgba(200,165,90,0.08)" stroke-width="0.6" class="ray-pulse-3"/>
+  <line x1="340" y1="452" x2="900" y2="672"
+    stroke="rgba(200,165,90,0.08)" stroke-width="0.6" class="ray-pulse"/>
+
+  <!-- ============================================================ -->
+  <!-- FLOATING WORDS in the opening space — not a list, a field   -->
+  <!-- Placed along the rays, brightness varies by distance         -->
+  <!-- They don't answer the question. They suggest its scale.      -->
+  <!-- ============================================================ -->
+
+  <!-- Nearest — clearest, most grounded -->
+  <text x="580" y="308"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(200,165,90,0.72)">judgment</text>
+
+  <text x="600" y="428"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(200,165,90,0.72)">reasoning</text>
+
+  <!-- Middle distance — still readable -->
+  <text x="790" y="268"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(200,165,90,0.75)">design</text>
+
+  <text x="770" y="364"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(200,165,90,0.42)">what matters</text>
+
+  <text x="790" y="464"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(200,165,90,0.75)">understanding</text>
+
+  <!-- Far — fading, hinting -->
+  <text x="980" y="210"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(200,165,90,0.42)">craft</text>
+
+  <text x="1020" y="340"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(200,165,90,0.78)">meaning</text>
+
+  <text x="1000" y="390"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(200,165,90,0.48)">connection</text>
+
+  <text x="980" y="522"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(200,165,90,0.42)">flourishing</text>
+
+  <!-- Furthest — barely visible, the suggestion that it continues -->
+  <text x="1150" y="282"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(200,165,90,0.48)">what you care about</text>
+
+  <text x="1140" y="440"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(200,165,90,0.48)">things only you can see</text>
+
+  <!-- ============================================================ -->
+  <!-- THE OPEN QUESTION — center right, anchoring the space        -->
+  <!-- Not an answer. The shape of the opening.                     -->
+  <!-- ============================================================ -->
+
+  <text x="820" y="654"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="16" font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.76)">when the operational layer runs itself — what do you think about?</text>
+
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+
+</svg>
+</div>
+</body>
+</html>

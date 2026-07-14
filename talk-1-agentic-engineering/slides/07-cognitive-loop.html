@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Understanding Gets Built</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0c0c0e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #0d0d0f;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.012) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#0d0d0f" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.88"/>
+    </radialGradient>
+
+    <radialGradient id="encounterGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="tensionGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="patternGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6AACB8" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#6AACB8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="integrationGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#5A8CC8" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="nodeGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="microGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="textGlow" x="-5%" y="-40%" width="110%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <marker id="arrowGold" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(200,165,90,0.75)"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(106,172,184,0.65)"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(90,140,200,0.65)"/>
+    </marker>
+    <marker id="arrowReturn" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(255,255,255,0.90)"/>
+    </marker>
+    <!-- mini chain arrows for scaffold/shortcut visual -->
+    <marker id="arrowMiniGold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(200,165,90,0.75)"/>
+    </marker>
+    <marker id="arrowMiniTeal" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(106,172,184,0.65)"/>
+    </marker>
+    <marker id="arrowMiniBlue" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(90,140,200,0.65)"/>
+    </marker>
+    <marker id="arrowMiniDim" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(255,255,255,0.94)"/>
+    </marker>
+
+    <clipPath id="bounds">
+      <rect width="1280" height="720"/>
+    </clipPath>
+
+    <style>
+      @keyframes pulse {
+        0%, 100% { opacity: 0.65; }
+        50%       { opacity: 1.0;  }
+      }
+    </style>
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- TITLE — restrained superscription                            -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="52"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="17" font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.94)">the content is personal — the structure is universal</text>
+
+  <line x1="180" y1="67" x2="1100" y2="67"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT: THE CYCLE                                              -->
+  <!-- cx=420, cy=395, r=185                                        -->
+  <!-- Nodes at cardinal positions                                  -->
+  <!--   TOP    (420, 210): ENCOUNTER                               -->
+  <!--   RIGHT  (605, 395): TENSION                                 -->
+  <!--   BOTTOM (420, 580): PATTERN                                 -->
+  <!--   LEFT   (235, 395): INTEGRATION                             -->
+  <!-- ============================================================ -->
+
+  <!-- Outer atmosphere ring -->
+  <circle cx="420" cy="395" r="220"
+    fill="none"
+    stroke="rgba(255,255,255,0.022)"
+    stroke-width="1"
+    stroke-dasharray="2 8"/>
+
+  <!-- ── NODE 1: ENCOUNTER — top -->
+  <ellipse cx="420" cy="210" rx="65" ry="65" fill="url(#encounterGlow)" opacity="0.85"/>
+  <circle cx="420" cy="210" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(255,255,255,0.94)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <circle cx="420" cy="210" r="10"
+    fill="none"
+    stroke="rgba(255,255,255,0.94)"
+    stroke-width="1"/>
+  <circle cx="420" cy="210" r="3.5"
+    fill="rgba(255,255,255,0.74)"
+    filter="url(#softGlow)"/>
+  <text x="420" y="158"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.18em"
+    fill="rgba(255,255,255,0.90)">ENCOUNTER</text>
+  <text x="420" y="177"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.92)">something resists your model</text>
+
+  <!-- ── NODE 2: TENSION — right -->
+  <ellipse cx="605" cy="395" rx="65" ry="65" fill="url(#tensionGlow)" opacity="0.85"/>
+  <circle cx="605" cy="395" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <circle cx="605" cy="395" r="10"
+    fill="none"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1"/>
+  <circle cx="605" cy="395" r="3.5"
+    fill="rgba(200,165,90,0.82)"
+    filter="url(#softGlow)"/>
+  <text x="678" y="388"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.18em"
+    fill="rgba(200,165,90,0.72)">TENSION</text>
+  <text x="678" y="407"
+    text-anchor="start"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.92)">you hold the gap open</text>
+
+  <!-- ── NODE 3: PATTERN — bottom -->
+  <ellipse cx="420" cy="580" rx="65" ry="65" fill="url(#patternGlow)" opacity="0.85"/>
+  <circle cx="420" cy="580" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(106,172,184,0.70)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <circle cx="420" cy="580" r="10"
+    fill="none"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1"/>
+  <circle cx="420" cy="580" r="3.5"
+    fill="rgba(106,172,184,0.82)"
+    filter="url(#softGlow)"/>
+  <text x="420" y="626"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.18em"
+    fill="rgba(106,172,184,0.72)">PATTERN</text>
+  <text x="420" y="644"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.92)">something coheres</text>
+
+  <!-- ── NODE 4: INTEGRATION — left -->
+  <ellipse cx="235" cy="395" rx="65" ry="65" fill="url(#integrationGlow)" opacity="0.85"/>
+  <circle cx="235" cy="395" r="18"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(90,140,200,0.70)"
+    stroke-width="1.4"
+    filter="url(#softGlow)"/>
+  <circle cx="235" cy="395" r="10"
+    fill="none"
+    stroke="rgba(90,140,200,0.65)"
+    stroke-width="1"/>
+  <circle cx="235" cy="395" r="3.5"
+    fill="rgba(90,140,200,0.82)"
+    filter="url(#softGlow)"/>
+  <text x="163" y="388"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.18em"
+    fill="rgba(90,140,200,0.72)">INTEGRATION</text>
+  <text x="163" y="407"
+    text-anchor="end"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.92)">the model shifts</text>
+
+  <!-- ── ARCS — clockwise -->
+  <path id="arc1" d="M 436 226 A 185 185 0 0 1 587 378"
+    fill="none" stroke="rgba(200,165,90,0.42)" stroke-width="1.4"
+    marker-end="url(#arrowGold)" filter="url(#arcGlow)"/>
+  <path id="arc2" d="M 589 412 A 185 185 0 0 1 436 564"
+    fill="none" stroke="rgba(106,172,184,0.32)" stroke-width="1.4"
+    marker-end="url(#arrowTeal)" filter="url(#arcGlow)"/>
+  <path id="arc3" d="M 404 564 A 185 185 0 0 1 251 412"
+    fill="none" stroke="rgba(90,140,200,0.32)" stroke-width="1.4"
+    marker-end="url(#arrowBlue)" filter="url(#arcGlow)"/>
+  <path id="arc4" d="M 251 378 A 185 185 0 0 1 404 226"
+    fill="none" stroke="rgba(255,255,255,0.94)" stroke-width="1.4"
+    marker-end="url(#arrowReturn)" filter="url(#arcGlow)"/>
+
+  <!-- Animated pulse dots -->
+  <circle r="3" fill="#C8A55A" opacity="0.90" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="0s" repeatCount="indefinite"><mpath href="#arc1"/></animateMotion>
+  </circle>
+  <circle r="3" fill="#6AACB8" opacity="0.90" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="1.25s" repeatCount="indefinite"><mpath href="#arc2"/></animateMotion>
+  </circle>
+  <circle r="3" fill="#5A8CC8" opacity="0.90" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="2.5s" repeatCount="indefinite"><mpath href="#arc3"/></animateMotion>
+  </circle>
+  <circle r="3" fill="rgba(255,255,255,0.90)" filter="url(#softGlow)">
+    <animateMotion dur="5s" begin="3.75s" repeatCount="indefinite"><mpath href="#arc4"/></animateMotion>
+  </circle>
+
+  <!-- ============================================================ -->
+  <!-- DIVIDER — cycle / right column                               -->
+  <!-- ============================================================ -->
+
+  <line x1="762" y1="85" x2="762" y2="668"
+    stroke="rgba(255,255,255,0.035)"
+    stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT COLUMN — three philosophical beats                     -->
+  <!-- x=792 to x=1220                                             -->
+  <!-- ============================================================ -->
+
+  <!-- ── BEAT 01: PHILOSOPHY OF MIND ─────────────────────────── -->
+  <!-- The cycle is the mechanism. Not an analogy.                 -->
+
+  <text x="792" y="108"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.94)">01  philosophy of mind</text>
+
+  <text x="792" y="138"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="22" font-style="italic"
+    fill="rgba(255,255,255,0.94)"
+    filter="url(#textGlow)">this is the mechanism</text>
+
+  <text x="792" y="163"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">not a metaphor for thinking — the structure of thinking itself.</text>
+  <text x="792" y="180"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">encounter with resistance is where cognition begins.</text>
+  <text x="792" y="197"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">remove it and the thinking doesn't happen more slowly.</text>
+  <text x="792" y="214"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">it doesn't happen.</text>
+
+  <text x="792" y="234"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.76)">Dewey · Dreyfus · Heidegger</text>
+
+  <!-- ── DIVIDER 1 -->
+  <line x1="792" y1="250" x2="1218" y2="250"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <!-- ── BEAT 02: ONTOLOGY ────────────────────────────────────── -->
+  <!-- What grows is relational structure, not facts.             -->
+
+  <text x="792" y="272"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.94)">02  ontology</text>
+
+  <text x="792" y="302"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="22" font-style="italic"
+    fill="rgba(255,255,255,0.94)"
+    filter="url(#textGlow)">what grows is relational</text>
+
+  <text x="792" y="327"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">not facts — connections. meaning is constituted by position</text>
+  <text x="792" y="344"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">in a structure, not by propositional content.</text>
+  <text x="792" y="368"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14" font-style="italic"
+    fill="rgba(255,255,255,0.94)">you can be given a node.</text>
+  <text x="792" y="388"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="14.5" font-style="italic"
+    fill="rgba(200,165,90,0.78)"
+    filter="url(#textGlow)">you cannot be given an edge.</text>
+
+  <text x="792" y="408"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.76)">Quillian 1968 · Merleau-Ponty</text>
+
+  <!-- ── DIVIDER 2 -->
+  <line x1="792" y1="424" x2="1218" y2="424"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <!-- ── BEAT 03: MEANING + SCAFFOLD / SHORTCUT ───────────────── -->
+
+  <text x="792" y="446"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.94)">03  meaning</text>
+
+  <text x="792" y="476"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="22" font-style="italic"
+    fill="rgba(255,255,255,0.94)"
+    filter="url(#textGlow)">meaning forms in encounter</text>
+
+  <text x="792" y="500"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">it does not precede the cycle — it is constituted by it.</text>
+  <text x="792" y="517"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">a tool that resolves tension before it can produce meaning</text>
+  <text x="792" y="534"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13.5" font-style="italic"
+    fill="rgba(255,255,255,0.94)">has not saved time. it has prevented meaning from forming.</text>
+
+  <!-- ────────────────────────────────────────────────────────── -->
+  <!-- SCAFFOLD VS SHORTCUT — two mini-chain diagrams             -->
+  <!-- Each is a horizontal node chain: [E]→[T]→[P]→[I]          -->
+  <!-- x anchor: 870                                              -->
+  <!-- Node radius: 6px, spacing: 42px center-to-center           -->
+  <!-- ────────────────────────────────────────────────────────── -->
+
+  <!-- ── SCAFFOLD (y=567) ── -->
+
+  <!-- Label -->
+  <text x="792" y="570"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.14em"
+    fill="rgba(200,165,90,0.78)">scaffold</text>
+
+  <!-- [E] node — x=878 -->
+  <circle cx="878" cy="566" r="6"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(255,255,255,0.94)"
+    stroke-width="1"
+    filter="url(#microGlow)"/>
+  <circle cx="878" cy="566" r="2.5"
+    fill="rgba(255,255,255,0.90)"/>
+  <text x="878" y="555" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="6.5" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.56)">E</text>
+
+  <!-- E→T arrow -->
+  <line x1="884" y1="566" x2="912" y2="566"
+    stroke="rgba(200,165,90,0.75)" stroke-width="1"
+    marker-end="url(#arrowMiniGold)"/>
+
+  <!-- [T] node — x=920, with tool support indicator below -->
+  <circle cx="920" cy="566" r="6"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.2"
+    filter="url(#microGlow)"/>
+  <circle cx="920" cy="566" r="2.5"
+    fill="rgba(200,165,90,0.82)"/>
+  <text x="920" y="555" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="6.5" letter-spacing="0.06em"
+    fill="rgba(200,165,90,0.75)">T</text>
+  <!-- Tool support bracket below T — small U shape indicating "tool holds here" -->
+  <path d="M 912 572 L 912 578 L 928 578 L 928 572"
+    fill="none" stroke="rgba(200,165,90,0.48)" stroke-width="0.8"/>
+  <text x="920" y="588" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="6" letter-spacing="0.06em"
+    fill="rgba(200,165,90,0.48)">tool supports</text>
+
+  <!-- T→P arrow -->
+  <line x1="926" y1="566" x2="954" y2="566"
+    stroke="rgba(106,172,184,0.70)" stroke-width="1"
+    marker-end="url(#arrowMiniTeal)"/>
+
+  <!-- [P] node — x=962 -->
+  <circle cx="962" cy="566" r="6"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1"
+    filter="url(#microGlow)"/>
+  <circle cx="962" cy="566" r="2.5"
+    fill="rgba(106,172,184,0.72)"/>
+  <text x="962" y="555" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="6.5" letter-spacing="0.06em"
+    fill="rgba(106,172,184,0.38)">P</text>
+
+  <!-- P→I arrow -->
+  <line x1="968" y1="566" x2="996" y2="566"
+    stroke="rgba(90,140,200,0.70)" stroke-width="1"
+    marker-end="url(#arrowMiniBlue)"/>
+
+  <!-- [I] node — x=1004 -->
+  <circle cx="1004" cy="566" r="6"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(90,140,200,0.65)"
+    stroke-width="1"
+    filter="url(#microGlow)"/>
+  <circle cx="1004" cy="566" r="2.5"
+    fill="rgba(90,140,200,0.72)"/>
+  <text x="1004" y="555" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="6.5" letter-spacing="0.06em"
+    fill="rgba(90,140,200,0.38)">I</text>
+
+  <!-- → model grows -->
+  <line x1="1010" y1="566" x2="1028" y2="566"
+    stroke="rgba(200,165,90,0.75)" stroke-width="0.8"/>
+  <text x="1034" y="570"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(200,165,90,0.78)">model grows</text>
+
+  <!-- ── SHORTCUT (y=612) ── -->
+
+  <!-- Label -->
+  <text x="792" y="615"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.14em"
+    fill="rgba(255,255,255,0.90)">shortcut</text>
+
+  <!-- [E] dim — x=878 -->
+  <circle cx="878" cy="611" r="6"
+    fill="rgba(8,10,14,0.95)"
+    stroke="rgba(255,255,255,0.74)"
+    stroke-width="1"/>
+  <circle cx="878" cy="611" r="2.5"
+    fill="rgba(255,255,255,0.56)"/>
+  <text x="878" y="600" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="6.5" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.56)">E</text>
+
+  <!-- Long dashed bypass line — skips T, P, I -->
+  <line x1="884" y1="611" x2="1004" y2="611"
+    stroke="rgba(255,255,255,0.94)" stroke-width="1"
+    stroke-dasharray="3 3"
+    marker-end="url(#arrowMiniDim)"/>
+
+  <!-- T, P, I nodes — ghosted above the bypass line -->
+  <!-- T ghost -->
+  <circle cx="920" cy="599" r="5"
+    fill="rgba(8,10,14,0.70)"
+    stroke="rgba(200,165,90,0.15)"
+    stroke-width="1"/>
+  <!-- strike -->
+  <line x1="915" y1="594" x2="925" y2="604"
+    stroke="rgba(200,165,90,0.48)" stroke-width="0.8"/>
+  <line x1="925" y1="594" x2="915" y2="604"
+    stroke="rgba(200,165,90,0.48)" stroke-width="0.8"/>
+
+  <!-- P ghost -->
+  <circle cx="962" cy="599" r="5"
+    fill="rgba(8,10,14,0.70)"
+    stroke="rgba(106,172,184,0.65)"
+    stroke-width="1"/>
+  <line x1="957" y1="594" x2="967" y2="604"
+    stroke="rgba(106,172,184,0.38)" stroke-width="0.8"/>
+  <line x1="967" y1="594" x2="957" y2="604"
+    stroke="rgba(106,172,184,0.38)" stroke-width="0.8"/>
+
+  <!-- [output] — dim end node -->
+  <circle cx="1004" cy="611" r="6"
+    fill="rgba(8,10,14,0.85)"
+    stroke="rgba(255,255,255,0.94)"
+    stroke-width="1"
+    stroke-dasharray="2 2"/>
+  <text x="1004" y="600" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="5.5" letter-spacing="0.04em"
+    fill="rgba(255,255,255,0.94)">out</text>
+
+  <!-- → nothing built -->
+  <line x1="1010" y1="611" x2="1028" y2="611"
+    stroke="rgba(255,255,255,0.74)" stroke-width="0.8"/>
+  <text x="1034" y="615"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.56)">nothing built</text>
+
+  <!-- ── KEY LINE ──────────────────────────────────────────────── -->
+
+  <line x1="792" y1="638" x2="1218" y2="638"
+    stroke="rgba(255,255,255,0.04)"
+    stroke-width="1"/>
+
+  <text x="1005" y="660"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(200,165,90,0.75)"
+    filter="url(#textGlow)">a scaffold holds you in the zone. a shortcut closes it.</text>
+
+  <!-- ── SOURCE WHISPER ─────────────────────────────────────────── -->
+
+  <text x="1215" y="694"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.90)">Heidegger · Merleau-Ponty · Vygotsky · Dewey · Dreyfus</text>
+
+  <!-- Vignette -->
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+
+</svg>
+</div>
+</body>
+</html>

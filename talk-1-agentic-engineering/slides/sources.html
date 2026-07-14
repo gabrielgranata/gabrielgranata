@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sources</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #060608;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px; height: 720px;
+    background: #060608;
+    position: relative; overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.012) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.012) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#060608" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.88"/>
+    </radialGradient>
+  </defs>
+
+  <!-- slide label -->
+  <text x="64" y="58"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.22em" font-weight="400"
+    fill="rgba(200,165,90,0.75)">SOURCES · INFLUENCES · FURTHER READING</text>
+
+  <!-- top rule -->
+  <line x1="64" y1="68" x2="1216" y2="68" stroke="rgba(200,165,90,0.42)" stroke-width="0.5"/>
+
+  <!-- ─── COLUMN 1: PHILOSOPHICAL GROUND ─── -->
+  <text x="64" y="102"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.18em" font-weight="500"
+    fill="rgba(200,165,90,0.75)">PHILOSOPHICAL GROUND</text>
+
+  <!-- Clark & Chalmers -->
+  <text x="64" y="124"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Clark &amp; Chalmers</text>
+  <text x="64" y="139"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">The Extended Mind, 1998</text>
+
+  <!-- Kahneman -->
+  <text x="64" y="162"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Kahneman</text>
+  <text x="64" y="177"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Thinking, Fast and Slow, 2011</text>
+
+  <!-- Vygotsky -->
+  <text x="64" y="200"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Vygotsky</text>
+  <text x="64" y="215"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Mind in Society, 1978</text>
+
+  <!-- Dewey -->
+  <text x="64" y="238"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Dewey</text>
+  <text x="64" y="253"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">How We Think, 1910</text>
+
+  <!-- Engelbart -->
+  <text x="64" y="276"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Engelbart</text>
+  <text x="64" y="291"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Augmenting Human Intellect, 1962</text>
+
+  <!-- Sarkar -->
+  <text x="64" y="314"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Sarkar</text>
+  <text x="64" y="329"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Intention Is All You Need, 2024</text>
+  <text x="64" y="343"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">TEDAI Vienna, 2025</text>
+
+  <!-- col 1 rule -->
+  <line x1="64" y1="368" x2="354" y2="368" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+  <!-- Licklider -->
+  <text x="64" y="390"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.56)">Licklider</text>
+  <text x="64" y="405"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">Man-Computer Symbiosis, 1960</text>
+
+  <!-- Rheingold -->
+  <text x="64" y="428"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.56)">Rheingold</text>
+  <text x="64" y="443"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">Tools for Thought, 1985</text>
+
+
+  <!-- ─── COLUMN DIVIDER 1 ─── -->
+  <line x1="394" y1="80" x2="394" y2="620" stroke="rgba(200,165,90,0.08)" stroke-width="0.5"/>
+
+
+  <!-- ─── COLUMN 2: EMPIRICAL EVIDENCE ─── -->
+  <text x="424" y="102"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.18em" font-weight="500"
+    fill="rgba(200,165,90,0.75)">EMPIRICAL EVIDENCE</text>
+
+  <!-- METR -->
+  <text x="424" y="124"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Becker et al. — METR Study</text>
+  <text x="424" y="139"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Developer Productivity, 2025</text>
+  <text x="424" y="153"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">arXiv:2507.09089</text>
+
+  <!-- Kosmyna -->
+  <text x="424" y="176"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Kosmyna et al. — MIT Media Lab</text>
+  <text x="424" y="191"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Your Brain on ChatGPT, 2025</text>
+  <text x="424" y="205"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">arXiv:2506.08872</text>
+
+  <!-- DORA -->
+  <text x="424" y="228"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Google DORA Report</text>
+  <text x="424" y="243"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">State of DevOps, 2024</text>
+
+  <!-- Gerlich -->
+  <text x="424" y="266"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Gerlich</text>
+  <text x="424" y="281"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">AI Tools in Society, 2025</text>
+  <text x="424" y="295"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">Societies 15(1)</text>
+
+  <!-- CHI -->
+  <text x="424" y="318"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">CHI 2025 Tools for Thought</text>
+  <text x="424" y="333"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Workshop · Synthesis Paper</text>
+  <text x="424" y="347"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">arXiv:2508.21036</text>
+
+  <!-- col 2 rule -->
+  <line x1="424" y1="368" x2="744" y2="368" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+  <!-- Sweller -->
+  <text x="424" y="390"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.56)">Sweller</text>
+  <text x="424" y="405"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">Cognitive Load Theory, 1988</text>
+
+
+  <!-- ─── COLUMN DIVIDER 2 ─── -->
+  <line x1="784" y1="80" x2="784" y2="620" stroke="rgba(200,165,90,0.08)" stroke-width="0.5"/>
+
+
+  <!-- ─── COLUMN 3: PRACTICE & CRAFT ─── -->
+  <text x="814" y="102"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.18em" font-weight="500"
+    fill="rgba(200,165,90,0.75)">PRACTICE &amp; CRAFT</text>
+
+  <!-- Karpathy -->
+  <text x="814" y="124"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Karpathy</text>
+  <text x="814" y="139"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Software 3.0 · Context Engineering</text>
+  <text x="814" y="153"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">2025</text>
+
+  <!-- Anthropic -->
+  <text x="814" y="176"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Anthropic</text>
+  <text x="814" y="191"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Effective Context Engineering</text>
+  <text x="814" y="205"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">for AI Agents, 2025</text>
+
+  <!-- ThoughtWorks -->
+  <text x="814" y="228"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">ThoughtWorks</text>
+  <text x="814" y="243"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Technology Radar Vol. 33, 2025</text>
+
+  <!-- Magerramov -->
+  <text x="814" y="266"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Magerramov</text>
+  <text x="814" y="281"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">The New Calculus of AI-based Coding</text>
+  <text x="814" y="295"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">blog.joemag.dev, 2025</text>
+
+  <!-- Internal case study -->
+  <text x="814" y="318"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.90)">Internal case study</text>
+  <text x="814" y="333"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.90)">AI-Assisted Development</text>
+  <text x="814" y="347"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">Cloud AI team, 2025</text>
+
+  <!-- col 3 rule -->
+  <line x1="814" y1="368" x2="1216" y2="368" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+  <!-- Dreyfus -->
+  <text x="814" y="390"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.56)">Dreyfus</text>
+  <text x="814" y="405"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">Mind Over Machine, 1986</text>
+
+  <!-- Schön -->
+  <text x="814" y="428"
+    font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="400"
+    fill="rgba(255,255,255,0.56)">Schön</text>
+  <text x="814" y="443"
+    font-family="IBM Plex Mono, monospace" font-size="8" font-weight="300"
+    fill="rgba(255,255,255,0.74)">The Reflective Practitioner, 1983</text>
+
+
+  <!-- ─── BOTTOM RULE ─── -->
+  <line x1="64" y1="580" x2="1216" y2="580" stroke="rgba(200,165,90,0.78)" stroke-width="0.5"/>
+
+  <!-- film / historical at bottom — full width, centred, dimmer -->
+  <text x="640" y="600"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="8" letter-spacing="0.14em" font-weight="300"
+    fill="rgba(255,255,255,0.90)">Kubrick · 2001: A Space Odyssey, 1968   ·   Adams, letter to Abigail Adams, 1780   ·   Csikszentmihalyi, Flow, 1990   ·   Polanyi, The Tacit Dimension, 1966</text>
+
+  <!-- footer -->
+  <text x="640" y="672"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="7.5" letter-spacing="0.18em"
+    fill="rgba(200,165,90,0.78)">A FRAMEWORK FOR AGENTIC ENGINEERING · GABRIEL GRANATA · 2026</text>
+
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+</svg>
+</div>
+</body>
+</html>

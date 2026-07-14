@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opening — Today</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0c0c0e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #0c0c0e;
+    position: relative;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <radialGradient id="vignette2" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#0c0c0e" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.92"/>
+    </radialGradient>
+
+    <!-- HAL's eye glow — red, centered right -->
+    <radialGradient id="halGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#c84040" stop-opacity="0.38"/>
+      <stop offset="30%"  stop-color="#c84040" stop-opacity="0.18"/>
+      <stop offset="70%"  stop-color="#8b1a1a" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Gold ambient — left side, the bone's side -->
+    <radialGradient id="goldAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="halGlowFilter" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="28" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="softGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="faintGlow" x="-10%" y="-40%" width="120%" height="180%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Gradient for the dividing line — gold to transparent to red -->
+    <linearGradient id="dividerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.6"/>
+      <stop offset="45%"  stop-color="#C8A55A" stop-opacity="0.15"/>
+      <stop offset="55%"  stop-color="#c84040" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#c84040" stop-opacity="0.5"/>
+    </linearGradient>
+
+    <!-- Same monolith edge gradient but now carrying the tension -->
+    <linearGradient id="monolith2Edge" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.55"/>
+      <stop offset="50%"  stop-color="rgba(200,165,90,0.78)" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#c84040" stop-opacity="0.40"/>
+    </linearGradient>
+
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- STAR FIELD — sparser, more weighted to top -->
+  <!-- ============================================================ -->
+  <g fill="white">
+    <circle cx="88"   cy="58"  r="0.6" opacity="0.22"/>
+    <circle cx="215"  cy="112" r="0.5" opacity="0.16"/>
+    <circle cx="388"  cy="70"  r="0.8" opacity="0.20"/>
+    <circle cx="490"  cy="168" r="0.5" opacity="0.14"/>
+    <circle cx="580"  cy="42"  r="0.6" opacity="0.18"/>
+    <circle cx="720"  cy="96"  r="0.4" opacity="0.16"/>
+    <circle cx="810"  cy="38"  r="0.7" opacity="0.22"/>
+    <circle cx="1060" cy="82"  r="0.6" opacity="0.20"/>
+    <circle cx="1190" cy="120" r="0.4" opacity="0.14"/>
+    <circle cx="1240" cy="55"  r="0.7" opacity="0.18"/>
+    <circle cx="100"  cy="620" r="0.5" opacity="0.12"/>
+    <circle cx="240"  cy="660" r="0.6" opacity="0.16"/>
+    <circle cx="1080" cy="640" r="0.6" opacity="0.18"/>
+    <circle cx="1200" cy="600" r="0.5" opacity="0.14"/>
+    <!-- brighter -->
+    <circle cx="338"  cy="180" r="1.0" opacity="0.28"/>
+    <circle cx="1020" cy="145" r="1.1" opacity="0.26"/>
+    <circle cx="128"  cy="350" r="0.9" opacity="0.24"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- LEFT ATMOSPHERE — gold warmth (extension / the bone) -->
+  <!-- ============================================================ -->
+  <ellipse cx="260" cy="360" rx="320" ry="280" fill="url(#goldAura)" opacity="1"/>
+
+  <!-- ============================================================ -->
+  <!-- HAL'S EYE — right side, geometric, minimal -->
+  <!-- The eye is suggested, not illustrated. A circle with concentric
+       rings and a red pupil glow. Kubrick's HAL had a fisheye lens. -->
+  <!-- ============================================================ -->
+
+  <!-- Outer atmospheric halo -->
+  <ellipse cx="1020" cy="360" rx="310" ry="285" fill="url(#halGlow)" opacity="1"/>
+
+  <!-- Concentric lens rings — very faint -->
+  <circle cx="1020" cy="360" r="210"
+    fill="none" stroke="rgba(180,50,50,0.08)" stroke-width="1"/>
+  <circle cx="1020" cy="360" r="160"
+    fill="none" stroke="rgba(180,50,50,0.10)" stroke-width="1"/>
+  <circle cx="1020" cy="360" r="112"
+    fill="none" stroke="rgba(180,50,50,0.14)" stroke-width="1"/>
+  <circle cx="1020" cy="360" r="72"
+    fill="none" stroke="rgba(180,50,50,0.18)" stroke-width="1.2"/>
+  <circle cx="1020" cy="360" r="42"
+    fill="none" stroke="rgba(200,60,60,0.25)" stroke-width="1.2"/>
+  <circle cx="1020" cy="360" r="20"
+    fill="none" stroke="rgba(200,60,60,0.35)" stroke-width="1.2"/>
+
+  <!-- Pupil — the red center -->
+  <circle cx="1020" cy="360" r="9"
+    fill="rgba(190,50,50,0.65)"
+    filter="url(#halGlowFilter)"/>
+  <circle cx="1020" cy="360" r="4"
+    fill="rgba(220,80,80,0.85)"/>
+
+  <!-- Lens cross-hairs — HAL's geometric precision -->
+  <line x1="1020" y1="148" x2="1020" y2="572"
+    stroke="rgba(180,50,50,0.08)" stroke-width="0.8"/>
+  <line x1="808" y1="360" x2="1232" y2="360"
+    stroke="rgba(180,50,50,0.08)" stroke-width="0.8"/>
+
+  <!-- HAL label — cold, monospace -->
+  <text x="1020" y="596"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.22em"
+    fill="rgba(200,60,60,0.35)">HAL 9000</text>
+
+  <!-- ============================================================ -->
+  <!-- CENTRAL DIVIDER — the same bone/tool axis, now with tension -->
+  <!-- This is the monolith again, but it has shifted.
+       Same proportions, but now the colors are split: gold above, red below -->
+  <!-- ============================================================ -->
+
+  <!-- Monolith ghost — same geometry as slide 1, now central -->
+  <rect x="617" y="175" width="46" height="370" rx="1"
+    fill="rgba(0,0,0,0.2)"
+    stroke="none"/>
+
+  <!-- Left edge — gold bleeding to red -->
+  <line x1="617" y1="175" x2="617" y2="545"
+    stroke="url(#dividerGrad)"
+    stroke-width="0.8"
+    filter="url(#softGlow)"/>
+
+  <!-- Right edge — same -->
+  <line x1="663" y1="175" x2="663" y2="545"
+    stroke="url(#dividerGrad)"
+    stroke-width="0.5"
+    opacity="0.5"/>
+
+  <!-- Horizontal center tick — the inflection point -->
+  <line x1="604" y1="360" x2="676" y2="360"
+    stroke="rgba(255,255,255,0.76)" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- VIGNETTE -->
+  <!-- ============================================================ -->
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette2)"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT TEXT — extension, possibility, the bone -->
+  <!-- ============================================================ -->
+
+  <!-- Main question — same weight as slide 1 -->
+  <text x="148" y="288"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="38"
+    font-style="italic"
+    fill="rgba(255,255,255,0.94)"
+    filter="url(#faintGlow)">the same film</text>
+
+  <text x="148" y="342"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="38"
+    font-style="italic"
+    fill="rgba(255,255,255,0.94)">contains both</text>
+
+  <!-- Rule -->
+  <line x1="148" y1="366" x2="445" y2="366"
+    stroke="rgba(200,165,90,0.42)"
+    stroke-width="1"/>
+
+  <!-- The distinction -->
+  <text x="148" y="400"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="17"
+    font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.35)">the bone that extends the mind</text>
+
+  <text x="148" y="428"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="17"
+    font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(200,60,60,0.50)">and the tool that replaces it</text>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM — the bridge to today -->
+  <!-- ============================================================ -->
+
+  <!-- Thin rule -->
+  <line x1="80" y1="596" x2="1200" y2="596"
+    stroke="rgba(255,255,255,0.06)"
+    stroke-width="1"/>
+
+  <!-- The pivot line — center, italic, bridge to the talk -->
+  <text x="640" y="636"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="16"
+    font-style="italic"
+    letter-spacing="0.04em"
+    fill="rgba(255,255,255,0.94)">the question kubrick asked in 1968 is the question we are answering right now</text>
+
+  <!-- Year credit -->
+  <text x="1198" y="662"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10"
+    letter-spacing="0.14em"
+    fill="rgba(255,255,255,0.76)">KUBRICK, 1968</text>
+
+</svg>
+</div>
+</body>
+</html>

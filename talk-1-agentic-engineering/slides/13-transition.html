@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slide 13</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #060608;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px; height: 720px;
+    background: #060608;
+    position: relative; overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="62%">
+      <stop offset="0%"   stop-color="#060608" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.94"/>
+    </radialGradient>
+  </defs>
+
+  <text x="640" y="338"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="32" font-style="italic"
+    letter-spacing="0.01em"
+    fill="rgba(255,255,255,0.92)">the tools and technology are here.</text>
+
+  <text x="640" y="400"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="32" font-style="italic"
+    letter-spacing="0.01em"
+    fill="rgba(255,255,255,0.92)">how do we build the right ones?</text>
+
+  <rect x="0" y="0" width="1280" height="720" fill="url(#vignette)"/>
+
+</svg>
+</div>
+</body>
+</html>

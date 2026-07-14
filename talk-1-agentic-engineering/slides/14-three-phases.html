@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three Phases of Thinking</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #111113;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.018) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.018) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- Phase arcs — each a distinct hue within the gold/blue family -->
+    <!-- Discovery: gold (exploration, warmth) -->
+    <radialGradient id="discoveryAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Sensemaking: between gold and blue — a teal/sage -->
+    <radialGradient id="sensemakingAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#6AACB8" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#6AACB8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Execution: blue (precision, action) -->
+    <radialGradient id="executionAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#5A8CC8" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Central brain aura -->
+    <radialGradient id="brainAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Feedback loop ring gradient — continuous, tight -->
+    <linearGradient id="feedbackRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.55"/>
+      <stop offset="33%"  stop-color="#6AACB8" stop-opacity="0.55"/>
+      <stop offset="66%"  stop-color="#5A8CC8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0.55"/>
+    </linearGradient>
+
+    <!-- Inner tight loop ring -->
+    <linearGradient id="innerRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.20"/>
+      <stop offset="50%"  stop-color="#5A8CC8" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0.20"/>
+    </linearGradient>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="brainGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="arcGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="faint" x="-10%" y="-20%" width="120%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="pulseGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Arrow markers -->
+    <marker id="arrowDiscovery" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(200,165,90,0.78)"/>
+    </marker>
+    <marker id="arrowSensemaking" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(106,172,184,0.70)"/>
+    </marker>
+    <marker id="arrowExecution" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M 0 0 L 7 3.5 L 0 7 Z" fill="rgba(90,140,200,0.70)"/>
+    </marker>
+
+    <clipPath id="bounds">
+      <rect width="1280" height="720"/>
+    </clipPath>
+
+  </defs>
+
+  <!--
+    LAYOUT:
+    Center of diagram: 580, 368 (slightly left to give right side breathing room for annotations)
+    
+    Three phase nodes arranged around the brain:
+    Discovery:   top-left  — 330°  → cx + r*cos(330°), cy + r*sin(330°)
+                             r=210: 580 + 210*cos(330°) = 580+182=762... 
+    
+    Let me use clock positions:
+    Discovery:   10 o'clock  → 240° from right = angle 240°
+                 cx=580, cy=368, r=210
+                 x = 580 + 210*cos(240°) = 580 - 105 = 475... 
+    
+    Simpler — place by feel:
+    Discovery:   top         → (580, 120)  — exploring, open sky
+    Sensemaking: right       → (860, 420)  — building, grounding  
+    Execution:   bottom-left → (340, 540)  — doing, concrete
+    
+    This creates a slightly off-balance triangle which feels more organic
+    than perfect 120° spacing. Matches the "phases cycle and nest" idea.
+  -->
+
+  <!-- ============================================================ -->
+  <!-- TITLE -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="54"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="20" font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.92)">the cognitive loop</text>
+
+  <line x1="80" y1="70" x2="1200" y2="70"
+    stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- ATMOSPHERE -->
+  <!-- ============================================================ -->
+
+  <!-- Diffuse aura over whole diagram area -->
+  <ellipse cx="570" cy="370" rx="420" ry="340"
+    fill="url(#brainAura)" opacity="0.6"/>
+
+  <!-- ============================================================ -->
+  <!-- CYCLE ARCS — connecting the three phases
+       Drawn as curved paths going: Discovery→Sensemaking→Execution→Discovery
+       These are the OUTER arcs, showing the cycling relationship -->
+  <!-- ============================================================ -->
+
+  <!--
+    Phase nodes (centers of label areas):
+    Discovery:   (490, 152)
+    Sensemaking: (832, 424)
+    Execution:   (340, 548)
+    Brain center: (578, 370)
+  -->
+
+  <!-- Discovery → Sensemaking arc -->
+  <path id="arc1"
+    d="M 538 178 C 620 180, 750 280, 810 400"
+    fill="none"
+    stroke="rgba(200,165,90,0.48)"
+    stroke-width="1.6"
+    marker-end="url(#arrowSensemaking)"/>
+
+  <!-- Sensemaking → Execution arc -->
+  <path id="arc2"
+    d="M 790 452 C 720 510, 560 548, 408 548"
+    fill="none"
+    stroke="rgba(106,172,184,0.38)"
+    stroke-width="1.6"
+    marker-end="url(#arrowExecution)"/>
+
+  <!-- Execution → Discovery arc (the return — goes back up through brain) -->
+  <path id="arc3"
+    d="M 328 516 C 280 420, 330 248, 448 170"
+    fill="none"
+    stroke="rgba(90,140,200,0.65)"
+    stroke-width="1.6"
+    marker-end="url(#arrowDiscovery)"/>
+
+  <!-- ============================================================ -->
+  <!-- INNER TIGHT RING — the feedback loop itself -->
+  <!-- Tighter circle around the brain showing the loop is fast and close -->
+  <!-- ============================================================ -->
+
+  <circle cx="578" cy="370" r="118"
+    fill="none"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1"
+    stroke-dasharray="2 4"/>
+
+  <circle cx="578" cy="370" r="148"
+    fill="none"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <!-- Animated pulse on arc1 — gold -->
+  <circle r="3.5" fill="#C8A55A" opacity="0.80" filter="url(#pulseGlow)">
+    <animateMotion dur="3.0s" repeatCount="indefinite" calcMode="spline"
+      keySplines="0.4 0 0.6 1" keyTimes="0;1">
+      <mpath href="#arc1"/>
+    </animateMotion>
+  </circle>
+
+  <!-- Animated pulse on arc2 — teal -->
+  <circle r="3.5" fill="#6AACB8" opacity="0.80" filter="url(#pulseGlow)">
+    <animateMotion dur="3.0s" begin="1.0s" repeatCount="indefinite" calcMode="spline"
+      keySplines="0.4 0 0.6 1" keyTimes="0;1">
+      <mpath href="#arc2"/>
+    </animateMotion>
+  </circle>
+
+  <!-- Animated pulse on arc3 — blue -->
+  <circle r="3.5" fill="#5A8CC8" opacity="0.80" filter="url(#pulseGlow)">
+    <animateMotion dur="3.0s" begin="2.0s" repeatCount="indefinite" calcMode="spline"
+      keySplines="0.4 0 0.6 1" keyTimes="0;1">
+      <mpath href="#arc3"/>
+    </animateMotion>
+  </circle>
+
+  <!-- ============================================================ -->
+  <!-- BRAIN — center -->
+  <!-- ============================================================ -->
+
+  <ellipse cx="578" cy="370" rx="105" ry="92"
+    fill="url(#brainAura)" opacity="1.2"/>
+
+  <g transform="translate(578, 366)" filter="url(#brainGlow)">
+    <path d="
+      M 0 -58
+      C 15 -62, 40 -52, 50 -36
+      C 62 -20, 58 0, 52 16
+      C 46 32, 34 44, 20 52
+      C 8 60, -4 62, -14 58
+      C -30 52, -40 38, -46 22
+      C -54 6, -54 -12, -48 -28
+      C -40 -46, -20 -56, 0 -58 Z
+    "
+    fill="rgba(235,220,195,0.13)"
+    stroke="rgba(235,220,195,0.50)"
+    stroke-width="1.5"/>
+    <path d="M 0 -58 C -2 -26, 2 10, 0 50"
+      fill="none" stroke="rgba(235,220,195,0.20)" stroke-width="1"/>
+    <path d="M -22 -36 C -16 -22, -14 -4, -18 14" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+    <path d="M -36 -8 C -28 0, -24 16, -30 28" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+    <path d="M 20 -36 C 16 -22, 16 -4, 20 14" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+    <path d="M 34 -8 C 28 0, 26 14, 32 26" fill="none" stroke="rgba(235,220,195,0.13)" stroke-width="1"/>
+  </g>
+
+  <!-- "you" label under brain -->
+  <text x="578" y="450"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.18em"
+    fill="rgba(200,165,90,0.48)">YOU</text>
+
+  <!-- Tight feedback label inside the ring -->
+  <text x="578" y="318"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.92)">feedback</text>
+  <text x="578" y="334"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(255,255,255,0.92)">always close</text>
+
+  <!-- ============================================================ -->
+  <!-- PHASE 1: DISCOVERY — top -->
+  <!-- ============================================================ -->
+
+  <ellipse cx="490" cy="152" rx="170" ry="52" fill="url(#discoveryAura)"/>
+
+  <!-- Phase label -->
+  <text x="490" y="132"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.20em"
+    fill="rgba(200,165,90,0.78)">DISCOVERY</text>
+
+  <text x="490" y="158"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="26" font-style="italic"
+    fill="rgba(255,255,255,0.90)"
+    filter="url(#faint)">exploring the unknown</text>
+
+  <!-- What the human does -->
+  <text x="490" y="182"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.56)">direction comes from you</text>
+
+  <!-- Right column annotation — what AI does here -->
+  <!-- Anchored to the right side, will be placed after all phases -->
+
+  <!-- ============================================================ -->
+  <!-- PHASE 2: SENSEMAKING — right -->
+  <!-- ============================================================ -->
+
+  <ellipse cx="856" cy="404" rx="180" ry="55" fill="url(#sensemakingAura)"/>
+
+  <text x="856" y="376"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.20em"
+    fill="rgba(106,172,184,0.70)">SENSEMAKING</text>
+
+  <text x="856" y="404"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="26" font-style="italic"
+    fill="rgba(255,255,255,0.90)"
+    filter="url(#faint)">building understanding</text>
+
+  <text x="856" y="428"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.56)">judgment stays with you</text>
+
+  <!-- ============================================================ -->
+  <!-- PHASE 3: EXECUTION — bottom left -->
+  <!-- ============================================================ -->
+
+  <ellipse cx="340" cy="548" rx="170" ry="52" fill="url(#executionAura)"/>
+
+  <text x="340" y="524"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.20em"
+    fill="rgba(90,140,200,0.70)">EXECUTION</text>
+
+  <text x="340" y="552"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="26" font-style="italic"
+    fill="rgba(255,255,255,0.90)"
+    filter="url(#faint)">taking action</text>
+
+  <text x="340" y="576"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.56)">expertise determines quality</text>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT COLUMN — AI role per phase, anchored far right -->
+  <!-- This is the bridge to the next slide (specific tools) -->
+  <!-- ============================================================ -->
+
+  <line x1="1020" y1="140" x2="1020" y2="600"
+    stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+
+  <text x="1040" y="140"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.16em"
+    fill="rgba(255,255,255,0.56)">AI ROLE</text>
+
+  <!-- Discovery → research amplifier -->
+  <text x="1040" y="178"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(200,165,90,0.75)">research amplifier</text>
+  <text x="1040" y="196"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.56)">synthesis · surface connections</text>
+
+  <line x1="1040" y1="212" x2="1230" y2="212"
+    stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <!-- Sensemaking → compression -->
+  <text x="1040" y="374"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(106,172,184,0.65)">compression engine</text>
+  <text x="1040" y="392"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.56)">structure · pattern · gap detection</text>
+
+  <line x1="1040" y1="408" x2="1230" y2="408"
+    stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <!-- Execution → automation -->
+  <text x="1040" y="546"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(90,140,200,0.65)">automation layer</text>
+  <text x="1040" y="564"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.56)">generation · test · deploy</text>
+
+  <!-- ============================================================ -->
+  <!-- BOTTOM — key invariant -->
+  <!-- ============================================================ -->
+
+  <line x1="80" y1="652" x2="980" y2="652"
+    stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+  <text x="80" y="672"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    fill="rgba(255,255,255,0.74)">the phases nest and cycle — you are always in more than one</text>
+
+  <!-- Feedback annotation -->
+  <text x="80" y="694"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.10em"
+    fill="rgba(200,165,90,0.48)">tight loop · feedback always available · ownership never leaves</text>
+
+</svg>
+</div>
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extended Mind — SDLC</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0e0e10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #111113;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <radialGradient id="brainAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C8A55A" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="loopAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C8A55A" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="nodeAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5A8CC8" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="extendedBoundaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8A55A" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#C8A55A" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <linearGradient id="threadGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C8A55A" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="dimGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <marker id="arrowGold" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(200,165,90,0.6)"/>
+    </marker>
+
+    <marker id="arrowDim" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(255,255,255,0.56)"/>
+    </marker>
+
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- ATMOSPHERE -->
+  <!-- ============================================================ -->
+
+  <!-- Big ambient field behind entire diagram -->
+  <ellipse cx="780" cy="360" rx="680" ry="310" fill="url(#loopAura)" opacity="0.8"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT: ENGINEER / BRAIN -->
+  <!-- ============================================================ -->
+
+  <!-- Brain aura -->
+  <ellipse cx="218" cy="350" rx="150" ry="130" fill="url(#brainAura)" opacity="1"/>
+
+  <!-- Ghost of old anatomical boundary — tight, faint -->
+  <circle cx="218" cy="342" r="96"
+    fill="none"
+    stroke="rgba(255,255,255,0.07)"
+    stroke-width="1"
+    stroke-dasharray="3 5"/>
+
+  <!-- "skull" annotation -->
+  <text x="218" y="224" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.15em"
+    fill="rgba(255,255,255,0.56)"
+    text-transform="uppercase">skull</text>
+
+  <!-- Brain shape -->
+  <g transform="translate(218, 342)" filter="url(#dimGlow)">
+    <path d="
+      M 0 -64
+      C 16 -68, 42 -58, 52 -40
+      C 64 -24, 60 -2, 54 14
+      C 48 30, 38 44, 24 52
+      C 12 60, -4 64, -16 60
+      C -32 54, -42 40, -50 24
+      C -58 8, -58 -10, -52 -28
+      C -44 -48, -22 -60, 0 -64 Z
+    "
+    fill="rgba(235,220,195,0.14)"
+    stroke="rgba(235,220,195,0.52)"
+    stroke-width="1.5"/>
+    <!-- fissure -->
+    <path d="M 0 -64 C -2 -28, 2 10, 0 52"
+      fill="none" stroke="rgba(235,220,195,0.22)" stroke-width="1"/>
+    <!-- gyri -->
+    <path d="M -26 -40 C -18 -26, -16 -6, -20 12" fill="none" stroke="rgba(235,220,195,0.15)" stroke-width="1"/>
+    <path d="M -40 -10 C -30 -2, -26 14, -32 28" fill="none" stroke="rgba(235,220,195,0.15)" stroke-width="1"/>
+    <path d="M 24 -40 C 18 -26, 18 -6, 22 12" fill="none" stroke="rgba(235,220,195,0.15)" stroke-width="1"/>
+    <path d="M 38 -10 C 30 -2, 28 14, 34 26" fill="none" stroke="rgba(235,220,195,0.15)" stroke-width="1"/>
+  </g>
+
+  <!-- Engineer label -->
+  <text x="218" y="466"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.14em"
+    fill="rgba(200,165,90,0.75)"
+    text-transform="uppercase">engineer</text>
+
+  <!-- ============================================================ -->
+  <!-- CENTER: COUPLING THREAD — brain to loop entry -->
+  <!-- ============================================================ -->
+
+  <!-- Thread from brain to Observe node (entry point of loop) -->
+  <!-- Observe node is at ~(572, 360) -->
+  <path id="couplingThread"
+    d="M 314 342 C 390 330, 480 340, 572 360"
+    fill="none"
+    stroke="url(#threadGrad)"
+    stroke-width="1.8"
+    stroke-dasharray="5 4"/>
+
+  <!-- Animated pulse along thread -->
+  <circle r="3.5" fill="#C8A55A" opacity="0.85" filter="url(#dimGlow)">
+    <animateMotion dur="2.8s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1">
+      <mpath href="#couplingThread"/>
+    </animateMotion>
+  </circle>
+
+  <!-- label on thread -->
+  <text x="430" y="322"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.12em"
+    fill="rgba(200,165,90,0.4)"
+    font-style="italic">context flows</text>
+
+  <!-- ============================================================ -->
+  <!-- SDLC LOOP — 5 nodes in a ring -->
+  <!-- cx=880 cy=358 r=185 -->
+  <!--
+    Observe:  180°  → (695, 358)
+    Plan:     270°  → (880, 173)  [top]
+    Code:      0°   → (1065,358)  [right]  — actually let's use 5 nodes at:
+    
+    Using angles from top going clockwise:
+    Plan:     270° (top)     → (880, 173)
+    Code:      18° (top-R)   → (1037, 244)  — let me do evenly spaced 72° each
+    Test:      90° (right)   → (1065, 358)
+    Deploy:   162° (bot-R)   → (1037, 472)
+    Review:   234° (bot-L)   → (880, 543)
+    Observe:  306° (left)    → (695, 358) — wait this would be 6
+
+    5 nodes evenly = 72° apart.
+    Starting from top (270°) going clockwise:
+    Plan:    270°  → cx+185*cos(270°), cy+185*sin(270°) = (880, 173)
+    Code:    342°  → 880+185*cos(342°), 358+185*sin(342°) = 880+181, 358-57 = (1061, 301) — hmm
+    
+    Let me just pick nice positions:
+    Plan:   (880, 175)  — top
+    Code:   (1060, 280) — top-right
+    Test:   (1060, 440) — bottom-right
+    Deploy: (880, 545)  — bottom
+    Observe:(700, 360)  — left (entry from brain)
+    
+    Center of loop: (880, 360)
+  -->
+
+  <!-- Atmospheric glow behind entire loop -->
+  <ellipse cx="880" cy="360" rx="245" ry="230" fill="url(#loopAura)" opacity="1.4"/>
+
+  <!-- ============================================================ -->
+  <!-- EXTENDED MIND BOUNDARY — wraps brain + entire loop -->
+  <!-- This is the key visual: the dashed organic curve from slide 1,
+       now massive, enclosing the whole diagram -->
+  <!-- ============================================================ -->
+
+  <path d="
+    M 90 200
+    C 100 140, 180 115, 270 128
+    C 340 138, 400 170, 470 175
+    C 560 182, 640 165, 720 155
+    C 790 146, 850 130, 920 128
+    C 1010 124, 1090 140, 1140 185
+    C 1195 232, 1210 295, 1208 355
+    C 1206 415, 1192 470, 1168 510
+    C 1138 558, 1090 585, 1030 595
+    C 970 605, 910 598, 860 590
+    C 800 580, 740 568, 680 572
+    C 620 576, 560 590, 500 594
+    C 430 598, 355 590, 290 572
+    C 215 552, 148 518, 108 468
+    C 68 418, 62 362, 68 305
+    C 74 250, 80 218, 90 200 Z
+  "
+  fill="rgba(200,165,90,0.025)"
+  stroke="url(#extendedBoundaryGrad)"
+  stroke-width="1.6"
+  stroke-dasharray="7 5"
+  filter="url(#glow)"
+  />
+
+  <!-- "extended cognitive boundary" label on the boundary curve — top -->
+  <text x="640" y="118"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="10" letter-spacing="0.16em"
+    fill="rgba(200,165,90,0.5)"
+    text-transform="uppercase">extended cognitive boundary</text>
+
+  <!-- ============================================================ -->
+  <!-- LOOP ARROWS between nodes -->
+  <!-- Plan→Code→Test→Deploy→Observe→Plan (clockwise) -->
+  <!-- ============================================================ -->
+
+  <!-- Plan → Code -->
+  <path d="M 908 194 C 980 210, 1042 248, 1052 278"
+    fill="none"
+    stroke="rgba(255,255,255,0.56)"
+    stroke-width="1.2"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Code → Test -->
+  <path d="M 1068 308 C 1072 340, 1068 370, 1060 400"
+    fill="none"
+    stroke="rgba(255,255,255,0.56)"
+    stroke-width="1.2"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Test → Deploy -->
+  <path d="M 1040 462 C 1005 500, 958 528, 916 538"
+    fill="none"
+    stroke="rgba(255,255,255,0.56)"
+    stroke-width="1.2"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Deploy → Observe -->
+  <path d="M 848 542 C 800 540, 746 518, 722 490"
+    fill="none"
+    stroke="rgba(255,255,255,0.56)"
+    stroke-width="1.2"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- Observe → Plan (closes the loop) -->
+  <path d="M 700 340 C 700 278, 740 216, 848 186"
+    fill="none"
+    stroke="rgba(255,255,255,0.56)"
+    stroke-width="1.2"
+    marker-end="url(#arrowDim)"/>
+
+  <!-- ============================================================ -->
+  <!-- SDLC NODES -->
+  <!-- ============================================================ -->
+
+  <!-- Helper macro pattern: each node = outer glow ellipse + ring + label + AI annotation -->
+
+  <!-- NODE: PLAN (top) 880, 175 -->
+  <ellipse cx="880" cy="175" rx="52" ry="30" fill="url(#nodeAura)" opacity="0.9"/>
+  <ellipse cx="880" cy="175" rx="42" ry="22"
+    fill="rgba(20,24,32,0.85)"
+    stroke="rgba(90,140,200,0.6)"
+    stroke-width="1.4"/>
+  <text x="880" y="179" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="12" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.90)">plan</text>
+  <!-- AI annotation -->
+  <text x="880" y="150"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.75)"
+    font-style="italic">research · synthesis</text>
+  <!-- Gold coupling dot -->
+  <circle cx="880" cy="197" r="2.5" fill="#C8A55A" opacity="0.7" filter="url(#dimGlow)"/>
+
+  <!-- NODE: CODE (top-right) 1060, 295 -->
+  <ellipse cx="1062" cy="295" rx="52" ry="30" fill="url(#nodeAura)" opacity="0.9"/>
+  <ellipse cx="1062" cy="295" rx="42" ry="22"
+    fill="rgba(20,24,32,0.85)"
+    stroke="rgba(90,140,200,0.6)"
+    stroke-width="1.4"/>
+  <text x="1062" y="299" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="12" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.90)">code</text>
+  <text x="1108" y="288"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.75)"
+    font-style="italic">generation</text>
+  <circle cx="1062" cy="317" r="2.5" fill="#C8A55A" opacity="0.7" filter="url(#dimGlow)"/>
+
+  <!-- NODE: TEST (bottom-right) 1060, 425 -->
+  <ellipse cx="1062" cy="425" rx="52" ry="30" fill="url(#nodeAura)" opacity="0.9"/>
+  <ellipse cx="1062" cy="425" rx="42" ry="22"
+    fill="rgba(20,24,32,0.85)"
+    stroke="rgba(90,140,200,0.6)"
+    stroke-width="1.4"/>
+  <text x="1062" y="429" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="12" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.90)">test</text>
+  <text x="1108" y="432"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.75)"
+    font-style="italic">validation</text>
+  <circle cx="1062" cy="447" r="2.5" fill="#C8A55A" opacity="0.7" filter="url(#dimGlow)"/>
+
+  <!-- NODE: DEPLOY (bottom) 880, 542 -->
+  <ellipse cx="880" cy="542" rx="52" ry="30" fill="url(#nodeAura)" opacity="0.9"/>
+  <ellipse cx="880" cy="542" rx="42" ry="22"
+    fill="rgba(20,24,32,0.85)"
+    stroke="rgba(90,140,200,0.6)"
+    stroke-width="1.4"/>
+  <text x="880" y="546" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="12" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.90)">deploy</text>
+  <text x="880" y="572"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.75)"
+    font-style="italic">automation</text>
+  <circle cx="904" cy="542" r="2.5" fill="#C8A55A" opacity="0.7" filter="url(#dimGlow)"/>
+
+  <!-- NODE: OBSERVE (left, entry point) 700, 360 -->
+  <ellipse cx="700" cy="360" rx="58" ry="30" fill="url(#nodeAura)" opacity="1.1"/>
+  <ellipse cx="700" cy="360" rx="48" ry="22"
+    fill="rgba(20,24,32,0.85)"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.6"/>
+  <!-- Gold stroke — this is the entry from the mind, so it's gold not blue -->
+  <text x="700" y="364" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="12" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.94)">observe</text>
+  <text x="700" y="340"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.08em"
+    fill="rgba(200,165,90,0.75)"
+    font-style="italic">sensemaking</text>
+  <!-- Entry coupling dot — brighter -->
+  <circle cx="652" cy="360" r="3" fill="#C8A55A" opacity="0.9" filter="url(#dimGlow)"/>
+
+  <!-- ============================================================ -->
+  <!-- MAIN TITLE LINE -->
+  <!-- ============================================================ -->
+
+  <line x1="80" y1="638" x2="1200" y2="638" stroke="rgba(200,165,90,0.78)" stroke-width="1"/>
+
+  <text x="640" y="80"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="21"
+    font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.90)">when the tool is trusted, the loop becomes part of the mind</text>
+
+  <line x1="180" y1="95" x2="1100" y2="95" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+  <!-- Source credit -->
+  <text x="80" y="658"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12"
+    font-style="italic"
+    fill="rgba(255,255,255,0.74)">Clark & Chalmers, 1998 — applied to the development lifecycle</text>
+
+  <!-- ============================================================ -->
+  <!-- SMALL LEGEND — three criteria, bottom right -->
+  <!-- ============================================================ -->
+
+  <text x="1198" y="630"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.12em"
+    fill="rgba(200,165,90,0.75)">reliably available  ·  trusted  ·  automatically endorsed</text>
+
+  <!-- ============================================================ -->
+  <!-- LOOP CENTER LABEL — faint, atmospheric -->
+  <!-- ============================================================ -->
+
+  <text x="880" y="352"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13"
+    font-style="italic"
+    letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.74)">development</text>
+  <text x="880" y="370"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13"
+    font-style="italic"
+    letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.74)">lifecycle</text>
+
+</svg>
+</div>
+</body>
+</html>

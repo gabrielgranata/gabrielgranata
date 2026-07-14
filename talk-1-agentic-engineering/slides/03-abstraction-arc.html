@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>70 Years of Abstraction</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f0f11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #111113;
+    position: relative;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+
+    <!-- Expanding light above the arc — cognitive territory -->
+    <radialGradient id="territoryGlow" cx="70%" cy="20%" r="65%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.09"/>
+      <stop offset="60%"  stop-color="#5A8CC8" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#111113" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Arc gradient — gets brighter toward the right -->
+    <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(200,165,90,0.78)"/>
+      <stop offset="70%"  stop-color="rgba(200,165,90,0.78)"/>
+      <stop offset="90%"  stop-color="rgba(200,165,90,0.78)"/>
+      <stop offset="100%" stop-color="rgba(200,165,90,0.0)"/>
+    </linearGradient>
+
+    <!-- Node glow -->
+    <filter id="nodeGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="softGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="dissolveGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <filter id="faint" x="-10%" y="-20%" width="120%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Clip to slide bounds -->
+    <clipPath id="bounds">
+      <rect width="1280" height="720"/>
+    </clipPath>
+
+    <!-- Expanding territory fill above the arc -->
+    <linearGradient id="expansionFill" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0.06"/>
+    </linearGradient>
+
+    <!-- Final node dissolve gradient -->
+    <radialGradient id="finalNodeGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#C8A55A" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- COGNITIVE TERRITORY — expanding space above the arc -->
+  <!-- The area above the arc represents what engineers can now think about.
+       It grows as you move right. Rendered as a filled polygon + gradient. -->
+  <!-- ============================================================ -->
+
+  <!-- Territory atmosphere -->
+  <rect x="0" y="0" width="1280" height="720" fill="url(#territoryGlow)"/>
+
+  <!-- Territory fill — polygon above the arc line
+       Arc nodes (approx): 
+         N0: 92,  590   (origin, ~1950s)
+         N1: 280, 520   (Assembly → HLL)
+         N2: 460, 450   (Memory → GC)
+         N3: 640, 378   (Bare metal → Cloud)
+         N4: 820, 306   (Waterfall → CI/CD)
+         N5: 1000, 232  (Manual → Types)
+         N6: 1160, 158  (AI — dissolves)
+       Territory polygon goes: top-right corner → down to arc → back.
+  -->
+  <polygon
+    points="92,590 280,520 460,450 640,378 820,306 1000,232 1160,158 1200,80 80,80"
+    fill="url(#expansionFill)"
+    opacity="0.8"
+    clip-path="url(#bounds)"/>
+
+  <!-- ============================================================ -->
+  <!-- THE ARC — main diagonal spine -->
+  <!-- Solid from N0 to N5, then dissolves toward N6 -->
+  <!-- ============================================================ -->
+
+  <!-- Solid segment N0 → N5 -->
+  <path d="M 92 590 L 280 520 L 460 450 L 640 378 L 820 306 L 1000 232"
+    fill="none"
+    stroke="url(#arcGrad)"
+    stroke-width="1.4"
+    stroke-linejoin="round"
+    stroke-linecap="round"/>
+
+  <!-- Dissolving segment N5 → N6 — dashed, fading -->
+  <path d="M 1000 232 L 1160 158"
+    fill="none"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.4"
+    stroke-dasharray="6 5"
+    stroke-linecap="round"/>
+
+  <!-- Trail beyond N6 — ghost line into open space -->
+  <path d="M 1160 158 L 1260 100"
+    fill="none"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1.2"
+    stroke-dasharray="3 7"
+    stroke-linecap="round"/>
+
+  <!-- ============================================================ -->
+  <!-- BELOW THE ARC — what got left behind -->
+  <!-- Each era: small label below the arc at the node, fading left to right -->
+  <!-- ============================================================ -->
+
+  <!-- Era year markers — very faint, above each node on the arc -->
+  <text x="92"  y="616" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.94)">1950s</text>
+
+  <text x="280" y="546" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.56)">1960s–70s</text>
+
+  <text x="460" y="476" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.56)">1980s–90s</text>
+
+  <text x="640" y="404" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.13)">2000s</text>
+
+  <text x="820" y="332" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.76)">2010s</text>
+
+  <text x="1000" y="258" text-anchor="middle"
+    font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="0.10em"
+    fill="rgba(255,255,255,0.11)">2013–2016</text>
+
+  <!-- ============================================================ -->
+  <!-- NODES — era transition points -->
+  <!-- ============================================================ -->
+
+  <!-- N0 — origin, machine code -->
+  <circle cx="92" cy="590" r="5"
+    fill="#111113"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.4"/>
+
+  <!-- N1 — Assembly → HLL -->
+  <circle cx="280" cy="520" r="5.5"
+    fill="#111113"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.5"
+    filter="url(#faint)"/>
+
+  <!-- N2 — Memory → GC -->
+  <circle cx="460" cy="450" r="6"
+    fill="#111113"
+    stroke="rgba(200,165,90,0.52)"
+    stroke-width="1.5"
+    filter="url(#faint)"/>
+
+  <!-- N3 — Bare metal → Cloud -->
+  <circle cx="640" cy="378" r="6.5"
+    fill="#111113"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1.6"
+    filter="url(#softGlow)"/>
+
+  <!-- N4 — Waterfall → CI/CD -->
+  <circle cx="820" cy="306" r="7"
+    fill="#111113"
+    stroke="rgba(200,165,90,0.68)"
+    stroke-width="1.6"
+    filter="url(#softGlow)"/>
+
+  <!-- N5 — Types / static analysis -->
+  <circle cx="1000" cy="232" r="7.5"
+    fill="#111113"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.8"
+    filter="url(#softGlow)"/>
+
+  <!-- N5 — Containers + Observability — dual expansion marker -->
+  <!-- Small downward tick showing insight went BOTH directions -->
+  <line x1="1000" y1="232" x2="1000" y2="248"
+    stroke="rgba(90,140,200,0.65)" stroke-width="1.2"
+    stroke-dasharray="2 2"/>
+  <polygon points="1000,250 996,243 1004,243"
+    fill="rgba(90,140,200,0.70)"/>
+
+  <!-- Annotation: "first tool to expand both ways" — very small, italic -->
+  <text x="1040" y="244"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="11" font-style="italic"
+    fill="rgba(90,140,200,0.38)">scope and resolution, simultaneously</text>
+  <circle cx="1160" cy="158" r="22"
+    fill="url(#finalNodeGlow)"
+    filter="url(#dissolveGlow)"
+    opacity="0.7"/>
+  <circle cx="1160" cy="158" r="8"
+    fill="rgba(200,165,90,0.42)"
+    stroke="rgba(200,165,90,0.78)"
+    stroke-width="1.2"
+    stroke-dasharray="3 3"/>
+
+  <!-- ============================================================ -->
+  <!-- NODE LABELS — era names, above the arc, left-anchored -->
+  <!-- Format: transition arrow style, what moved upward -->
+  <!-- ============================================================ -->
+
+  <!-- N1 label — Assembly → HLL -->
+  <text x="248" y="498"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(200,165,90,0.75)">assembly</text>
+  <text x="258" y="498"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.94)">→ languages</text>
+
+  <!-- What opened above N1 -->
+  <text x="280" y="468"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.94)">algorithms</text>
+
+  <!-- N2 label — GC -->
+  <text x="428" y="428"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(200,165,90,0.78)">memory</text>
+  <text x="438" y="428"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.94)">→ GC</text>
+
+  <text x="460" y="396"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.33)">architecture</text>
+
+  <!-- N3 label — Cloud -->
+  <text x="608" y="356"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(200,165,90,0.75)">hardware</text>
+  <text x="618" y="356"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.94)">→ cloud</text>
+
+  <text x="640" y="324"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.76)">distributed systems</text>
+
+  <!-- N4 label — CI/CD -->
+  <text x="788" y="284"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(200,165,90,0.78)">deploy</text>
+  <text x="798" y="284"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.94)">→ CI/CD</text>
+
+  <text x="820" y="252"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.44)">feedback loops</text>
+
+  <!-- N5 label — Containers + Observability -->
+  <text x="952" y="210"
+    text-anchor="end"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(200,165,90,0.78)">environment</text>
+  <text x="962" y="210"
+    text-anchor="start"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(255,255,255,0.94)">→ containers</text>
+
+  <!-- Dual expansion annotation — two lines, not one -->
+  <text x="1000" y="174"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.74)">system topology</text>
+
+  <!-- Second line — the downward insight, different color to mark the duality -->
+  <text x="1000" y="192"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="12" font-style="italic"
+    fill="rgba(90,140,200,0.65)">and the detail within</text>
+
+  <!-- N6 label — AI, dissolving -->
+  <text x="1160" y="124"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="11" letter-spacing="0.07em"
+    fill="rgba(200,165,90,0.75)">intent → AI</text>
+
+  <!-- The open question above N6 — no answer -->
+  <text x="1160" y="98"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.74)">?</text>
+
+  <!-- ============================================================ -->
+  <!-- BELOW ARC — what got automated, subdued -->
+  <!-- Small horizontal lines dropping from arc to labels below -->
+  <!-- ============================================================ -->
+
+  <!-- N1 below -->
+  <line x1="280" y1="525" x2="280" y2="560"
+    stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="280" y="574"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.13)">registers · addresses</text>
+
+  <!-- N2 below -->
+  <line x1="460" y1="455" x2="460" y2="490"
+    stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="460" y="504"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.76)">malloc · free</text>
+
+  <!-- N3 below -->
+  <line x1="640" y1="383" x2="640" y2="418"
+    stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="640" y="432"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.11)">provisioning · racks</text>
+
+  <!-- N4 below -->
+  <line x1="820" y1="311" x2="820" y2="346"
+    stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="820" y="360"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.74)">build · ship mechanics</text>
+
+  <!-- N5 below -->
+  <line x1="1000" y1="237" x2="1000" y2="265"
+    stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+  <text x="1000" y="278"
+    text-anchor="middle"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.06em"
+    fill="rgba(255,255,255,0.74)">env config · manual ops</text>
+
+  <!-- ============================================================ -->
+  <!-- PATTERN ANNOTATION — the repeating beat, bottom-left -->
+  <!-- ============================================================ -->
+
+  <line x1="80" y1="648" x2="620" y2="648"
+    stroke="rgba(200,165,90,0.08)" stroke-width="1"/>
+
+  <text x="80" y="630"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="15" font-style="italic"
+    letter-spacing="0.02em"
+    fill="rgba(255,255,255,0.74)">automate a layer</text>
+
+  <text x="80" y="650"
+    font-family="IBM Plex Mono, monospace"
+    font-size="9" letter-spacing="0.13em"
+    fill="rgba(200,165,90,0.78)">→ resist → prove good enough → think higher</text>
+
+  <!-- Repeating: experience becomes MORE valuable -->
+  <text x="80" y="672"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="13" font-style="italic"
+    fill="rgba(255,255,255,0.56)">every time, experience became more valuable — not less</text>
+
+  <!-- ============================================================ -->
+  <!-- TOP TITLE -->
+  <!-- ============================================================ -->
+
+  <text x="640" y="56"
+    text-anchor="middle"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="20"
+    font-style="italic"
+    letter-spacing="0.03em"
+    fill="rgba(255,255,255,0.94)">seventy years of learning to think at the right level</text>
+
+  <line x1="80" y1="72" x2="1200" y2="72"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT SIDE OPEN QUESTION — bridge to next slide -->
+  <!-- ============================================================ -->
+
+  <text x="1200" y="672"
+    text-anchor="end"
+    font-family="EB Garamond, Georgia, serif"
+    font-size="16"
+    font-style="italic"
+    fill="rgba(255,255,255,0.74)">what do we now have the capacity to think about?</text>
+
+</svg>
+</div>
+</body>
+</html>

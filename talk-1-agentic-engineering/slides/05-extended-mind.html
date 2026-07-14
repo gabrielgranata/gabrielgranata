@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Extended Mind Thesis</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #111113;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #111113;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Subtle grid texture */
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(200,165,90,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,165,90,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .label-small {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    fill: rgba(200,165,90,0.5);
+  }
+
+  .label-criterion {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    fill: rgba(200,165,90,0.85);
+  }
+
+  .label-title {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    fill: rgba(255,255,255,0.35);
+    font-style: italic;
+  }
+
+  .label-main {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 22px;
+    fill: rgba(255,255,255,0.94);
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+</style>
+</head>
+<body>
+<div class="slide">
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Radial glow for brain -->
+    <radialGradient id="brainGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#C8A55A" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#C8A55A" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Radial glow for notebook -->
+    <radialGradient id="notebookGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5A8CC8" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Gold gradient for extended boundary -->
+    <linearGradient id="boundaryGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C8A55A" stop-opacity="0.7"/>
+      <stop offset="50%" stop-color="#C8A55A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#5A8CC8" stop-opacity="0.7"/>
+    </linearGradient>
+
+    <!-- Filter for soft glow -->
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="subtleGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip path for the extended mind region -->
+    <clipPath id="slideClip">
+      <rect width="1280" height="720"/>
+    </clipPath>
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- BACKGROUND ATMOSPHERE -->
+  <!-- ============================================================ -->
+
+  <!-- Deep atmospheric glow behind the whole diagram -->
+  <ellipse cx="640" cy="360" rx="580" ry="280" fill="url(#brainGlow)" opacity="0.6"/>
+
+  <!-- ============================================================ -->
+  <!-- LEFT SIDE: ANATOMICAL BRAIN (what anatomy says) -->
+  <!-- ============================================================ -->
+
+  <!-- Brain glow -->
+  <ellipse cx="280" cy="340" rx="160" ry="140" fill="url(#brainGlow)" opacity="1.2"/>
+
+  <!-- Skull / anatomical boundary — hard circle -->
+  <circle cx="280" cy="330" r="108"
+    fill="none"
+    stroke="rgba(255,255,255,0.74)"
+    stroke-width="1.5"
+    stroke-dasharray="none"/>
+
+  <!-- Brain silhouette — simplified, iconic -->
+  <g transform="translate(280, 330)" filter="url(#subtleGlow)">
+    <!-- Brain body — warm ivory -->
+    <path d="
+      M 0 -68
+      C 18 -72, 44 -62, 54 -44
+      C 68 -28, 64 -4, 58 12
+      C 52 30, 42 46, 28 56
+      C 14 66, -4 70, -16 66
+      C -34 60, -44 44, -52 28
+      C -60 10, -62 -10, -56 -28
+      C -48 -50, -26 -64, 0 -68 Z
+    "
+    fill="rgba(235,220,195,0.15)"
+    stroke="rgba(235,220,195,0.55)"
+    stroke-width="1.5"/>
+
+    <!-- Central fissure -->
+    <path d="M 0 -68 C -2 -30, 2 10, 0 56"
+      fill="none"
+      stroke="rgba(235,220,195,0.25)"
+      stroke-width="1"/>
+
+    <!-- Gyri suggestion lines left hemisphere -->
+    <path d="M -28 -42 C -20 -28, -18 -8, -22 12"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+    <path d="M -44 -12 C -32 -4, -28 14, -34 30"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+
+    <!-- Gyri suggestion lines right hemisphere -->
+    <path d="M 26 -44 C 20 -28, 20 -8, 24 12"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+    <path d="M 42 -12 C 32 -4, 30 14, 36 28"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+  </g>
+
+  <!-- "Anatomical" label -->
+  <text x="280" y="468" text-anchor="middle" class="label-small">anatomical boundary</text>
+  <line x1="280" y1="458" x2="280" y2="444" stroke="rgba(200,165,90,0.75)" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- CENTER DIVIDER — concept arrow area -->
+  <!-- ============================================================ -->
+
+  <!-- Vertical rule, faint -->
+  <line x1="500" y1="140" x2="500" y2="580" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- RIGHT SIDE: EXTENDED MIND (what function says) -->
+  <!-- ============================================================ -->
+
+  <!-- Extended boundary glow — much wider -->
+  <ellipse cx="870" cy="340" rx="340" ry="240" fill="url(#brainGlow)" opacity="0.5"/>
+  <ellipse cx="1020" cy="340" rx="160" ry="140" fill="url(#notebookGlow)" opacity="0.8"/>
+
+  <!-- THE EXTENDED MIND BOUNDARY — key visual element -->
+  <!-- Soft, organic, fluid — not a hard circle -->
+  <path d="
+    M 680 200
+    C 700 160, 780 145, 840 165
+    C 870 175, 890 195, 920 200
+    C 960 205, 990 195, 1010 175
+    C 1050 145, 1110 148, 1140 175
+    C 1180 205, 1195 250, 1185 295
+    C 1175 345, 1160 390, 1145 420
+    C 1120 468, 1070 492, 1020 498
+    C 980 503, 940 495, 910 482
+    C 880 470, 860 455, 840 452
+    C 810 448, 785 458, 760 472
+    C 730 488, 695 498, 668 488
+    C 635 476, 618 445, 610 408
+    C 598 365, 600 310, 618 265
+    C 635 228, 658 210, 680 200 Z
+  "
+  fill="rgba(200,165,90,0.04)"
+  stroke="url(#boundaryGrad)"
+  stroke-width="1.8"
+  stroke-dasharray="6 4"
+  filter="url(#softGlow)"/>
+
+  <!-- Brain (right side, same as left) -->
+  <g transform="translate(790, 330)" filter="url(#subtleGlow)">
+    <path d="
+      M 0 -68
+      C 18 -72, 44 -62, 54 -44
+      C 68 -28, 64 -4, 58 12
+      C 52 30, 42 46, 28 56
+      C 14 66, -4 70, -16 66
+      C -34 60, -44 44, -52 28
+      C -60 10, -62 -10, -56 -28
+      C -48 -50, -26 -64, 0 -68 Z
+    "
+    fill="rgba(235,220,195,0.15)"
+    stroke="rgba(235,220,195,0.55)"
+    stroke-width="1.5"/>
+    <path d="M 0 -68 C -2 -30, 2 10, 0 56"
+      fill="none" stroke="rgba(235,220,195,0.25)" stroke-width="1"/>
+    <path d="M -28 -42 C -20 -28, -18 -8, -22 12"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+    <path d="M -44 -12 C -32 -4, -28 14, -34 30"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+    <path d="M 26 -44 C 20 -28, 20 -8, 24 12"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+    <path d="M 42 -12 C 32 -4, 30 14, 36 28"
+      fill="none" stroke="rgba(235,220,195,0.18)" stroke-width="1"/>
+  </g>
+
+  <!-- CONNECTION — neural thread from brain to notebook -->
+  <path d="M 848 330 C 880 310, 940 310, 980 330"
+    fill="none"
+    stroke="rgba(200,165,90,0.75)"
+    stroke-width="1.5"
+    stroke-dasharray="4 3"/>
+
+  <!-- Animated pulse dot along connection -->
+  <circle r="3" fill="#C8A55A" opacity="0.8">
+    <animateMotion dur="3s" repeatCount="indefinite">
+      <mpath href="#connPath"/>
+    </animateMotion>
+  </circle>
+  <path id="connPath" d="M 848 330 C 880 310, 940 310, 980 330" fill="none"/>
+
+  <!-- NOTEBOOK — the external tool -->
+  <g transform="translate(1020, 330)" filter="url(#subtleGlow)">
+    <!-- Notebook body -->
+    <rect x="-40" y="-56" width="80" height="104" rx="4"
+      fill="rgba(90,140,200,0.32)"
+      stroke="rgba(90,140,200,0.65)"
+      stroke-width="1.5"/>
+    <!-- Spine -->
+    <rect x="-40" y="-56" width="12" height="104" rx="2"
+      fill="rgba(90,140,200,0.32)"
+      stroke="rgba(90,140,200,0.4)"
+      stroke-width="1"/>
+    <!-- Lines on page -->
+    <line x1="-20" y1="-28" x2="32" y2="-28" stroke="rgba(90,140,200,0.65)" stroke-width="1"/>
+    <line x1="-20" y1="-14" x2="32" y2="-14" stroke="rgba(90,140,200,0.65)" stroke-width="1"/>
+    <line x1="-20" y1="0" x2="32" y2="0" stroke="rgba(90,140,200,0.65)" stroke-width="1"/>
+    <line x1="-20" y1="14" x2="24" y2="14" stroke="rgba(90,140,200,0.65)" stroke-width="1"/>
+    <line x1="-20" y1="28" x2="28" y2="28" stroke="rgba(90,140,200,0.65)" stroke-width="1"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- THREE CRITERIA — annotated on the boundary -->
+  <!-- ============================================================ -->
+
+  <!-- Criterion 1: reliably available — top -->
+  <g>
+    <circle cx="870" cy="167" r="3" fill="#C8A55A" opacity="0.8"/>
+    <text x="870" y="148" text-anchor="middle" class="label-criterion">reliably available</text>
+  </g>
+
+  <!-- Criterion 2: trusted — right side -->
+  <g>
+    <circle cx="1148" cy="310" r="3" fill="#C8A55A" opacity="0.8"/>
+    <text x="1192" y="306" text-anchor="start" class="label-criterion">trusted</text>
+  </g>
+
+  <!-- Criterion 3: automatically endorsed — bottom -->
+  <g>
+    <circle cx="870" cy="497" r="3" fill="#C8A55A" opacity="0.8"/>
+    <text x="870" y="522" text-anchor="middle" class="label-criterion">automatically endorsed</text>
+  </g>
+
+  <!-- "functional boundary" label -->
+  <text x="870" y="570" text-anchor="middle" class="label-small">functional boundary</text>
+
+  <!-- ============================================================ -->
+  <!-- CENTER TRANSITION ARROW -->
+  <!-- ============================================================ -->
+
+  <!-- Arrow shaft -->
+  <line x1="410" y1="330" x2="555" y2="330"
+    stroke="rgba(255,255,255,0.94)" stroke-width="1.5"/>
+  <!-- Arrowhead -->
+  <polygon points="555,330 545,325 545,335"
+    fill="rgba(255,255,255,0.94)"/>
+
+  <!-- "when the tool meets these criteria" -->
+  <text x="482" y="318" text-anchor="middle" class="label-small" style="font-size:9px;">when</text>
+
+  <!-- ============================================================ -->
+  <!-- MAIN CAPTION -->
+  <!-- ============================================================ -->
+
+  <!-- Thin rule at bottom -->
+  <line x1="80" y1="638" x2="1200" y2="638" stroke="rgba(200,165,90,0.42)" stroke-width="1"/>
+
+  <!-- Source credit -->
+  <text x="80" y="658" class="label-title">Clark & Chalmers, 1998</text>
+
+  <!-- Main evocative line — centered -->
+  <text x="640" y="80" text-anchor="middle" class="label-main">
+    the boundary of the mind is functional, not anatomical
+  </text>
+
+  <!-- Thin rule at top under main title -->
+  <line x1="200" y1="94" x2="1080" y2="94" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- ============================================================ -->
+  <!-- SMALL BRACKET LABELS -->
+  <!-- ============================================================ -->
+
+  <!-- Left: "the skull" bracket -->
+  <text x="280" y="202" text-anchor="middle" class="label-small">the skull</text>
+  <path d="M 220 212 L 220 218 L 280 218 L 340 218 L 340 212"
+    fill="none" stroke="rgba(255,255,255,0.74)" stroke-width="1"/>
+
+</svg>
+</div>
+</body>
+</html>
