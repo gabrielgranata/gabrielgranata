@@ -1,0 +1,44 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# ── Public-repo boundary ──────────────────────────────────────────
+# This repo is PUBLIC (the profile README repo). The public set is the
+# app source, talks/, and README. Everything below is working material
+# that stays local. (Gabriel's call, 2026-07-22.)
+
+# Raw Letterboxd export — personal data (profile, diary, reviews).
+letterboxd-*-utc/
+
+# Process docs, personal drafts, instructions, and tooling.
+docs/
+CLAUDE.md
+AGENTS.md
+resume-mockup.html
+frontend-basics-map.md
+tools/
+
+# Posts publish by being committed: a draft stays local until Gabriel
+# calls it public — then `git add -f src/writing/posts/<name>.md`.
+src/writing/posts/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

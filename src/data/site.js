@@ -1,0 +1,186 @@
+/*
+  All content lives here — components render this, they don't invent it.
+
+  Facts trace to resume-mockup.html (the sole source of facts) or to this
+  project's own history. [Bracketed text] is a placeholder, not a claim —
+  the same convention the resume uses. Components render bracketed runs in
+  muted italic via <PendingText>.
+*/
+
+export const identity = {
+  name: 'Gabriel Granata',
+
+  // Resume positioning line — marked draft there ("[Gabriel's edit before submission]").
+  positioning:
+    'Software engineer (AWS, agent infrastructure) building and publishing ' +
+    'independent research on human-AI interaction — working prototypes, one in production.',
+
+  // Writing task for Gabriel — do not fill in.
+  intro: "[Gabriel's introduction — his words, 3–5 sentences]",
+
+  // href: null means the link itself is pending; `note` is the visible placeholder.
+  contact: [
+    { label: 'GitHub', href: null, note: '[link pending]' },
+    { label: 'Substack', href: 'https://m1ndovermatter.substack.com', note: null },
+    { label: 'Email', href: null, note: '[pending]' },
+  ],
+}
+
+/*
+  Receipts: the number is the claim; opening it shows where the number comes
+  from. Method text is the resume's own wording — none of the four states how
+  the figure was measured, so each carries a visible pending marker.
+*/
+export const receipts = [
+  {
+    figure: '50%',
+    label: 'learning-agent latency',
+    method:
+      'Built a trajectory-analysis pipeline over agent investigation journals; ' +
+      'used it to build MCP tooling that improved learning-agent latency 50%. ' +
+      '(AWS DevOps Agent) [measurement methodology pending]',
+  },
+  {
+    figure: '70→0',
+    label: 'region-build manual tasks',
+    method:
+      'Co-owned automation of 70 manual tasks across the team, cutting region-build ' +
+      'time from 30+ developer-days per region to full automation. ' +
+      '(AWS Cloud Map) [measurement methodology pending]',
+  },
+  {
+    figure: '10×',
+    label: 'report-writing, BMO',
+    method:
+      'Built a reporting tool that cut manual report-writing time 10× for ' +
+      'non-technical stakeholders. (BMO Capital Markets, 2020) ' +
+      '[measurement methodology pending]',
+  },
+  {
+    figure: '80%',
+    label: 'MTTR, weigh-out',
+    method:
+      'Designed and built end-to-end automatic weigh-out, reducing MTTR 80%. ' +
+      '(AWS Cloud Map) [measurement methodology pending]',
+  },
+]
+
+/*
+  Feed entries. types: build | lab | essay | work | note.
+  `date` is a display string, kept exactly as honest as the source allows.
+
+  Order is authored by hand, newest first — no sort, because entries with
+  pending dates can't be sorted mechanically. When a pending date gets a real
+  value, move the entry to its true position.
+*/
+export const entries = [
+  {
+    date: 'Jul 19, 2026',
+    type: 'note',
+    title: 'This site: first sketch built',
+    body:
+      'One page: a narrative header over a dated feed. Neutral placeholder ' +
+      'styling on purpose — the visual direction is still an open call.',
+  },
+  {
+    date: 'Jul 18, 2026',
+    type: 'lab',
+    title: 'Visual-assets research fan-out',
+    body:
+      'Three research threads run in parallel: directed AI generation, ' +
+      'procedural code-generated art, and real work artifacts treated as ' +
+      'aesthetic objects. A map of what to try — nothing adopted yet.',
+  },
+  {
+    date: 'Jul 18, 2026',
+    type: 'note',
+    title: 'Three visual directions proposed in Paper',
+    body:
+      'Bookish serif, phosphor terminal, Swiss editorial — three tiles on the ' +
+      'canvas, awaiting a pick. The site stays neutral until the call is made.',
+  },
+  {
+    date: 'Jul 18, 2026',
+    type: 'lab',
+    title: 'Motion hello-world',
+    body:
+      'A spring and a draggable dot: grab it, throw it, it finds its way home. ' +
+      'First contact with react-spring and use-gesture; the tension/friction ' +
+      'pair from this exercise is now the site-wide motion constant.',
+  },
+  {
+    date: 'Jul 2026',
+    type: 'work',
+    title: 'Promoted to SDE II — Amazon Web Services',
+  },
+  {
+    date: '[date pending]',
+    type: 'essay',
+    title: 'I wrote my last article with AI',
+    link: { label: 'Read on Substack', href: 'https://m1ndovermatter.substack.com' },
+  },
+  {
+    date: '[date pending]',
+    type: 'essay',
+    title: 'Where are we headed?',
+    link: { label: 'Read on Substack', href: 'https://m1ndovermatter.substack.com' },
+  },
+  {
+    date: '2026 · [month pending]',
+    type: 'build',
+    title: 'AI-enabled competitive intelligence',
+    body:
+      'Vision-model PDF extraction, per-site scraping adapters, two-pass ' +
+      'product matching with a human-confirmation gate before any price is ' +
+      'trusted. In production for a business client. (Consulting)',
+  },
+  {
+    date: '2026 · [month pending]',
+    type: 'build',
+    title: 'MrSports ERP',
+    body:
+      'Inventory & order-management system (Next.js/Supabase) for a print ' +
+      'shop, replacing a paper workflow. In daily use since [date pending]. ' +
+      '(Consulting)',
+  },
+  {
+    date: '[date pending]',
+    type: 'build',
+    title: 'Cognitive Cartographer',
+    body:
+      "Writing environment where the model's only output surface is Socratic " +
+      'questions; gap analysis is deterministic.',
+    link: { label: 'Repo', href: null },
+  },
+  {
+    date: '[date pending]',
+    type: 'build',
+    title: 'Paideia',
+    body:
+      'Education platform, originally built at a hackathon: curriculum graph ' +
+      'vs. comprehension graph, updated only through demonstrated reasoning; ' +
+      'citation enforced at the render boundary. Working build — repo going public.',
+    link: { label: 'Repo', href: null },
+  },
+  {
+    date: 'Oct 2025 – present',
+    type: 'work',
+    title: 'AWS DevOps Agent',
+    body:
+      'Owned launch of agent memory and learned-skills capabilities — ' +
+      'continual learning and automated skill generation from operational ' +
+      'history. Built a trajectory-analysis pipeline over agent investigation ' +
+      'journals; used it to build MCP tooling that improved learning-agent ' +
+      'latency 50%.',
+  },
+  {
+    date: 'Jan 2024 – Oct 2025',
+    type: 'work',
+    title: 'AWS Cloud Map',
+    body:
+      'Co-owned automation of 70 manual tasks across the team, cutting ' +
+      'region-build time from 30+ developer-days per region to full ' +
+      'automation. Designed and built end-to-end automatic weigh-out, ' +
+      'reducing MTTR 80%.',
+  },
+]
