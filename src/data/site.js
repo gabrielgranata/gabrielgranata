@@ -37,13 +37,15 @@ export const identity = {
 */
 export const talks = [
   {
-    slug: 'talk-1-agentic-engineering',
+    // id is the public address (#talks/1) — deliberately unlabeled,
+    // and explicit rather than positional so reordering never renumbers
+    id: 1,
     title: 'A Framework for Agentic Engineering',
     date: '2026',
     href: '/talks/talk-1-agentic-engineering/',
   },
   {
-    slug: 'talk-2-ai-mirror',
+    id: 2,
     title: 'What Your AI Conversations Say About How You Think',
     date: '2026',
     href: '/talks/talk-2-ai-mirror/',

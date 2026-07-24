@@ -10,8 +10,8 @@ export default function Talks() {
     <section className="experiments" aria-label="talks">
       <ul className="experiments-list">
         {talks.map(t => (
-          <li key={t.slug} className="experiment-row">
-            <a href={`#talks/${t.slug}`}>{t.title}</a>
+          <li key={t.id} className="experiment-row">
+            <a href={`#talks/${t.id}`}>{t.title}</a>
             <span className="lab-note">{t.date}</span>
           </li>
         ))}
