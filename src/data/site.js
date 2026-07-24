@@ -30,6 +30,27 @@ export const identity = {
 }
 
 /*
+  Talks. The repo's talks/ folder is served verbatim at /talks/
+  (public/talks is a symlink into it; the build copies through it).
+  slug routes to the in-site reader (#talks/<slug>); href is the raw
+  deck document itself. Titles are the decks' own <title> tags.
+*/
+export const talks = [
+  {
+    slug: 'talk-1-agentic-engineering',
+    title: 'A Framework for Agentic Engineering',
+    date: '2026',
+    href: '/talks/talk-1-agentic-engineering/',
+  },
+  {
+    slug: 'talk-2-ai-mirror',
+    title: 'What Your AI Conversations Say About How You Think',
+    date: '2026',
+    href: '/talks/talk-2-ai-mirror/',
+  },
+]
+
+/*
   Feed entries. types: build | lab | essay | work | note.
   `date` is a display string, kept exactly as honest as the source allows.
 

@@ -4,6 +4,7 @@ import FrontPage from './components/FrontPage.jsx'
 import Tabs from './components/Tabs.jsx'
 import Writing from './components/Writing.jsx'
 import Experiments from './components/Experiments.jsx'
+import Talks from './components/Talks.jsx'
 // films & feed are off the public build for now (Gabriel's call,
 // 2026-07-24) — re-enable by uncommenting here and in TABS below.
 // import Feed from './components/Feed.jsx'
@@ -31,6 +32,7 @@ import Experiments from './components/Experiments.jsx'
 const TABS = [
   { id: 'writing', label: 'writing', Panel: Writing },
   { id: 'experiments', label: 'experiments', Panel: Experiments },
+  { id: 'talks', label: 'talks', Panel: Talks },
   // { id: 'feed', label: 'feed', Panel: Feed },
   // { id: 'films', label: 'films', Panel: Films },
 ]

@@ -493,6 +493,18 @@ a {
   margin-top: var(--space-4);
 }
 
+/* the deck runs live inside the reader — full column width, tall
+   enough to present; the deck's own styles govern everything inside */
+.talk-frame {
+  display: block;
+  width: 100%;
+  height: 70vh;
+  margin-top: var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: #fff;
+}
+
 .post-body p,
 .post-body ul,
 .post-body blockquote,
