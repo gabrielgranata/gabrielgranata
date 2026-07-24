@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { talks } from '../data/site.js'
 
 /*
@@ -15,6 +15,41 @@ import { talks } from '../data/site.js'
   The one contract an iframe imposes: keyboard events go to whichever
   document has focus. Click the deck once and ← → belong to it.
 */
+/*
+  The reader page: the talk's generated image is the face of the page —
+  a poster that launches the slideshow. One piece of state, one writer:
+  React owns the single fact "is the deck showing", and clicking the
+  poster flips it. The iframe therefore loads only when asked for.
+  A talk with no image skips the poster and shows the deck directly.
+  key={talk.slug} above resets the state when moving between talks.
+*/
+function TalkReader({ talk }) {
+  const [showingDeck, setShowingDeck] = useState(!talk.image)
+
+  return (
+    <article className="talk-reader">
+      <h1 className="post-title">{talk.title}</h1>
+      <p className="post-meta">
+        {talk.date} · <a href={talk.href}>open full screen ↗</a>
+      </p>
+
+      {showingDeck ? (
+        <>
+          <iframe className="talk-frame" src={talk.href} title={talk.title} />
+          <p className="pend">
+            click the deck once, then ← → moves through the slides
+          </p>
+        </>
+      ) : (
+        <button className="talk-poster" onClick={() => setShowingDeck(true)}>
+          <img src={talk.image} alt="" />
+          <span className="talk-poster-play">view the slides →</span>
+        </button>
+      )}
+    </article>
+  )
+}
+
 export default function TalksPage({ hash }) {
   const slug = hash.split('/')[1]
   // resolve by the current slug OR any address ever published (the
@@ -40,16 +75,7 @@ export default function TalksPage({ hash }) {
       </nav>
 
       {talk ? (
-        <article className="talk-reader">
-          <h1 className="post-title">{talk.title}</h1>
-          <p className="post-meta">
-            {talk.date} · <a href={talk.href}>open full screen ↗</a>
-          </p>
-          <iframe className="talk-frame" src={talk.href} title={talk.title} />
-          <p className="pend">
-            click the deck once, then ← → moves through the slides
-          </p>
-        </article>
+        <TalkReader key={talk.slug} talk={talk} />
       ) : (
         <ul className="lab-list">
           {talks.map(t => (

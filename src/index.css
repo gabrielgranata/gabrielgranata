@@ -494,6 +494,45 @@ a {
   margin-top: var(--space-4);
 }
 
+/* poster-as-launcher: the talk's image fronts the page; clicking it
+   swaps in the live deck. A real <button>, so keyboard and screen
+   readers get the affordance for free. */
+.talk-poster {
+  all: unset;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  margin-top: var(--space-3);
+  width: 100%;
+}
+
+.talk-poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.talk-poster-play {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-3);
+  transform: translateX(-50%);
+  padding: var(--space-1) var(--space-3);
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  border-radius: 4px;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+.talk-poster:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* the deck runs live inside the reader — full column width, tall
    enough to present; the deck's own styles govern everything inside */
 .talk-frame {
