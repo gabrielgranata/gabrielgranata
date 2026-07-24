@@ -1,0 +1,67 @@
+# deploy.yml — build the site and publish it to GitHub Pages.
+#
+# HOW TO READ THIS FILE
+# A workflow is a program GitHub runs on its own machines when an event
+# fires. This one fires on every push to main: check the repo out, build
+# it the same way `npm run build` does locally, hand the resulting dist/
+# folder to Pages. The repo is the only input — no machine of ours is a
+# build dependency (the reproducibility rule, 2026-07-22).
+#
+# What is NOT here yet, on purpose: the scheduled content fetch (RSS,
+# Substack). That arrives later as a separate workflow whose job is to
+# commit content; this one only turns commits into a live site.
+
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  # a manual "run now" button in the Actions tab — costs nothing, useful
+  # when a deploy needs re-running without an empty commit
+  workflow_dispatch:
+
+# The deploy step doesn't use a password. It proves "I am this repo's
+# workflow" with a short-lived OIDC token — that's what id-token: write
+# permits. pages: write lets it publish the artifact.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Two pushes in quick succession: the second deploy supersedes the first
+# instead of racing it. Pages can only serve one version anyway.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # npm ci (not install): reproduce package-lock.json exactly,
+      # fail loudly if it can't. The lockfile is the build's contract.
+      - run: npm ci
+
+      # --base: this repo serves as a PROJECT site, so every asset URL
+      # is prefixed with /gabrielgranata/. DELETE this flag when the
+      # custom domain is attached — a domain serves from the root.
+      - run: npm run build -- --base=/gabrielgranata/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
