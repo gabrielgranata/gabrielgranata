@@ -11,7 +11,7 @@ export default function Talks() {
   return (
     <section className="card-grid talks" aria-label="talks">
       {talks.map(t => (
-        <a key={t.id} className="post-card" href={`#talks/${t.id}`}>
+        <a key={t.slug} className="post-card" href={`#talks/${t.slug}`}>
           {t.image && (
             <div className="card-media">
               <img src={t.image} alt="" />

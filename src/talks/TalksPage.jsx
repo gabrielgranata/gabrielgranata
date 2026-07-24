@@ -15,8 +15,8 @@ import { talks } from '../data/site.js'
   document has focus. Click the deck once and ← → belong to it.
 */
 export default function TalksPage({ hash }) {
-  const id = hash.split('/')[1]
-  const talk = id ? talks.find(t => String(t.id) === id) : null
+  const slug = hash.split('/')[1]
+  const talk = slug ? talks.find(t => t.slug === slug) : null
 
   return (
     <main className="writing-page">
@@ -39,8 +39,8 @@ export default function TalksPage({ hash }) {
       ) : (
         <ul className="lab-list">
           {talks.map(t => (
-            <li key={t.id}>
-              <a href={`#talks/${t.id}`}>{t.title}</a>
+            <li key={t.slug}>
+              <a href={`#talks/${t.slug}`}>{t.title}</a>
               <span className="lab-note">{t.date}</span>
             </li>
           ))}

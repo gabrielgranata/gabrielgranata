@@ -44,16 +44,17 @@ export const identity = {
 */
 export const talks = [
   {
-    // id is the public address (#talks/1) — deliberately unlabeled,
-    // and explicit rather than positional so reordering never renumbers
-    id: 1,
+    // slug is the public address (#talks/<slug>) — the title formatted
+    // for a link, not the talks/ folder name. Changing it changes the
+    // published address; old addresses fall back to the talks index.
+    slug: 'a-framework-for-agentic-engineering',
     title: 'A Framework for Agentic Engineering',
     date: '2026',
     href: '/talks/talk-1-agentic-engineering/',
     image: talk1Image,
   },
   {
-    id: 2,
+    slug: 'what-your-ai-conversations-say-about-how-you-think',
     title: 'What Your AI Conversations Say About How You Think',
     date: '2026',
     href: '/talks/talk-2-ai-mirror/',
