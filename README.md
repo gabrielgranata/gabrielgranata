@@ -1,18 +1,26 @@
 <!--
   This repo is the special profile repo: this README renders at
-  github.com/gabrielgranata. It is also the source of the portfolio
-  site being built in the open. Bracketed gray text below is the
-  resume's placeholder convention — a gap Gabriel will write, not a claim.
+  github.com/gabrielgranata. It is also the source of granata.blog,
+  built in the open. The words below are Gabriel's, from the site.
 -->
 
 # Gabriel Granata
 
-*[Gabriel's introduction — his words, a few sentences. Until written, this page stays quiet.]*
+hello. here is a collection of my thoughts, experiments, and ramblings.
+personally exploring humanity, AI, and the future of work.
 
-**Now:** building this site in the open — React, motion experiments, and a captain's log about building with AI. The source is this repo.
+take everything with a grain of salt — i am a human exploring what it
+means to be human.
+
+**[granata.blog](https://granata.blog)** — the site, built in the open
+from this repo. a work in progress; i intend to grow with it.
+
+**Writing:** [First Steps](https://granata.blog/#writing/building-this-site-with-ai) · [Substack](https://m1ndovermatter.substack.com)
 
 **Talks:** [talks/](talks/)
 
+**Elsewhere:** [LinkedIn](https://www.linkedin.com/in/gabrielgranata)
+
 ---
 
-<sub>Portfolio source: React 19 + Vite. `npm install && npm run dev`. Process notes live in [docs/](docs/).</sub>
+<sub>site source: React 19 + Vite — `npm install && npm run dev`.</sub>
