@@ -45,9 +45,13 @@ export const identity = {
 export const talks = [
   {
     // slug is the public address (#talks/<slug>) — the title formatted
-    // for a link, not the talks/ folder name. Changing it changes the
-    // published address; old addresses fall back to the talks index.
+    // for a link. aliases is the LEDGER: every address this talk has
+    // ever been published under. Append-only — changing the slug means
+    // the old slug moves in here; nothing is ever deleted, so no link
+    // that ever left the site can break. Old addresses resolve, then
+    // canonicalize to the current slug.
     slug: 'a-framework-for-agentic-engineering',
+    aliases: ['1', 'talk-1-agentic-engineering'],
     title: 'A Framework for Agentic Engineering',
     date: '2026',
     href: '/talks/talk-1-agentic-engineering/',
@@ -55,6 +59,7 @@ export const talks = [
   },
   {
     slug: 'what-your-ai-conversations-say-about-how-you-think',
+    aliases: ['2', 'talk-2-ai-mirror'],
     title: 'What Your AI Conversations Say About How You Think',
     date: '2026',
     href: '/talks/talk-2-ai-mirror/',

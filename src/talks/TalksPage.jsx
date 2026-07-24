@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { talks } from '../data/site.js'
 
 /*
@@ -16,7 +17,20 @@ import { talks } from '../data/site.js'
 */
 export default function TalksPage({ hash }) {
   const slug = hash.split('/')[1]
-  const talk = slug ? talks.find(t => t.slug === slug) : null
+  // resolve by the current slug OR any address ever published (the
+  // aliases ledger in site.js) — published links are a contract
+  const talk = slug
+    ? talks.find(t => t.slug === slug || t.aliases?.includes(slug))
+    : null
+
+  // canonicalize: reached via an old address → rewrite the address bar
+  // to the current one. location.replace swaps the history entry, so
+  // the back button never lands on the stale address.
+  useEffect(() => {
+    if (talk && slug !== talk.slug) {
+      window.location.replace(`#talks/${talk.slug}`)
+    }
+  }, [talk, slug])
 
   return (
     <main className="writing-page">
