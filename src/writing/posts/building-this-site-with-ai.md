@@ -3,6 +3,7 @@ title: First Steps
 date: 2026-07-19
 status: draft
 image: the-world.png
+description: the first post — what this site is, and how i'm setting out to build it.
 ---
 
 I'm building this site as an expression of self. My goal is to build a site that houses my works and my beliefs, at the same time helping me to grow these, through this personal expression.
