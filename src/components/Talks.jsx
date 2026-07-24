@@ -1,4 +1,5 @@
 import { talks } from '../data/site.js'
+import TalkCard from './TalkCard.jsx'
 
 /*
   Talks — the slide decks committed in talks/, shown as cards (the
@@ -11,17 +12,7 @@ export default function Talks() {
   return (
     <section className="card-grid talks" aria-label="talks">
       {talks.map(t => (
-        <a key={t.slug} className="post-card" href={`#talks/${t.slug}`}>
-          {t.image && (
-            <div className="card-media">
-              <img src={t.image} alt="" />
-            </div>
-          )}
-          <div className="card-text">
-            <span className="card-title">{t.title}</span>
-            <span className="card-date">{t.date}</span>
-          </div>
-        </a>
+        <TalkCard key={t.slug} talk={t} />
       ))}
     </section>
   )

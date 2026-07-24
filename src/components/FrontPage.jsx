@@ -1,5 +1,7 @@
 import { posts } from '../writing/posts.js'
+import { talks } from '../data/site.js'
 import PostMedia from './PostMedia.jsx'
+import TalkCard from './TalkCard.jsx'
 
 /*
   FrontPage — the newspaper strip on the home page: the most recent
@@ -29,15 +31,17 @@ function previewText(post) {
   return post.description ?? post.body.split(/\n\s*\n/)[0]
 }
 
-/* §3 · How many stories the front page leads with — a visible knob. */
+/* §3 · How many stories the front page leads with — a visible knob.
+   Talks marked `featured` in site.js join the grid after the posts. */
 const RECENT_COUNT = 3
 
 export default function FrontPage() {
   const recent = posts.slice(0, RECENT_COUNT)
-  if (recent.length === 0) return null
+  const featuredTalks = talks.filter(t => t.featured)
+  if (recent.length === 0 && featuredTalks.length === 0) return null
 
   return (
-    <section className="card-grid front-page" aria-label="recent posts">
+    <section className="card-grid front-page" aria-label="recent posts and featured talks">
       {recent.map(post => (
         <a key={post.slug} className="post-card" href={`#writing/${post.slug}`}>
           <PostMedia post={post} className="card-media" />
@@ -50,6 +54,9 @@ export default function FrontPage() {
             <p className="card-preview">{previewText(post)}</p>
           </div>
         </a>
+      ))}
+      {featuredTalks.map(t => (
+        <TalkCard key={t.slug} talk={t} />
       ))}
     </section>
   )

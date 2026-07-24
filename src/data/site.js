@@ -56,6 +56,9 @@ export const talks = [
     date: '2026',
     href: '/talks/talk-1-agentic-engineering/',
     image: talk1Image,
+    // featured: surfaces on the home page beside the recent posts —
+    // a content call, flipped here
+    featured: true,
   },
   {
     slug: 'what-your-ai-conversations-say-about-how-you-think',
