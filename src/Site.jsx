@@ -4,6 +4,7 @@ import Tabs from './components/Tabs.jsx'
 import Writing from './components/Writing.jsx'
 import Experiments from './components/Experiments.jsx'
 import Feed from './components/Feed.jsx'
+import Films from './films/Films.jsx'
 
 /*
   The homepage: identity persists on top; below it, one section at a time
@@ -28,6 +29,7 @@ const TABS = [
   { id: 'writing', label: 'writing', Panel: Writing },
   { id: 'experiments', label: 'experiments', Panel: Experiments },
   { id: 'feed', label: 'feed', Panel: Feed },
+  { id: 'films', label: 'films', Panel: Films },
 ]
 
 export default function Site() {

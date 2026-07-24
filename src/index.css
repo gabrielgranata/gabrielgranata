@@ -315,6 +315,103 @@ a {
 }
 
 /* ============================================================
+   Films — the Letterboxd diary tab. List typography only; any
+   per-film expression lives in its surface component, not here.
+   ============================================================ */
+.films-list {
+  list-style: none;
+  padding: 0;
+}
+
+.film-entry {
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.film-entry:last-child {
+  border-bottom: none;
+}
+
+.film-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  align-items: baseline;
+}
+
+.film-title {
+  font-weight: 600;
+}
+
+.film-year,
+.film-date {
+  font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.film-date {
+  margin-left: auto; /* pushes the date to the row's far edge */
+}
+
+.film-rating {
+  font-size: var(--text-sm);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.film-rewatch {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--pend);
+}
+
+.film-review {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+.film-review p,
+.film-review blockquote {
+  margin-top: var(--space-2);
+}
+
+.film-review p:first-child {
+  margin-top: 0;
+}
+
+.film-review blockquote {
+  border-left: 2px solid var(--rule);
+  padding-left: var(--space-3);
+  color: var(--muted);
+}
+
+.tabs + .films {
+  margin-top: var(--space-3);
+}
+
+/* A film's expressive surface — the container is deliberately quiet;
+   whatever identity a surface has comes from the surface itself. */
+.film-surface {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border: 1px dashed var(--rule);
+}
+
+.film-surface-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: grab;
+  touch-action: none; /* the drag owns touch here, not page scroll */
+}
+
+.film-surface-dot:active {
+  cursor: grabbing;
+}
+
+/* ============================================================
    Writing — post pages (#writing). Reading typography only;
    palette and voice stay on the tokens.
    ============================================================ */
