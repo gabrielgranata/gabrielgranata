@@ -1,3 +1,7 @@
+// importing an image hands back its bundled URL (same mechanism as
+// post images) — used by the talks cards below
+import talk1Image from '../talks/talk-1.png'
+
 /*
   All content lives here — components render this, they don't invent it.
 
@@ -34,6 +38,9 @@ export const identity = {
   (public/talks is a symlink into it; the build copies through it).
   slug routes to the in-site reader (#talks/<slug>); href is the raw
   deck document itself. Titles are the decks' own <title> tags.
+
+  Card images live in src/talks/ (talk-1.png, …), imported at the top
+  of this file.
 */
 export const talks = [
   {
@@ -43,12 +50,14 @@ export const talks = [
     title: 'A Framework for Agentic Engineering',
     date: '2026',
     href: '/talks/talk-1-agentic-engineering/',
+    image: talk1Image,
   },
   {
     id: 2,
     title: 'What Your AI Conversations Say About How You Think',
     date: '2026',
     href: '/talks/talk-2-ai-mirror/',
+    // no image yet — the card renders as a text brief until one exists
   },
 ]
 

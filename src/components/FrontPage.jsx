@@ -37,7 +37,7 @@ export default function FrontPage() {
   if (recent.length === 0) return null
 
   return (
-    <section className="front-page" aria-label="recent posts">
+    <section className="card-grid front-page" aria-label="recent posts">
       {recent.map(post => (
         <a key={post.slug} className="post-card" href={`#writing/${post.slug}`}>
           <PostMedia post={post} className="card-media" />

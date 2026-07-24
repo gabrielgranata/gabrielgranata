@@ -1,21 +1,28 @@
 import { talks } from '../data/site.js'
 
 /*
-  Talks — the slide decks committed in talks/. Each row opens the
-  in-site reader (#talks/<slug>), which runs the deck live in a frame;
-  the raw document stays reachable from there via "open full screen".
+  Talks — the slide decks committed in talks/, shown as cards (the
+  same idiom as the front-page post cards: media box, title, date).
+  Each card opens the in-site reader (#talks/<id>), which runs the
+  deck live in a frame; a talk without an image renders as a text
+  brief, same rule as posts.
 */
 export default function Talks() {
   return (
-    <section className="experiments" aria-label="talks">
-      <ul className="experiments-list">
-        {talks.map(t => (
-          <li key={t.id} className="experiment-row">
-            <a href={`#talks/${t.id}`}>{t.title}</a>
-            <span className="lab-note">{t.date}</span>
-          </li>
-        ))}
-      </ul>
+    <section className="card-grid talks" aria-label="talks">
+      {talks.map(t => (
+        <a key={t.id} className="post-card" href={`#talks/${t.id}`}>
+          {t.image && (
+            <div className="card-media">
+              <img src={t.image} alt="" />
+            </div>
+          )}
+          <div className="card-text">
+            <span className="card-title">{t.title}</span>
+            <span className="card-date">{t.date}</span>
+          </div>
+        </a>
+      ))}
     </section>
   )
 }

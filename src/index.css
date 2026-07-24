@@ -122,11 +122,12 @@ a {
 }
 
 /* ============================================================
-   Front page — recent posts as newspaper cards.
-   The .card-media box owns the geometry (aspect-ratio); whatever
-   fills it — an <img> or a live component — inherits that canvas.
+   Card grid — newspaper cards, used by the front page (posts) and
+   the talks tab. The .card-media box owns the geometry
+   (aspect-ratio); whatever fills it — an <img> or a live component —
+   inherits that canvas.
    ============================================================ */
-.front-page {
+.card-grid {
   margin-top: var(--space-5);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
