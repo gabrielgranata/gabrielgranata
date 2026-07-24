@@ -52,10 +52,11 @@ jobs:
       # fail loudly if it can't. The lockfile is the build's contract.
       - run: npm ci
 
-      # --base: this repo serves as a PROJECT site, so every asset URL
-      # is prefixed with /gabrielgranata/. DELETE this flag when the
-      # custom domain is attached — a domain serves from the root.
-      - run: npm run build -- --base=/gabrielgranata/
+      # No --base flag: granata.blog serves from the domain root, so
+      # Vite's default base of / is correct. (Before the custom domain,
+      # this needed --base=/gabrielgranata/ — a username/username repo
+      # serves as a project site under a path.)
+      - run: npm run build
 
       - uses: actions/configure-pages@v5
 
