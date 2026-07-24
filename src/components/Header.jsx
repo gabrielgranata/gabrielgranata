@@ -4,17 +4,11 @@ import PendingText from './PendingText.jsx'
 export default function Header() {
   return (
     <header className="header">
-      <h1 className="name">{identity.name}</h1>
-
-      <p className="positioning">
-        {identity.positioning} <span className="pend">[draft]</span>
-      </p>
-
-      <p className="intro">
-        <PendingText text={identity.intro} />
-      </p>
-
-      <ul className="contact">
+      {/* name and links share one row; the links ride beside the name
+          like a small annotation — their height is a CSS knob */}
+      <div className="name-row">
+        <h1 className="name">{identity.name}</h1>
+        <ul className="contact">
         {identity.contact.map(({ label, href, note }) => (
           <li key={label}>
             {href ? (
@@ -28,7 +22,25 @@ export default function Header() {
             )}
           </li>
         ))}
-      </ul>
+        </ul>
+      </div>
+
+      {/* positioning is Gabriel's authored text; if a run of it is still
+          pending he writes [brackets] and PendingText renders the chip —
+          draftness is content state, never hardcoded here */}
+      <p className="positioning">
+        <PendingText text={identity.positioning} />
+      </p>
+
+      {identity.positioningClose && (
+        <p className="positioning-close">
+          <PendingText text={identity.positioningClose} />
+        </p>
+      )}
+
+      <p className="intro">
+        <PendingText text={identity.intro} />
+      </p>
     </header>
   )
 }

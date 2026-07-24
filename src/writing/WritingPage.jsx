@@ -1,5 +1,6 @@
 import Markdown from './markdown.jsx'
 import { posts, postBySlug } from './posts.js'
+import PostMedia from '../components/PostMedia.jsx'
 
 /*
   The writing pages, behind #writing (index) and #writing/<slug> (one post).
@@ -25,6 +26,13 @@ export default function WritingPage({ hash }) {
             {post.confidence && <span> · confidence: {post.confidence}</span>}
             {post.importance && <span> · importance: {post.importance}</span>}
           </p>
+          {/* optional description: frontmatter → the dek, newspaper
+              vocabulary for the line under the headline that frames
+              the story before it starts */}
+          {post.description && <p className="post-dek">{post.description}</p>}
+          {/* the lead image (or live media) — newspaper order:
+              headline, dateline, dek, photo, story */}
+          <PostMedia post={post} className="post-lead" />
           <div className="post-body">
             <Markdown text={post.body} />
           </div>

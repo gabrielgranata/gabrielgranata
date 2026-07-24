@@ -1,10 +1,13 @@
 import { useState } from 'react'
 import Header from './components/Header.jsx'
+import FrontPage from './components/FrontPage.jsx'
 import Tabs from './components/Tabs.jsx'
 import Writing from './components/Writing.jsx'
 import Experiments from './components/Experiments.jsx'
-import Feed from './components/Feed.jsx'
-import Films from './films/Films.jsx'
+// films & feed are off the public build for now (Gabriel's call,
+// 2026-07-24) — re-enable by uncommenting here and in TABS below.
+// import Feed from './components/Feed.jsx'
+// import Films from './films/Films.jsx'
 
 /*
   The homepage: identity persists on top; below it, one section at a time
@@ -28,8 +31,8 @@ import Films from './films/Films.jsx'
 const TABS = [
   { id: 'writing', label: 'writing', Panel: Writing },
   { id: 'experiments', label: 'experiments', Panel: Experiments },
-  { id: 'feed', label: 'feed', Panel: Feed },
-  { id: 'films', label: 'films', Panel: Films },
+  // { id: 'feed', label: 'feed', Panel: Feed },
+  // { id: 'films', label: 'films', Panel: Films },
 ]
 
 export default function Site() {
@@ -39,6 +42,9 @@ export default function Site() {
   return (
     <div className="site">
       <Header />
+      {/* recent posts as newspaper cards — placement above the tabs is
+          the front-page reading of "home page"; moving it is this line */}
+      <FrontPage />
       <Tabs tabs={TABS} activeId={activeId} onSelect={setActiveId} />
       <Panel />
     </div>

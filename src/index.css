@@ -84,6 +84,17 @@ a {
   margin-top: var(--space-2);
   font-size: var(--text-base);
   color: var(--muted);
+  /* pre-line: a \n in the authored string renders as a line break;
+     all other whitespace still collapses. Without this, HTML folds
+     newlines into spaces and authored line breaks silently vanish. */
+  white-space: pre-line;
+}
+
+.positioning-close {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  color: var(--muted);
+  text-align: center;
 }
 
 .intro {
@@ -94,72 +105,92 @@ a {
 .contact {
   list-style: none;
   padding: 0;
-  margin-top: var(--space-4);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2) var(--space-3);
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
+}
+
+/* name + links on one row. The links' vertical seat is ONE knob:
+   align-items: flex-start ≈ superscript (links at the name's cap line),
+   center = midscript (links centered on the name's height). */
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
 }
 
 /* ============================================================
-   Receipts strip
+   Front page — recent posts as newspaper cards.
+   The .card-media box owns the geometry (aspect-ratio); whatever
+   fills it — an <img> or a live component — inherits that canvas.
    ============================================================ */
-.receipts {
-  margin-top: var(--space-4);
+.front-page {
+  margin-top: var(--space-5);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.post-card {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3) var(--space-5);
-  /* without this, opening one receipt stretches its closed siblings to match */
-  align-items: flex-start;
+  flex-direction: column;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden; /* media corners follow the card's radius */
+  text-decoration: none;
+  color: inherit;
 }
 
-.receipt {
-  /* no box — the number and whitespace do the grouping */
-  flex: 0 1 auto;
-  max-width: 16rem;
-}
-
-.receipt-toggle {
-  /* button reset — it's a receipt, not a chrome button */
-  all: unset;
-  cursor: pointer;
-  display: block;
-  width: 100%;
-}
-
-.receipt-toggle:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.receipt-figure {
-  display: block;
-  font-size: var(--text-lg);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.receipt-toggle[aria-expanded='true'] .receipt-figure {
+.post-card:hover .card-title {
   color: var(--accent);
 }
 
-.receipt-label {
+.card-media {
+  aspect-ratio: 3 / 2; /* the slot's contract — stable canvas for image or instrument */
+  background: var(--rule);
+}
+
+.card-media img {
   display: block;
-  margin-top: var(--space-1);
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* fill the box, crop rather than distort */
+}
+
+.card-text {
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.card-date {
   font-size: var(--text-xs);
+  color: var(--muted);
+}
+
+.card-draft {
+  margin-left: var(--space-2);
   text-transform: uppercase;
   letter-spacing: 0.07em;
-  color: var(--muted);
 }
 
-.receipt-panel {
-  overflow: hidden; /* the spring animates height; this does the clipping */
-}
-
-.receipt-method {
-  padding-top: var(--space-2); /* padding lives on the measured element */
+.card-preview {
+  margin: 0;
   font-size: var(--text-sm);
   color: var(--muted);
+  /* display clamp: the preview SOURCE is the whole first paragraph;
+     these three lines are all the card shows of it */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ============================================================
@@ -435,6 +466,27 @@ a {
   margin-top: var(--space-1);
   font-size: var(--text-xs);
   color: var(--muted);
+}
+
+/* the dek — the framing line under the headline, from `description:` */
+.post-dek {
+  margin-top: var(--space-2);
+  font-size: var(--text-base);
+  color: var(--muted);
+}
+
+/* the lead media — full column width; images keep their natural
+   aspect (no crop — the card's 3:2 box is the cropping surface,
+   the article shows the whole picture) */
+.post-lead {
+  margin-top: var(--space-3);
+}
+
+.post-lead img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
 }
 
 .post-body {

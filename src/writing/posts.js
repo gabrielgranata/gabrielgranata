@@ -25,6 +25,23 @@ const files = import.meta.glob('./posts/*.md', {
   eager: true,
 })
 
+/*
+  Post images — the same glob trick, opposite mode. Without ?raw, a
+  glob of asset files returns each file's BUNDLED URL (Vite copies the
+  image into dist/assets/ and hands back its final address), not its
+  bytes. A post opts in with frontmatter: `image: spaceman.png` names a
+  file sitting next to the .md in ./posts/; below, that name resolves
+  to a URL the <img> tag can use. Publishing a post with an image means
+  committing both files (`git add -f` each — the folder is gitignored).
+*/
+const imageFiles = import.meta.glob('./posts/*.{png,jpg,jpeg,webp,gif,svg}', {
+  import: 'default',
+  eager: true,
+})
+const imageUrlByName = Object.fromEntries(
+  Object.entries(imageFiles).map(([path, url]) => [path.split('/').pop(), url])
+)
+
 function parseFrontmatter(raw) {
   const meta = {}
   if (!raw.startsWith('---')) return { meta, body: raw }
@@ -48,6 +65,8 @@ export const posts = Object.entries(files)
       title: meta.title || '[untitled]',
       date: meta.date || '[date pending]',
       status: meta.status || 'published',
+      // null when the post names no image, or names one that isn't there
+      imageUrl: meta.image ? (imageUrlByName[meta.image] ?? null) : null,
       body,
     }
   })

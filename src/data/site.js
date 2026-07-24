@@ -10,60 +10,24 @@
 export const identity = {
   name: 'Gabriel Granata',
 
-  // Resume positioning line — marked draft there ("[Gabriel's edit before submission]").
   positioning:
-    'Software engineer (AWS, agent infrastructure) building and publishing ' +
-    'independent research on human-AI interaction — working prototypes, one in production.',
+    'hello. \nthis is a collection of my thoughts, experiments, and ramblings.\n' +
+    'personally exploring humanity, AI, and the future of work. \nthis site is a work in progress, and the content is evolving.' +
+    '\ni intend to grow with it.',
+
+  // the closing line is its own element so it can carry its own
+  // geometry (centered) — alignment belongs to blocks, not to lines
 
   // Writing task for Gabriel — do not fill in.
-  intro: "[Gabriel's introduction — his words, 3–5 sentences]",
+  intro: "Take everything with a grain of salt. I am a human exploring what it means to be human.",
 
   // href: null means the link itself is pending; `note` is the visible placeholder.
   contact: [
-    { label: 'GitHub', href: null, note: '[link pending]' },
+    { label: 'GitHub', href: 'https://github.com/gabrielgranata', note: null },
     { label: 'Substack', href: 'https://m1ndovermatter.substack.com', note: null },
-    { label: 'Email', href: null, note: '[pending]' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/gabrielgranata', note: null },
   ],
 }
-
-/*
-  Receipts: the number is the claim; opening it shows where the number comes
-  from. Method text is the resume's own wording — none of the four states how
-  the figure was measured, so each carries a visible pending marker.
-*/
-export const receipts = [
-  {
-    figure: '50%',
-    label: 'learning-agent latency',
-    method:
-      'Built a trajectory-analysis pipeline over agent investigation journals; ' +
-      'used it to build MCP tooling that improved learning-agent latency 50%. ' +
-      '(AWS DevOps Agent) [measurement methodology pending]',
-  },
-  {
-    figure: '70→0',
-    label: 'region-build manual tasks',
-    method:
-      'Co-owned automation of 70 manual tasks across the team, cutting region-build ' +
-      'time from 30+ developer-days per region to full automation. ' +
-      '(AWS Cloud Map) [measurement methodology pending]',
-  },
-  {
-    figure: '10×',
-    label: 'report-writing, BMO',
-    method:
-      'Built a reporting tool that cut manual report-writing time 10× for ' +
-      'non-technical stakeholders. (BMO Capital Markets, 2020) ' +
-      '[measurement methodology pending]',
-  },
-  {
-    figure: '80%',
-    label: 'MTTR, weigh-out',
-    method:
-      'Designed and built end-to-end automatic weigh-out, reducing MTTR 80%. ' +
-      '(AWS Cloud Map) [measurement methodology pending]',
-  },
-]
 
 /*
   Feed entries. types: build | lab | essay | work | note.
